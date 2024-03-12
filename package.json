@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.2"
+  },
+  "lint-staged": {
+    "*.md": [
+      "bash /home/atsushi/markdown_share/custom_formatter/replace.bash"
+    ]
+  }
+}
