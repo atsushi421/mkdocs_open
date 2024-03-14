@@ -8,10 +8,7 @@ hide:
 
 ## はじめに
 
-本資料は、次のドキュメントを要約し、補足を入れたものである：
-https://www.kernel.org/doc/html/v4.12/admin-guide/pm/cpufreq.html
-
-`intel_pstate` に関する情報は省略している。
+本資料は [CPU Performance Scaling](https://www.kernel.org/doc/html/v4.12/admin-guide/pm/cpufreq.html) を要約し、補足を入れたものである。`intel_pstate` に関する情報は省略している。
 
 ## The Concept of CPU Performance Scaling
 
