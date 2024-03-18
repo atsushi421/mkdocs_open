@@ -33,24 +33,24 @@ Global Statusはシステム全体のPower Stateを定義する状態であり�
 
 ## P-state [[参考](https://uefi.org/htmlspecs/ACPI_Spec_6_4_html/02_Definition_of_Terms/Definition_of_Terms.html#device-and-processor-performance-state-definitions)]
 
-P-stateは、アクティブ状態 (プロセッサの場合はC0、デバイスの場合はD0)内の消費電力と能力の状態である。Px Stateの概要は以下である：
+P-stateは、アクティブ状態 (プロセッサの場合はC0 State、デバイスの場合はD0 State) 内の消費電力と能力の状態である。Px Stateの概要は以下である：
 
 - **P0 Performance State**: 最大性能を使用し、最大電力を消費する可能性がある。
-- **P1 Performance State**: 性能は最大値以下に制限され、消費電力は最大値以下になる。
+- **P1 Performance State**: 性能は最大値以下に制限され、消費電力も最大値以下になる。
 - ...
-- **Pn Performance State**: 性能が最小レベルになり、アクティブ状態を維持しながら消費電力が最小限に抑えられる。状態nは最大数であり、プロセッサまたはデバイスに依存する。
+- **Pn Performance State**: 性能が最小レベルになり、アクティブ状態を維持しながら消費電力が最小限に抑えられる。状態 n は最大数であり、プロセッサまたはデバイスに依存する。
 
 ## Processor Control Block (P_BLK) [[参考](https://uefi.org/specs/ACPI/6.5/04_ACPI_Hardware_Specification.html#processor-control-block-p-blk)]
 
 ![](imgs/2024-03-15-04-20-19.png){width="60%"} ([出典](https://uefi.org/htmlspecs/ACPI_Spec_6_4_html/04_ACPI_Hardware_Specification/ACPI_Hardware_Specification.html?#processor-control-registers))
 
-システム内の各プロセッサには、Optionalのプロセッサコントロールレジスタブロックがある。これはhomogeneous featureであるため、全てのプロセッサが同じレベルのサポートを持たなければならない。プロセッサコントロールブロックには、プロセッサコントロールレジスタ (P_CNT, P_LVL2, P_LVL3) が含まれる。32ビットのP_CNTレジスタは、そのプロセッサのプロセッサクロックロジックの動作を制御し、P_LVL2レジスタはCPUをC2 Power Stateにするために使用され、P_LVL3レジスタはプロセッサをC3 Power Stateにするために使用される。
+システム内の各プロセッサには、Optionalのプロセッサコントロールレジスタブロックがある。これはHomogeneous Featureであるため、全てのプロセッサが同じレベルのサポートを持たなければならない。プロセッサコントロールブロックには、プロセッサコントロールレジスタ (P_CNT, P_LVL2, P_LVL3) が含まれる。32ビットのP_CNTレジスタは、そのプロセッサのプロセッサクロックロジックの動作を制御し、P_LVL2レジスタはCPUをC2 Power Stateにするために使用され、P_LVL3レジスタはプロセッサをC3 Power Stateにするために使用される。
 
 ### P_CNT Register [[参考](https://uefi.org/htmlspecs/ACPI_Spec_6_4_html/04_ACPI_Hardware_Specification/ACPI_Hardware_Specification.html?#processor-control-p-cnt-32)]
 
 ![](imgs/2024-03-15-04-28-26.png){width="35%"} ![](imgs/2024-03-15-04-28-42.png){width="60%"}
 
-CLK_VALフィールドは、FADT内のDUTY_WIDTH値とDUTY_OFFSET値によって記述されるように、スロットリングハードウェアのduty settingがプログラムされる場所である。THT_ENフィールドは、CLK_VALフィールドで設定されたクロックのスロットリングを有効化するためのbitである。
+CLK_VALフィールドは、FADT内のDUTY_WIDTH値とDUTY_OFFSET値によって記述される (下表) ように、スロットリングハードウェアのduty settingがプログラムされる場所である。THT_ENフィールドは、CLK_VALフィールドで設定されたクロックのスロットリングを有効化するためのbitである。
 
 ![](imgs/2024-03-15-04-34-07.png){width="50%"}
 ![](imgs/2024-03-15-04-33-41.png){width="50%"} ([出典](https://uefi.org/htmlspecs/ACPI_Spec_6_4_html/05_ACPI_Software_Programming_Model/ACPI_Software_Programming_Model.html?#fadt-format))
@@ -61,14 +61,19 @@ CLK_VALフィールドは、FADT内のDUTY_WIDTH値とDUTY_OFFSET値によって
 
 ACPIは、G0 Working StateにおけるシステムプロセッサのPower Stateをアクティブ状態またはスリープ状態のいずれかとして定義している。アクティブ状態はC0 Stateと呼ばれ、CPUが命令を実行するアクティブなPower Stateであることを示す。C1~Cn Stateはプロセッサのスリープ状態であり、プロセッサは命令を実行せず、C0 Stateよりも消費電力と放熱が少なくなる。各プロセッサのスリープ状態には、対応する入出力のレイテンシがある。一般に、入出力のレイテンシが長ければ長いほど、スリープ状態での省電力効果は大きくなる。消費電力を節約するため、OSPM はアイドル時にプロセッサをサポートされているスリープ状態のいずれかにする。C0 Stateにある間、ACPIは、定義されたスロットリングプロセスと複数のパフォーマンス状態 (P-State) への遷移を通じて、プロセッサの性能を変更できる。
 
+!!! note
+    やはり、Clock ThrottlingとP-stateの変更は別の概念ぽい
+
 ACPIは、OSPMが異なるプロセッサPower State間のマイグレーションに使用するロジックをCPU毎に定義する。このロジックはオプションであり、FADTテーブルとプロセッサオブジェクト (階層名前空間に含まれる) を通じて記述される。FADTテーブル内のフィールドとフラグは、ハードウェアの対称機能を記述し、プロセッサオブジェクトには、特定のCPUのクロックロジック (P_BLKレジスタブロックと_CSTオブジェクトで記述) の場所が含まれる。
 
 !!! question
     - プロセッサオブジェクト？
     - クロックロジックの場所？
-    - _CSTオブジェクト？
 
-P_LVL2 および P_LVL3 レジスタは、システムプロセッサを C2 または C3 Stateにするためのオプションサポートである。P_LVL2レジスタは、選択されたプロセッサをC2 Stateにシーケンスするために使用され、P_LVLレジスタは、選択されたプロセッサをC3 Stateにシーケンスするために使用される。C3 Stateの追加サポートは、バスマスタステータスとアービターディセーブルビット (PM1_STSレジスタのBM_STSとPM2_CNTレジスタのARB_DIS) を通して提供される。システムソフトウェアは、P_LVL2 または P_LVL3 レジスタを読み出して、 C2 または C3 Power Stateに入る。ハードウェアは、適切な P_LVLx レジスタへの読み出し操作に応じて、プロセッサを適切なクロック状態にする必要がある。CST (C State)で定義されている_CSTオブジェクトを使用して、OSPMがC Stateに入るためのインタフェースを定義することもできる。
+??? quote "_CST [[参考](https://uefi.org/htmlspecs/ACPI_Spec_6_4_html/08_Processor_Configuration_and_Control/declaring-processors.html?highlight=_cst#cst-c-states)]"
+    _CSTは、サポートされるプロセッサの電源状態 (Cステート)を宣言するための代替方法を提供するオプショナルオブジェクトである。_CSTオブジェクトが提供する値は、P_BLKのP_LVLx値とFADTのP_LVLx_LAT値を上書きする。_CSTオブジェクトを使用すると、プロセッサの電源状態の数をC1、C2、C3から任意の数に拡張できる。
+
+P_LVL2 および P_LVL3 レジスタは、システムプロセッサを C2 または C3 Stateにするためのオプションサポートである。C3 Stateの追加サポートは、バスマスタステータスとアービターディセーブルビット (PM1_STSレジスタのBM_STSとPM2_CNTレジスタのARB_DIS) を通して提供される。システムソフトウェアは、P_LVL2 または P_LVL3 レジスタを読み出して、 C2 または C3 Power Stateに入る。ハードウェアは、適切な P_LVLx レジスタへの読み出し操作に応じて、プロセッサを適切なクロック状態にする必要がある。CST (C State)で定義されている_CSTオブジェクトを使用して、OSPMがC Stateに入るためのインタフェースを定義することもできる。
 
 FADT および P_BLK インタフェースを通じて提示される場合、プロセッサのPower Stateのサポートは対称的である。プロセッサが非対称なPower Stateをサポートしている場合、プラットフォームランタイムファームウェアは、FADT テーブルを介して、システム内の全てのプロセッサがサポートする、最も共通性の低いPower Stateを選択し、使用する。例えば、CPU0プロセッサがC3 Stateまでの全てのPower Stateをサポートしているが、CPU1プロセッサがC1Power Stateのみをサポートしている場合、OSPMはアイドル状態のプロセッサをC1Power Stateにのみ配置する (CPU0はC2, C3 Power Stateには決して配置されない)。C1 Power Stateのサポートが必須であることに注意。C2およびC3のPower Stateはオプションである (システム記述テーブルヘッダーのFADT表記述のPROC_C1フラグを参照)。
 
@@ -92,7 +97,7 @@ Nominal Performanceとは、"指示された性能レベルに可能な限り近
 
 !!! question
     - ストップグラントサイクル?
-    - IAプロセッサ？
+    - IAプロセッサ?
 
 スロットリングロジックを開始するには、OSPMは希望のduty settingを設定し、THT_ENビットをHIGHに設定する。duty settingを変更するには、OSPMはまずTHT_ENビットをLOWにリセットし、このレジスタの他の未使用フィールドを保持したままduty settingフィールドに別の値を書き込み、THT_ENビットを再びHIGHに設定する。
 
