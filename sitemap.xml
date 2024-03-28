@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://atsushi421.github.io/mkdocs_open/</loc>
+         <lastmod>2024-03-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://atsushi421.github.io/mkdocs_open/dvfs/CPU_Performance_Scaling/summary_CPU_Performance_Scaling/</loc>
+         <lastmod>2024-03-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://atsushi421.github.io/mkdocs_open/dvfs/Declaring_Processors/summary_Declaring_Processors/</loc>
+         <lastmod>2024-03-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://atsushi421.github.io/mkdocs_open/dvfs/Introduction/summary_Introduction/</loc>
+         <lastmod>2024-03-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://atsushi421.github.io/mkdocs_open/dvfs/Overview/summary_Overview/</loc>
+         <lastmod>2024-03-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://atsushi421.github.io/mkdocs_open/dvfs/acpi_p_state/summary_processor_power_states/</loc>
+         <lastmod>2024-03-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+</urlset>
