@@ -55,7 +55,7 @@ CLK_VALフィールドは、FADT内のDUTY_WIDTH値とDUTY_OFFSET値によって
 ![](imgs/2024-03-15-04-34-07.png){width="50%"}
 ![](imgs/2024-03-15-04-33-41.png){width="50%"} ([出典](https://uefi.org/htmlspecs/ACPI_Spec_6_4_html/05_ACPI_Software_Programming_Model/ACPI_Software_Programming_Model.html?#fadt-format))
 
-## Processor Power States [[参考](https://uefi.org/htmlspecs/ACPI_Spec_6_4_html/08_Processor_C0nfiguration_and_C0ntrol/processor-power-states.html)]
+## Processor Power States [[参考](https://uefi.org/specs/ACPI/6.5/08_Processor_Configuration_and_Control.html#processor-power-states)]
 
 ![alt text](imgs/processor_power_states.drawio.svg){width="50%"}
 
@@ -75,7 +75,10 @@ ACPIは、OSPMが異なるプロセッサPower State間のマイグレーショ�
 
 P_LVL2 および P_LVL3 レジスタは、システムプロセッサを C2 または C3 Stateにするためのオプションサポートである。C3 Stateの追加サポートは、バスマスタステータスとアービターディセーブルビット (PM1_STSレジスタのBM_STSとPM2_CNTレジスタのARB_DIS) を通して提供される。システムソフトウェアは、P_LVL2 または P_LVL3 レジスタを読み出して、 C2 または C3 Power Stateに入る。ハードウェアは、適切な P_LVLx レジスタへの読み出し操作に応じて、プロセッサを適切なクロック状態にする必要がある。CST (C State)で定義されている_CSTオブジェクトを使用して、OSPMがC Stateに入るためのインタフェースを定義することもできる。
 
-FADT および P_BLK インタフェースを通じて提示される場合、プロセッサのPower Stateのサポートは対称的である。プロセッサが非対称なPower Stateをサポートしている場合、プラットフォームランタイムファームウェアは、FADT テーブルを介して、システム内の全てのプロセッサがサポートする、最も共通性の低いPower Stateを選択し、使用する。例えば、CPU0プロセッサがC3 Stateまでの全てのPower Stateをサポートしているが、CPU1プロセッサがC1Power Stateのみをサポートしている場合、OSPMはアイドル状態のプロセッサをC1Power Stateにのみ配置する (CPU0はC2, C3 Power Stateには決して配置されない)。C1 Power Stateのサポートが必須であることに注意。C2およびC3のPower Stateはオプションである (システム記述テーブルヘッダーのFADT表記述のPROC_C1フラグを参照)。
+FADT および P_BLK インタフェースを通じて提示される場合、プロセッサのPower Stateのサポートは対称的である。プロセッサが非対称なPower Stateをサポートしている場合、プラットフォームランタイムファームウェアは、FADT テーブルを介して、システム内の全てのプロセッサがサポートする、最も共通性の低いPower Stateを選択し、使用する。
+
+!!! example "対称性の例"
+    CPU0プロセッサがC3 Stateまでの全てのPower Stateをサポートしているが、CPU1プロセッサがC1Power Stateのみをサポートしている場合、OSPMはアイドル状態のプロセッサをC1Power Stateにのみ配置する (CPU0はC2, C3 Power Stateには決して配置されない)。
 
 以下のセクションでは、プロセッサのPower Stateについて詳しく説明する。
 
@@ -88,10 +91,10 @@ FADT および P_BLK インタフェースを通じて提示される場合、�
 FADT はduty offset値とduty width値を含む。duty offset値は、P_CNTレジスタ内のduty値のオフセットを決定する。duty width値は、duty値で使用されるビット数を決定する(スロットリングロジックの粒度を決定する)。クロックロジックによるプロセッサの性能は、以下の式で表すことができる：
 
 \[
-  \text{ Performance [%]}=\frac{\text { duty setting }}{2^{\text {duty width }}} \times 100 \quad (1)
+  \text{Nominal Performance [%]}=\frac{\text { duty setting }}{2^{\text {duty width }}} \times 100 \quad (1)
 \]
 
-Nominal Performanceとは、"指示された性能レベルに可能な限り近いが、それを下回らないこと "と定義される。OSPM はduty offsetとduty widthを使用して、duty settingフィールドへのアクセス方法を決定する。そして OSPM は、プロセッサオブジェクトの熱条件と希望する電力に基づいてduty settingをプログラムする。OSPM は、式 1 を使用してプロセッサのNominal Performanceを計算する。例えば、クロックロジックはストップグラントサイクルを使用して、IAプロセッサ上で分割されたプロセッサクロック周波数をエミュレートできる (STPCLK#信号を使用することによって)。この信号はLOWにアサートされたときにプロセッサのクロックを内部的に停止する。8段階のクロック制御を提供するロジックを実装するために、STPCLK#ピンは次のようにアサートされる可能性がある
+Nominal Performanceとは、"指示された性能レベルに可能な限り近いが、それを下回らないこと"と定義される。OSPM はduty offsetとduty widthを使用して、duty settingフィールドへのアクセス方法を決定する。そして OSPM は、プロセッサオブジェクトの熱条件と希望する電力に基づいてduty settingをプログラムする。例えば、クロックロジックはストップグラントサイクルを使用して、IAプロセッサ上で分割されたプロセッサクロック周波数をエミュレートできる (STPCLK#信号を使用することによって)。この信号はLOWにアサートされたときにプロセッサのクロックを内部的に停止する。8段階のクロック制御を提供するロジックを実装するために、STPCLK#ピンは次のようにアサートされる可能性がある。
 
 ![](imgs/2024-03-14-15-52-56.png){width="50%"}
 
@@ -101,14 +104,17 @@ Nominal Performanceとは、"指示された性能レベルに可能な限り近
 
 スロットリングロジックを開始するには、OSPMは希望のduty settingを設定し、THT_ENビットをHIGHに設定する。duty settingを変更するには、OSPMはまずTHT_ENビットをLOWにリセットし、このレジスタの他の未使用フィールドを保持したままduty settingフィールドに別の値を書き込み、THT_ENビットを再びHIGHに設定する。
 
+!!! question
+    - duty settingとは結局何なんだ
+
 ロジックモデルの例を以下に示す：
 
 ![](imgs/2024-03-14-16-07-27.png){width="50%"}
 
-ACPIプロセッサPower State制御の実装では、1つのCPUスリープ状態 (C1)のサポートが最低限必要である。システムがスリープ状態 (S1～S4)に遷移すると、これらの状態は意味を持たない。ACPIは、異なるCPU状態の属性 (セマンティクス)を定義している (4つを定義)。適切な低消費電力CPU状態を定義されたACPI CPU状態にマッピングするかどうかは、プラットフォームの実装次第である。
-
 !!! question
-    - duty settingとは結局何なんだ
+    この図は何？
+
+ACPIプロセッサPower State制御の実装では、1つのCPUスリープ状態 (C1)のサポートが最低限必要である。システムがスリープ状態 (S1～S4)に遷移すると、これらの状態は意味を持たない。ACPIは、異なるCPU状態の属性 (セマンティクス)を定義している (4つを定義)。適切な低消費電力CPU状態を定義されたACPI CPU状態にマッピングするかどうかは、プラットフォームの実装次第である。
 
 ACPI クロック制御は、オプションのプロセッサレジスタブロック (P_BLK)を介してサポートされる。ACPIでは、システム内の各CPUに固有のプロセッサレジスタブロックが必要である。POプロセッサが C1, C2 および C3 Stateをサポートし、P1が C1 Stateのみをサポートする場合、OSPMはアイドル時に全てのプロセッサが C1 Stateになるように制限する。
 
@@ -122,9 +128,9 @@ ACPI クロック制御は、オプションのプロセッサレジスタブロ
 
 ### Processor Power State C2
 
-このプロセッサPower Stateは、システムによってオプションでサポートされる。この状態が存在する場合、C1 Stateよりも省電力であり、ローカルプロセッサの P_LVL2 コマンドレジスタを使用するか、または _CST オブジェクトによって示される別のメカニズムを使用して入力される。この状態の最悪のハードウェアレイテンシはFADTで宣言されており、OSPMはこの情報を使用して、 C2 Stateの代わりに C1 Stateを使用するタイミングを決定できる。この状態は、プロセッサをPower Stateにする以外に、ソフトウェアから見える効果はない。OSPMは、C2Power Stateは C1 Power Stateよりも消費電力が低く、終了レイテンシが高いと想定している。
+このプロセッサPower Stateは、システムによってオプションでサポートされる。この状態が存在する場合、C1 Stateよりも省電力であり、ローカルプロセッサの P_LVL2 コマンドレジスタを使用するか、または _CST オブジェクトによって示される別のメカニズムを使用して入力される。この状態の最悪のハードウェアレイテンシはFADTで宣言されており、OSPMはこの情報を使用して、 C2 Stateの代わりに C1 Stateを使用するタイミングを決定できる。この状態は、プロセッサをPower Stateにする以外に、ソフトウェアから見える効果はない。OSPMは、C2 Power Stateは C1 Power Stateよりも消費電力が低く、終了レイテンシが高いと想定している。
 
-C2Power Stateは、オプションのACPIクロック状態であり、チップセットのハードウェアサポートが必要である。このクロックロジックはインタフェースで構成されており、このインタフェースを操作することで、プロセッサコンプレックスをC2Power Stateに正確にマイグレーションさせることができる。C2Power Stateでは、プロセッサはキャッシュのコヒーレンシを維持できると想定され、例えば、キャッシュコンテキストを破壊することなく、バスマスタやマルチプロセッサの活動を行うことができる。
+C2 Power Stateは、オプションのACPIクロック状態であり、チップセットのハードウェアサポートが必要である。このクロックロジックはインタフェースで構成されており、このインタフェースを操作することで、プロセッサコンプレックスをC2 Power Stateに正確にマイグレーションさせることができる。C2 Power Stateでは、プロセッサはキャッシュのコヒーレンシを維持できると想定され、例えば、キャッシュコンテキストを破壊することなく、バスマスタやマルチプロセッサの活動を行うことができる。
 
 C2 Stateは、プロセッサをマルチプロセッサやバスマスタシステムに最適化された低消費Power Stateにする。OSPMは、バスマスタまたはマルチプロセッサのアクティビティがある場合、アイドル状態のプロセッサコンプレックスをC2 Stateにマイグレーションさせる (これにより、OSPMはプロセッサコンプレックスをC3 Stateにマイグレーションさせない)。プロセッサコンプレックスは、C2 Stateにある間、バスマスタまたはマルチプロセッサCPUのメモリへのアクセスをスヌープできる。
 
