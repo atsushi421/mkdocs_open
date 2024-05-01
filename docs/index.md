@@ -1,10 +1,11 @@
 # HOME
 
+- [Inbox](dvfs/linux/inbox.md)
+
 ## DVFS
 
-### Linux
-
 - [CPU Performance Scaling in Linux Kernel](./dvfs/CPU_Performance_Scaling/summary_CPU_Performance_Scaling.md)
+- [Power Management in ACPI](dvfs/Power_Management_in_ACPI/Power_Management_in_ACPI.md)
 
 ### ACPI
 
