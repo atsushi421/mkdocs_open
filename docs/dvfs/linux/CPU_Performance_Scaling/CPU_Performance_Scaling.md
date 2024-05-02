@@ -4,11 +4,11 @@ hide:
 - toc
 ---
 
-# CPU Performance Scaling in Linux Kernel
+# CPU Performance Scaling
 
 ## はじめに
 
-本資料は [CPU Performance Scaling](https://www.kernel.org/doc/html/v4.12/admin-guide/pm/cpufreq.html) を要約し、補足を入れたものである。`intel_pstate` に関する情報は省略している。
+本資料は [CPU Performance Scaling](https://www.kernel.org/doc/html/latest/admin-guide/pm/cpufreq.html) を要約し、補足を入れたものである。`intel_pstate` に関する情報は省略している。
 
 ## The Concept of CPU Performance Scaling
 
@@ -93,12 +93,13 @@ CPUの初期化中に作成されたポリシーオブジェクトと、それ�
 
 |          Attributes           | Descriptions                                                                                                                                       |
 | :---------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------- |
-|        `affected_cpus`        | このポリシーに属すオンラインCPUのリスト                                                                                                          |
+|        `affected_cpus`        | このポリシーに属すオンラインCPUのリスト                                                                                                            |
 |         `bios_limit`          | BIOSがOSにCPU周波数に上限を適用するように指示した場合、その上限が格納される                                                                        |
+|      `cpuinfo_cur_freq`       | このポリシーに属すCPUの現在の動作周波数 [$\mathrm{kHz}$]                                                                                           |
 |      `cpuinfo_max_freq`       | このポリシーに属すCPUの最大動作周波数 [$\mathrm{kHz}$]                                                                                             |
 |      `cpuinfo_min_freq`       | このポリシーに属すCPUの最小動作周波数 [$\mathrm{kHz}$]                                                                                             |
 | `cpuinfo_transition_latency`  | このポリシーに属すCPUをあるP-stateから別のP-stateに切り替えるのにかかる時間 [ns]                                                                   |
-|        `related_cpus`         | このポリシーに属す全ての(オンライン&オフライン)CPUのリスト                                                                                       |
+|        `related_cpus`         | このポリシーに属す全ての(オンライン&オフライン)CPUのリスト                                                                                         |
 | `scaling_available_governors` | このポリシーにアタッチできるCPUFreq scaling governorのリスト                                                                                       |
 |      `scaling_cur_freq`       | このポリシーに属す全てのCPUの現在の周波数 [$\mathrm{kHz}$]                                                                                         |
 |       `scaling_driver`        | 現在使用中のscaling driver                                                                                                                         |
