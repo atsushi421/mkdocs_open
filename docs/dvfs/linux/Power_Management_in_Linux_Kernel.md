@@ -43,7 +43,7 @@ Linuxカーネルは、以下2つの主要な高レベル電力管理戦略を�
 
 ## [CPU Idle Time Management](https://www.kernel.org/doc/html/latest/admin-guide/pm/cpuidle.html)
 
-[> CPU Idle Time Management](CPU_Idle_Time_Management.md)
+[> CPU Idle Time Management](CPU_Idle_Time_Management/CPU_Idle_Time_Management.md)
 
 ---
 
