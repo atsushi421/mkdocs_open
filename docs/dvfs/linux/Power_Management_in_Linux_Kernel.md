@@ -8,7 +8,7 @@ hide:
 
 ## はじめに
 
-本資料は、Linux kernelにおけるPower Managementを説明する。出典は全て[公式ドキュメント](https://www.kernel.org/doc/html/latest/admin-guide/pm/index.html)である。本資料の一番の目的はAwkernelのDVFS実装の参考にすることであるため、CPUの周波数調整に調査範囲を限定する。
+本資料は、Linux kernelにおけるPower Managementを説明する。出典は全て[公式ドキュメント](https://www.kernel.org/doc/html/latest/admin-guide/pm/index.html)である。本資料の一番の目的はAwkernelのDVFS実装の参考にすることであるため、CPUの周波数調整に調査範囲を限定し、コードレベルまで詳細に調査はしない。
 
 ---
 
@@ -52,7 +52,7 @@ Linuxカーネルは、以下2つの主要な高レベル電力管理戦略を�
 !!! note
     EBSとP-state調整の違いはよく分かっていない。ChatGPTに聞いたところ、EBSによる調整は、プロセッサがどのようにP-stateを選択するかの傾向を調整することに相当するらしい。
 
-Performance and Energy Bias Hint (EPB) は、プロセッサに存在する電力と性能のトレードオフに関して、ソフトウェアが優先順位を指定できるようにするものである。EPBはユーザ空間によって (sysfs経由で直接的、またはx86_energy_perf_policyツールによって間接的に) 設定される。各論理CPUのEPB値は、 `sys/devices/system/cpu/cpu<N>/power/energy_perf_bias` を通じて確認または更新できる：
+Performance and Energy Bias Hint (EPB) は、プロセッサに存在する電力と性能のトレードオフに関して、ソフトウェアが優先度を指定できるようにするものである。EPBはユーザ空間によって (sysfs経由で直接的、またはx86_energy_perf_policyツールによって間接的に) 設定される。各論理CPUのEPB値は、 `sys/devices/system/cpu/cpu<N>/power/energy_perf_bias` を通じて確認または更新できる：
 
 ![](imgs/2024-05-01-20-44-38.png){width="50%"}
 
