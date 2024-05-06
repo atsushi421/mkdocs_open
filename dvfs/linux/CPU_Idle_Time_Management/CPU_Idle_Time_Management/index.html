@@ -1,0 +1,1014 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://atsushi421.github.io/mkdocs_open/dvfs/linux/CPU_Idle_Time_Management/CPU_Idle_Time_Management/">
+      
+      
+        <link rel="prev" href="../../Power_Management_in_Linux_Kernel/">
+      
+      
+        <link rel="next" href="../../CPU_Performance_Scaling/CPU_Performance_Scaling/">
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.20">
+    
+    
+      
+        <title>CPU Idle Time Management - Documents created by Atsushi Yano</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.eebd395e.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ecc896b0.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/mermaid@8.13.10/dist/mermaid.css">
+    
+      <link rel="stylesheet" href="../../../../assets/css/extra.css">
+    
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../../custom.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cpu-idle-time-management" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Documents created by Atsushi Yano" class="md-header__button md-logo" aria-label="Documents created by Atsushi Yano" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documents created by Atsushi Yano
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CPU Idle Time Management
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+            
+              <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+              </label>
+            
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+            
+              <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+              </label>
+            
+          
+        </form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/atsushi421/mkdocs_open" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../../.." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../Power_Management_in_Linux_Kernel/" class="md-tabs__link md-tabs__link--active">
+        DVFS
+      </a>
+    </li>
+  
+
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Documents created by Atsushi Yano" class="md-nav__button md-logo" aria-label="Documents created by Atsushi Yano" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Documents created by Atsushi Yano
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/atsushi421/mkdocs_open" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          DVFS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          DVFS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+          Linux
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Linux
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Power_Management_in_Linux_Kernel/" class="md-nav__link">
+        Power Management in Linux Kernel
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_2" checked>
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1_2" id="__nav_2_1_2_label" tabindex="0">
+          CPU Idle Time Management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          CPU Idle Time Management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          CPU Idle Time Management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        CPU Idle Time Management
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#concepts" class="md-nav__link">
+    Concepts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#idle-cpus" class="md-nav__link">
+    Idle CPUs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-idle-loop" class="md-nav__link">
+    The Idle Loop
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#idle-cpus-and-the-scheduler-tick" class="md-nav__link">
+    Idle CPUs and The Scheduler Tick
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-menu-governor" class="md-nav__link">
+    The menu Governor (実装)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-timer-events-oriented-teo-governor" class="md-nav__link">
+    The Timer Events Oriented (TEO) Governor (実装)
+  </a>
+  
+    <nav class="md-nav" aria-label="The Timer Events Oriented (TEO) Governor (実装)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#util-awareness-mechanism" class="md-nav__link">
+    Util-awareness mechanism
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#representation-of-idle-states" class="md-nav__link">
+    Representation of Idle States
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#power-management-quality-of-service-for-cpus" class="md-nav__link">
+    Power Management Quality of Service for CPUs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#idle-states-control-via-kernel-command-line" class="md-nav__link">
+    Idle States Control Via Kernel Command Line
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_1_3" >
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1_3" id="__nav_2_1_3_label" tabindex="0">
+          CPU Performance Scaling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_1_3">
+          <span class="md-nav__icon md-icon"></span>
+          CPU Performance Scaling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CPU_Performance_Scaling/CPU_Performance_Scaling/" class="md-nav__link">
+        CPU Performance Scaling
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="cpu-idle-time-management">CPU Idle Time Management<a class="headerlink" href="#cpu-idle-time-management" title="Permanent link">#</a></h1>
+<h2 id="concepts">Concepts<a class="headerlink" href="#concepts" title="Permanent link">#</a></h2>
+<p>最近のプロセッサは一般に、プログラムの実行が中断され、そのプログラムに属す命令がメモリからフェッチされたり実行されたりしないアイドル状態に入ることができる。アイドル状態では、プロセッサのハードウェアの一部は使用されないため、消費電力を削減できる。CPUアイドル時間管理は、プロセッサのアイドル状態を使用するエネルギー効率機能である。</p>
+<!-- ## Logical CPUs
+
+CPUアイドル時間管理は、論理CPUに対して行われる。以下では論理CPUを単にCPUと呼ぶ。 -->
+
+<!-- その見解では、CPUは論理ユニットである。すなわち、独立した物理的な実体である必要はなく、個々のシングルコアプロセッサとしてソフトウェアに表示されるインタフェースであってもよい。言い換えれば、CPUは、メモリから1つのシーケンス (プログラム)に属す命令をフェッチして実行しているように見える実体であるが、物理的にこのように動作する必要はない。一般に、ここでは3つの異なるケースが考えられる。
+
+まず、プロセッサ全体が一度に1つの命令シーケンス (1つのプログラム)にしか従えない場合、それはCPUである。その場合、ハードウェアがアイドル状態に入るように要求されれば、それはプロセッサ全体に適用される。
+
+第二に、プロセッサがマルチコアである場合、その中の各コアは一度に少なくとも1つのプログラムに従うことができる。コアは互いに完全に独立している必要はないが (例えば、キャッシュを共有する場合もある)、それでもほとんどの場合、互いに物理的に並行して動作するため、各コアが1つのプログラムだけを実行する場合、それらのプログラムは同時に互いにほとんど独立して実行される。その場合、コア全体がCPUであり、ハードウェアがアイドル状態に入るよう求められた場合、それは最初にアイドル状態を求めたコアに適用されるが、そのコアが属すより大きなユニット (「パッケージ」や「クラスタ」など)にも適用されることがある (実際には、そのコアを含むより大きなユニットの階層全体に適用されることもある)。すなわち、より大きなユニットに属すコアのうち、1つを除く全てのコアが「コアレベル」でアイドル状態になっており、残りのコアがプロセッサにアイドル状態になるよう要求した場合、それが引き金となってより大きなユニット全体がアイドル状態になり、そのユニット内の他のコアにも影響が及ぶ可能性がある。
+
+最後に、マルチコアプロセッサの各コアは、同じ時間枠内で複数のプログラムに従うことができる場合がある (すなわち、各コアは、メモリ内の複数の場所から命令をフェッチし、同じ時間枠内で実行できるが、必ずしも完全に互いに並行して実行する必要はない)。この場合、コアはソフトウェアに対して、ハードウェアスレッド (インテルハードウェアではハイパースレッド)と呼ばれる、それぞれが1つのシーケンスに従うことができる複数のシングルコア「プロセッサ」からなる「バンドル」として表示される。
+ストラクションを使用する。そして、ハードウェアスレッドは、CPUアイドル時間管理の観点からはCPUであり、そのうちの1つによってプロセッサがアイドル状態に入るように要求された場合、それを要求したハードウェアスレッド (またはCPU)は停止されるが、同じコア内の他のハードウェアスレッドも全てプロセッサにアイドル状態に入るように要求していない限り、それ以上は何も起こらない。そのような状況では、コアが個別にアイドル状態になるか、コアを含むより大きなユニットが全体としてアイドル状態になる (その大きなユニット内の他のコアがすでにアイドル状態になっている場合)。 -->
+
+<h2 id="idle-cpus">Idle CPUs<a class="headerlink" href="#idle-cpus" title="Permanent link">#</a></h2>
+<p>LinuxカーネルによってCPUがアイドルとみなされるのは、そのCPUがアイドル状態である場合と、アイドルタスクを実行している場合である。アイドルタスクは、CPUがアイドル状態をサポートしていなかったり、次のウェイクアップイベントまでにアイドル状態で過ごす時間が十分でなかったりする場合に実行される。アイドルタスクは意味の無い命令をループで実行するだけである。</p>
+<h2 id="the-idle-loop">The Idle Loop<a class="headerlink" href="#the-idle-loop" title="Permanent link">#</a></h2>
+<p>アイドルループのコードは、2つの主要なステップから成る：</p>
+<ol>
+<li>CPUIdleと呼ばれるCPUアイドル時間管理サブシステムに属すガバナーと呼ばれるコードモジュールを呼び出し、CPUが入るべきアイドル状態を選択する。</li>
+<li>ドライバと呼ばれるCPUIdleサブシステムに属す別のコードモジュールを呼び出し、ガバナーによって選択されたアイドル状態に入るよう、プロセッサハードウェアに実際に要求する。</li>
+</ol>
+<p>ガバナーの役割は、手元の条件に最も適したアイドル状態を見つけることである。この目的のために、アイドル状態は、プラットフォームやプロセッサアーキテクチャに依存しない抽象的な方法で表現され、一次元配列で整理される。この配列は初期化時にCPUIdleドライバによって準備され、実行中のカーネルのプラットフォームに合わせて提供されなければならない。これにより、CPUIdleガバナーはプラットフォームとなるハードウェアから独立し、Linuxカーネルが動作するあらゆるプラットフォームで動作できる。配列に存在する各アイドル状態は、ガバナーによって考慮されるべき2つのパラメータで特徴づけられる：</p>
+<div class="admonition success">
+<p class="admonition-title">target residency</p>
+<p>ハードウェアが対象のアイドル状態にある最小時間</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">exit latency</p>
+<p>CPUがプロセッサハードウェアにアイドル状態からの復帰を要求してから、ウェイクアップ後に最初の命令を実行し始めるまでの最大時間。そのアイドル状態に入るために必要な時間も含まれる。</p>
+</div>
+<p>ガバナーは以下2種類の情報を考慮してアイドル状態を選択する：</p>
+<div class="admonition success">
+<p class="admonition-title">最も近いタイマイベントまでの時間</p>
+<p>カーネルがタイマをプログラムし、それがいつトリガされるかを正確に知っているため、この時間は正確に分かる。この時間は、指定されたCPUが依存するハードウェアがアイドル状態で過ごすことができる最大時間であるとみなせる。</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">アイドル継続時間</p>
+<p>CPUがウェイクアップされた後、実際にどれだけの時間アイドル状態であったか</p>
+</div>
+<p><a class="glightbox" href="../imgs/2024-05-04-11-20-22.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/2024-05-04-11-20-22.png" width="50%" /></a></p>
+<p>CPUIdleガバナーには、menu、TEO、ladder、haltpollの4種類がある。利用可能なガバナーはavailable_governorsから読み込むことができ、実行時にガバナーを変更することもできる。カーネルが現在使用しているCPUIdleガバナーの名前は、sysfsの/sys/devices/system/cpu/cpuidle/の下にあるcurrent_governor_roまたはcurrent_governorファイルから読み取ることができる。</p>
+<p><a class="glightbox" href="../imgs/2024-05-04-11-22-05.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/2024-05-04-11-22-05.png" width="50%" /></a></p>
+<p>一方、どのCPUIdleドライバを使用するかは、通常、カーネルが動作しているプラットフォームに依存する。例えば、大多数のIntelプラットフォームで動作する2つのドライバ、intel_idleとacpi_idleがあり、1つはハードコードされたアイドル状態の情報を持ち、もう1つはシステムのACPIテーブルからその情報を読み取ることができる。インテルプラットフォームでは、intel_idleが何らかの理由で無効になっているか、プロセッサを認識していない場合、acpi_idleドライバが使用される。カーネルが現在使用しているCPUIdleドライバーの名前は、sysfsの/sys/devices/system/cpu/cpuidle/にあるcurrent_driverファイルから読み取ることができる。</p>
+<h2 id="idle-cpus-and-the-scheduler-tick">Idle CPUs and The Scheduler Tick<a class="headerlink" href="#idle-cpus-and-the-scheduler-tick" title="Permanent link">#</a></h2>
+<p>スケジューラティックは、CPUスケジューラのタイムシェアリング戦略を実行するために、定期的にトリガされるタイマである。スケジューラティックを停止するかどうかはガバナーが何を期待しているかを考慮する必要がある。もしガバナーがtick範囲内で何らかのウェイクアップを期待しているのであれば、tickトリガを許可する方が良い。しかし、そうでない場合、ガバナーは比較的深いアイドル状態を選択するので、tickはCPUを早くウェイクアップしすぎないように停止すべきである。</p>
+<p>カーネルは、アイドルループ内でスケジューラティックを完全に停止させないように設定できる。これはビルド時の設定 (CONFIG_NO_HZ_IDLE=false) またはコマンドライン (nohz=off) で行うことができる。アイドル状態のCPUでスケジューラのティックを停止できるように設定されたカーネルを実行するシステムは、ティックレスシステムと呼ばれ、一般に、ティックを停止できないカーネルを実行するシステムよりもエネルギー効率が高いとみなされる。</p>
+<h2 id="the-menu-governor">The menu Governor <a href="https://elixir.bootlin.com/linux/v6.8/source/drivers/cpuidle/governors/menu.c">(実装)</a><a class="headerlink" href="#the-menu-governor" title="Permanent link">#</a></h2>
+<p>メニューガバナーは、ティックレスシステムのデフォルトCPUIdleガバナーである。設計の基本原理は単純であり、呼び出されると、アイドル時間の予測を試み、アイドル状態の選択に予測値を使用する。</p>
+<ol>
+<li>スリープ長を求め、次のCPUウェイクアップまでの時間の上限とする。これは、スリープ長補正係数を求めるために必要なスリープ長の範囲を決定するために使用される。</li>
+</ol>
+<div class="admonition success">
+<p class="admonition-title">スリープ長</p>
+<p>スケジューラのティックが停止するという前提における、最も近いタイマイベントまでの時間</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">スリープ長補正係数</p>
+<p><a class="glightbox" href="../imgs/2024-05-06-09-27-25.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/2024-05-06-09-27-25.png" width="40%" /></a></p>
+<ul>
+<li>メニューガバナーは、スリープ長補正係数の2つの配列を保持する。そのうちの1つは、指定されたCPU上で以前に実行されていたタスクがI/O処理の完了を待っているときに使用され、もう1つは、そうでないときに使用される。各配列には、異なるスリープ長範囲に対応する複数の補正係数の値が含まれており、配列で表される各範囲は、前のものよりも約10倍広くなるように構成されている。</li>
+</ul>
+<ul>
+<li>与えられたスリープ長範囲の補正係数は、CPUがスリープ解除された後に更新され、スリープ長が観測されたアイドル持続時間に近いほど、補正係数は1に近くなる。スリープ長に、該当する範囲の補正係数を乗じることで、予測アイドル時間の第一近似値が得られる。</li>
+</ul>
+</div>
+<ol>
+<li>単純なパターン認識アルゴリズムを用いてアイドル時間の予測を精緻化する。すなわち、過去 8 回のアイドル持続時間の観測値を保存し、次回のアイドル持続時間を予測する際に、その平均と分散を計算する。分散が小さい (400平方ミリ秒より小さい) か、平均値に対して小さい (平均値が標準偏差の6倍より大きい) 場合、平均値はtypical intervalとみなされる。そうでない場合は、保存されたアイドル時間値のうち最長のものが破棄され、残りのものに対して計算が繰り返される。この場合、typical intervalは無限大に等しいと仮定される。このようにして計算されたtypical intervalは、スリープ長に補正係数を掛けたものと比較され、両者の最小値が予測されるアイドル持続時間となる。</li>
+</ol>
+<details class="quote">
+<summary>typical intervalが得られる条件</summary>
+<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm"> * The typical interval is obtained when standard deviation is</span>
+<span class="cm"> * small (stddev &lt;= 20 us, variance &lt;= 400 us^2) or standard</span>
+<span class="cm"> * deviation is small compared to the average interval (avg &gt;</span>
+<span class="cm"> * 6*stddev, avg^2 &gt; 36*variance).</span>
+<span class="cm"> * ...</span>
+</code></pre></div>
+</details>
+<ol>
+<li>
+<p>ガバナーは、「対話型」ワークロードを支援するために、追加のレイテンシ制限を計算する。選択されたアイドル状態のexit latencyが、予測されたアイドル時間と同程度である場合、その状態で費やされる総時間はおそらく非常に短く、その状態に入ることで節約されるエネルギー量は比較的小さいため、その状態に入って終了することに関連するオーバーヘッドを回避する方が良い可能性が高いという観測を利用する。したがって、より浅い状態を選択する方が良い選択肢である可能性が高い。追加のレイテンシ制限の最初の近似値は、予測されるアイドル時間そのものであり、さらに、与えられたCPU上で以前に実行され、現在I/O操作の完了を待っているタスクの数に応じた値で除算される。その除算結果は、<a href="#power-management-quality-of-service-for-cpus">電力管理QoSフレームワーク</a>から得られるレイテンシ制限と比較され、両者の最小値がアイドル状態のexit latencyの制限値として採用される。</p>
+</li>
+<li>
+<p>ガバナーは、アイドル状態のリストを探索し、それらの中から1つを選ぶ。この目的のために、それは各状態のtarget residencyを予測されたアイドル時間と比較し、またその状態のexit latencyを計算されたレイテンシ制限と比較する。ガバナーは、target residencyが予測されたアイドル時間以下であり最も近く、そしてexit latencyが制限を超えない状態を選択する。</p>
+</li>
+</ol>
+<h2 id="the-timer-events-oriented-teo-governor">The Timer Events Oriented (TEO) Governor <a href="https://elixir.bootlin.com/linux/v6.8/source/drivers/cpuidle/governors/teo.c">(実装)</a><a class="headerlink" href="#the-timer-events-oriented-teo-governor" title="Permanent link">#</a></h2>
+<p>TEOガバナーは、ティックレスシステム用の代替CPUIdleガバナーである。このガバナーもメニューガバナーと同じ基本戦略に従っているが、異なるアプローチを使用する。このガバナーのアイデアは、多くのシステムにおいてタイマイベントは他の割り込みよりも2桁以上頻繁に発生するため、アイドル状態からのCPUウェイクアップの最も重要な原因である可能性が高いという観察に基づいている。さらに、過去に起こったことに関する情報を使用して、スリープ長以下のtarget residencyを持つ最も深いアイドル状態が、今後のCPUアイドル期間に適しているかどうかを推定し、適していない場合は、その代わりに、より浅いアイドル状態のどれを選択するかを決定できる。</p>
+<p><a class="glightbox" href="../imgs/2024-05-06-10-50-48.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/2024-05-06-10-50-48.png" width="60%" /></a></p>
+<p>このガバナーによって実行される計算は、CPUIdleドライバによって提供されるCPUアイドル状態のtarget residencyパラメータ値と昇順に整列された境界を持つビンを使用することに基づいている。最初のビンはアイドル状態0からアイドル状態1のtarget residencyまで (ただし、アイドル状態1を含まない)、2番目のビンはアイドル状態1のtarget residencyからアイドル状態2のtarget residencyまで (ただし、アイドル状態2を含まない)のようにスパンする。最後のビンは、ドライバから供給された最も深いアイドル状態のtarget residencyから無限大までのスパンである。</p>
+<p>hitsとinterceptsと呼ばれる2つのメトリクスが各ビンに関連付けられている。これらは、与えられたCPUのアイドル状態を選択する前に、毎回更新される。</p>
+<div class="admonition success">
+<p class="admonition-title">hits</p>
+<p>スリープ長および CPU ウェイクアップ後に測定されたアイドル時間が同じビンに入る (すなわち、スリープ長に対して CPU が「時間通り」にウェイクアップする) 状況の相対的な頻度を反映する。</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">intercepts</p>
+<p>測定されたアイドル時間がスリープ長よりも非常に短く、スリープ長によってビンに入るアイドル状態よりも浅いアイドル状態に対応する状況の相対的な頻度を反映する。</p>
+</div>
+<p>上記のメトリクスに加えて、ガバナーは、各ビンのrecent tinterceptsをカウントする。</p>
+<div class="admonition success">
+<p class="admonition-title">recent intercepts</p>
+<p>指定されたCPUにおける最後の<a href="https://elixir.bootlin.com/linux/v6.8/source/drivers/cpuidle/governors/teo.c#L168">NR_RECENT</a> (定数) 回の呼び出しの間に発生したintercepts回数</p>
+</div>
+<p>CPUのアイドル状態を選択するために、ガバナーは以下のステップを踏む：</p>
+<ol>
+<li>
+<p>スリープ長以下のtarget residencyを持つ最も深いCPUアイドル状態 (候補アイドル状態) を見つけ、以下の3つの和を計算する：</p>
+<ol>
+<li>候補アイドル状態およびそれより深いアイドル状態のhitsとinterceptsメトリクスの合計 (スリープの長さが現在の長さと同じであった場合、interceptsを回避するのに十分なほどCPUがアイドル状態であったケース)。</li>
+<li>候補アイドル状態より浅い全てのアイドル状態のinterceptsメトリクスの合計 (スリープの長さが現在の長さと同じだった場合に、interceptsされるのを避けるためにCPUが十分に長くアイドル状態でなかったケース)。</li>
+<li>候補の状態よりも浅い全てのアイドル状態の最近のintercepts数の合計。</li>
+</ol>
+</li>
+<li>
+<p>1.bの合計が1.aの合計より大きいか、1.cの合計が <span class="arithmatex">\(\text{NR_RECENT} / 2\)</span> より大きい場合、CPUは早くウェイクアップする可能性が高いので、選択する別のアイドル状態を探す。</p>
+<ul>
+<li>候補より浅いアイドル状態を降順に探索する。</li>
+<li>それぞれについて、その状態と候補アイドル状態の間の全てのアイドル状態のinterceptsの合計とrecent interceptsの合計を計算する。</li>
+<li>これらの合計が、ステップ1で計算された対応する合計の半分より大きい場合、候補アイドル状態の代わりにそのアイドル状態を選択する。</li>
+</ul>
+</li>
+<li>
+<p>2以外の場合、候補アイドル状態を選択する。</p>
+</li>
+</ol>
+<h3 id="util-awareness-mechanism">Util-awareness mechanism<a class="headerlink" href="#util-awareness-mechanism" title="Permanent link">#</a></h3>
+<p>util-awareness mechanismの背景にある考え方は、CPUがutilizedであるかどうかに応じてアプローチを変えることである。ここで、utilizedとは、CPUの平均ランキュー利用率がある閾値を上回っていることを意味する。utilized CPUがアイドル状態に遷移する場合、すぐにCPUが起動する可能性が高いため、パフォーマンスを最大化するために、より浅いアイドル状態を選択すべきである。そうでない場合は、利用可能な最も深いアイドル状態を選択する通常のメトリクスベースのアプローチを優先すべきである。</p>
+<p>これを実現するために、ガバナーは利用率の閾値を使用する。この閾値は、CPUのcapacityをビットシフトすることで、CPUのcapacityに対するパーセンテージとして計算される。経験的には、6 (1.56%) のシフトが最良の結果を得ている。ガバナーは次のアイドル状態を選択する前に、現在のCPU利用率を閾値と比較し、閾値以下であれば、TEOメトリクスメカニズムがデフォルトとなる。それ以上の場合は、ポーリング状態でない限り、最も近い浅いアイドル状態が代わりに選択される。</p>
+<h2 id="representation-of-idle-states">Representation of Idle States<a class="headerlink" href="#representation-of-idle-states" title="Permanent link">#</a></h2>
+<details class="quote">
+<summary><a href="https://elixir.bootlin.com/linux/v6.9-rc6/source/include/linux/cpuidle.h#L49">struct cpuidle_state</a></summary>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">cpuidle_state</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">        </span><span class="n">name</span><span class="p">[</span><span class="n">CPUIDLE_NAME_LEN</span><span class="p">]</span><span class="err">、</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">        </span><span class="n">desc</span><span class="p">[</span><span class="n">CPUIDLE_DESC_LEN</span><span class="p">]</span><span class="err">、</span>
+
+<span class="w">    </span><span class="n">s64</span><span class="w">     </span><span class="n">exit_latency_ns</span><span class="err">、</span>
+<span class="w">    </span><span class="n">s64</span><span class="w">     </span><span class="n">target_residency_ns</span><span class="err">、</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">    </span><span class="n">flags</span><span class="err">、</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">    </span><span class="n">exit_latency</span><span class="err">、</span><span class="w"> </span><span class="cm">/* in US */</span>
+<span class="w">    </span><span class="kt">int</span><span class="w">     </span><span class="n">power_usage</span><span class="err">、</span><span class="w"> </span><span class="cm">/* in mW */</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">    </span><span class="n">target_residency</span><span class="err">、</span><span class="w"> </span><span class="cm">/* in US */</span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">enter</span><span class="p">)</span><span class="w">    </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">cpuidle_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">,</span>
+<span class="w">            </span><span class="k">struct</span><span class="w"> </span><span class="nc">cpuidle_driver</span><span class="w"> </span><span class="o">*</span><span class="n">drv</span><span class="p">,</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="p">)</span><span class="err">、</span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">enter_dead</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">cpuidle_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="p">)</span><span class="err">、</span>
+
+<span class="w">    </span><span class="cm">/*</span>
+<span class="cm">    * CPUs execute -&gt;enter_s2idle with the local tick or entire timekeeping</span>
+<span class="cm">    * suspended, so it must not re-enable interrupts at any point (even</span>
+<span class="cm">    * temporarily) or attempt to change states of clock event devices.</span>
+<span class="cm">    *</span>
+<span class="cm">    * This callback may point to the same function as -&gt;enter if all of</span>
+<span class="cm">    * the above requirements are met by it.</span>
+<span class="cm">    */</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">enter_s2idle</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">cpuidle_device</span><span class="w"> </span><span class="o">*</span><span class="n">dev</span><span class="p">,</span>
+<span class="w">                </span><span class="k">struct</span><span class="w"> </span><span class="nc">cpuidle_driver</span><span class="w"> </span><span class="o">*</span><span class="n">drv</span><span class="p">,</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="p">)</span><span class="err">、</span>
+<span class="p">}</span><span class="err">、</span>
+</code></pre></div>
+</details>
+<p>CPUのアイドル時間管理のためには、プロセッサがサポートする全ての物理的なアイドル状態を、構造体cpuidle_stateオブジェクトの1次元配列として表現する必要がある。各構造体cpuidle_stateオブジェクトは、個々の論理CPUがプロセッサハードウェアに特定のアイドル状態になるように要求できるようにする。プロセッサ内にユニットの階層がある場合、1つのstruct cpuidle_stateオブジェクトで、階層の異なるレベルのユニットがサポートするアイドル状態の組み合わせをカバーできる。その場合、その構造体のtarget residencyとexit latencyパラメータは、最も深いレベルのアイドル状態 (すなわち、他の全てのユニットを含むユニットのアイドル状態) の特性を反映しなければならない。上述したtarget residencyとexit latencyのアイドル状態パラメータに加えて、アイドル状態を表すオブジェクトはそれぞれ、アイドル状態を説明する他のいくつかのパラメータと、その状態に入るようにハードウェアに要求するために実行する関数へのポインタを含む。</p>
+<!-- 例えば、「モジュール」と呼ばれるより大きなユニットの中に2つのコアを持つプロセッサを想定し、一方のコアが「コア」レベルで特定のアイドル状態 (例えば「 \(\mathrm{X}\) 」)に入るようハードウェアに要求すると、もう一方のコアがすでにアイドル状態「 \(\mathrm{X}\) 」にある場合、モジュールがそれ自身の特定のアイドル状態 (例えば「MX」)に入ろうとするトリガになるとする。言い換えれば、「コア」レベルでアイドル状態「 \(\mathrm{X}\) 」を要求することは、「モジュール」レベルでアイドル状態「MX」まで深く入るライセンスをハードウェアに与えるが、これが起こる保証はない (アイドル状態「 \(\mathrm{X}\) 」を要求しているコアが、代わりにその状態で終わるだけ可能性がある)。その場合、アイドル状態 " \(\mathrm{X}\) " を表す struct cpuidle_state オブジェクトのtarget residencyには、モジュールのアイドル状態 " \(\mathrm{MX}\) " で過ごす最小時間 (アイドル状態に入るために必要な時間を含む)を反映させる必要がある。同様に、このオブジェクトのexit latencyパラメータは、モジュールのアイドル状態「MX」の終了時間 (通常はそのエントリ時間も)をカバーしなければならない。これは、ウェイクアップ信号からCPUが最初の新しい命令の実行を開始するまでの最大レイテンシ時間だからである (モジュール内の両方のコアが、モジュール全体として動作可能になるとすぐに命令を実行する準備が常に整っていると仮定して)。
+
+しかし、プロセッサ内部のユニット階層の異なるレベル間で直接的な調整がないプロセッサも存在する。そのような場合、「コア」レベルでアイドル状態を要求しても、例えば「モジュール」レベルには何ら自動的に影響せず、CPUIdleドライバが階層の処理全体に責任を持つ。次に、アイドル状態オブジェクトの定義は完全にドライバに任されているが、それでもなお、プロセッサハードウェアが最終的に入るアイドル状態の物理的特性は、アイドル状態選択のためにガバナーによって使用されるパラメータに常に従わなければならない (例えば、そのアイドル状態の実際のexit latencyは、ガバナーによって選択されたアイドル状態オブジェクトのexit latencyパラメータを超えてはならない)。 -->
+
+<p><a class="glightbox" href="../imgs/2024-05-05-10-37-14.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/2024-05-05-10-37-14.png" width="40%" /></a></p>
+<p>また、各構造体cpuidle_stateオブジェクトには、対応する構造体cpuidle_state_usageがあり、指定されたアイドル状態の使用統計情報が含まれている。この情報は、sysfsを介してカーネルによって公開される。システム内の各CPUに対して、sysfs内に/sys/devices/system/cpu/cpu<N>/cpuidle/ディレクトリがあり、初期化時に与えられたCPUに番号<N>が割り当てられる。このディレクトリには、与えられたCPUに対して定義されたアイドル状態オブジェクトの数から1を引いた数まで、state0、statelなどと呼ばれるサブディレクトリのセットが含まれる。これらのディレクトリはそれぞれ1つのアイドル状態オブジェクトに対応し、その名前に含まれる数字が大きいほど、アイドル状態が深くなる。各ディレクトリには、対応するアイドル状態オブジェクトのプロパティを表すファイルが、以下のように多数含まれている：</p>
+<table>
+<thead>
+<tr>
+<th>ファイル名</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>above</td>
+<td>このアイドル状態が要求された回数のうち、観測されたアイドル時間がtarget residencyより短かった回数。</td>
+</tr>
+<tr>
+<td>below</td>
+<td>このアイドル状態が要求された回数のうち、観測されたアイドル時間がtarget residencyより長かった回数。</td>
+</tr>
+<tr>
+<td>desc</td>
+<td>アイドル状態の説明。</td>
+</tr>
+<tr>
+<td>disable</td>
+<td>このアイドル状態が無効化されているかどうか。</td>
+</tr>
+<tr>
+<td>default_status</td>
+<td>この状態のデフォルトのステータス、「enabled」または「disabled」。</td>
+</tr>
+<tr>
+<td>latency</td>
+<td>アイドル状態からのexit latencyをマイクロ秒単位で表す。</td>
+</tr>
+<tr>
+<td>name</td>
+<td>アイドル状態の名前。</td>
+</tr>
+<tr>
+<td>power</td>
+<td>このアイドル状態でハードウェアが消費する電力をミリワット単位で表す (指定されている場合はその値、そうでなければ0)。</td>
+</tr>
+<tr>
+<td>residency</td>
+<td>アイドル状態のtarget residencyをマイクロ秒で表す。</td>
+</tr>
+<tr>
+<td>time</td>
+<td>このアイドル状態に特定のCPUが費やした合計時間をカーネルによって測定したマイクロ秒単位で表す。</td>
+</tr>
+<tr>
+<td>usage</td>
+<td>特定のCPUによってこのアイドル状態に入るようにハードウェアに要求された回数の合計。</td>
+</tr>
+<tr>
+<td>rejected</td>
+<td>特定のCPUにおいてこのアイドル状態への入力要求が拒否された回数の合計。</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>プロパティの補足</summary>
+<ul>
+<li>descファイルとnameファイルはどちらも文字列を含む。両者の違いは、nameはより簡潔であることが期待されるのに対し、descriptionはより長く、空白や特殊文字を含む可能性があることである。上記の他のファイルには整数が含まれる。</li>
+</ul>
+<ul>
+<li>disable属性は書き込み可能な唯一の属性である。これは、ガバナーがこの特定のCPUに対してアイドル状態を選択することがなく、CPUIdleドライバがそのCPUに対してアイドル状態を入力するようハードウェアに要求することがないことを意味する。しかし、1つのCPUに対してアイドル状態を無効にしても、他のCPUからアイドル状態を要求されることを防ぐことはできないため、どのCPUからもアイドル状態を要求されないようにするには、全てのCPUに対してアイドル状態を無効にする必要がある。[ラダーガバナーが実装されているため、アイドル状態を無効にすると、無効化されたアイドル状態より深いアイドル状態も選択できなくなることに注意]。</li>
+</ul>
+<ul>
+<li>disable属性が0を含む場合、指定されたアイドル状態はこの特定のCPUに対して有効であるが、システム内の他のCPUの一部または全てに対して同時に無効化される可能性がある。1を書き込むと、この特定のCPUに対してアイドル状態が無効になり、0を書き込むと、ドライバでその状態がグローバルに無効にされていない限り (その場合は全く使用できない)、ガバナーが指定されたCPUに対してアイドル状態を考慮し、ドライバがアイドル状態を要求できるようになる。</li>
+</ul>
+<ul>
+<li>power属性は、特にプロセッサ内のユニット階層の異なるレベルにあるアイドル状態の組み合わせを表すアイドル状態オブジェクトの場合、あまりうまく定義されておらず、一般的に複雑なハードウェアのアイドル状態の電力数値を取得するのは困難であるため、電力には0 (使用不可)が含まれることが多く、0以外の数値が含まれる場合、その数値はあまり正確でない可能性があり、意味のあるものについては信頼すべきではない。なぜなら、この数値はカーネルによって測定されたものであり、ハードウェアがアイドル状態に入ることを拒否し、代わりにもっと浅いアイドル状態に入った (あるいはまったくアイドル状態に入らなかった)ケースをカバーしていない可能性があるからである。カーネルが計測できるのは、ハードウェアにアイドル状態へのマイグレーションを要求してからCPUがウェイクアップするまでの時間だけであり、その間にハードウェアレベルで実際に何が起こったかを語ることはできない。さらに、問題のアイドル状態のオブジェクトが、プロセッサ内のユニットの階層の異なるレベルでのアイドル状態の組み合わせを表している場合、カーネルは、特定のケースでハードウェアがどの程度深い階層に行ったかを言うことはできない。これらの理由から、ハードウェアがサポートする様々なアイドル状態でどれだけの時間が費やされたかを知る唯一の信頼できる方法は、ハードウェア内のアイドル状態残留カウンタが利用可能であれば、それを使用することである。</li>
+</ul>
+<ul>
+<li>一般に、アイドル状態に入ろうとしたときに割り込みを受信すると、アイドル状態入力要求が拒否される。この場合、CPUIdleドライバはそのことを示すエラーコードを返す。この場合、CPUIdleドライバはエラーコードを返すことがある。usageファイルとrejectedファイルは、それぞれ、指定されたアイドル状態の入力に成功した回数と拒否された回数を報告する。</li>
+</ul>
+</details>
+<h2 id="power-management-quality-of-service-for-cpus">Power Management Quality of Service for CPUs<a class="headerlink" href="#power-management-quality-of-service-for-cpus" title="Permanent link">#</a></h2>
+<p>Linuxカーネルの電力管理QoS (Quality of Service)フレームワークは、カーネルコードとユーザ空間プロセスが、カーネルの様々なエネルギー効率機能に制約を設定し、パフォーマンスが必要なレベル以下に低下するのを防ぐことを可能にする。</p>
+<p>CPUのアイドル時間管理は、グローバルなCPUレイテンシ制限と個々のCPUの再開レイテンシ制約の2つの方法でPM QoSの影響を受けることができる。カーネルコードはPM QoSフレームワークが提供する内部インタフェースの助けを借りてこの2つを設定できる:</p>
+<div class="admonition success">
+<p class="admonition-title">グローバルなCPUレイテンシ制限</p>
+<p>/dev/ の下にある cpu_dma_latency 特殊デバイスファイルを開き、バイナリ値 (符号付き32ビットとして解釈) を書き込む</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">CPUの再開レイテンシ制約</p>
+<p>sysfsの/sys/devices/system/cpu/cpu<N>/の下にあるpower/pm_qos_resume_latency_usファイルに文字列 (符号付き32ビットとして解釈) を書き込む</p>
+</div>
+<p>どちらの場合も負の値は拒否され、またどちらの場合も、書き込まれた整数はマイクロ秒単位で要求された PM QoS 制約として解釈される。要求された値は自動的に新しい制約として適用されるわけではない。なぜなら、その値は以前に他の誰かによって要求された別の制約よりも制限が緩い可能性があるからである。このため、PM QoS フレームワークは個々の CPU に対してこれまでに要求されたリクエストのリストを保持し、それらを集約し、有効な (このケースでは最小の) 値を新しい制約として適用する。</p>
+<p>CPUアイドル時間ガバナーは、与えられたCPUにおけるグローバルCPUレイテンシ制限と再開レイテンシ制約の最小値を、新たに選択するアイドル状態のexit latencyの上限とみなすことが期待される。その制限を超えるレイテンシを持つアイドル状態を決して選択すべきではない。</p>
+<h2 id="idle-states-control-via-kernel-command-line">Idle States Control Via Kernel Command Line<a class="headerlink" href="#idle-states-control-via-kernel-command-line" title="Permanent link">#</a></h2>
+<p>sysfsインタフェースでCPUアイドル時間管理に影響を与えるカーネルコマンドラインパラメータがある。</p>
+<div class="admonition success">
+<p class="admonition-title"><code>cpuidle.off=1</code></p>
+<p>CPUアイドル時間管理を完全に無効にできる。これは、アイドル状態のCPUでアイドルループが実行されるのを防ぐことはできないが、CPUアイドルタイムガバナーやドライバが呼び出されるのを防ぐ。すなわち、アイドルループは、デフォルトのメカニズムを提供することが期待されるCPUアーキテクチャのサポートコードを介して、アイドル状態に入るようにハードウェアに要求する。しかし、そのデフォルトメカニズムはかなり粗雑で、エネルギー効率もあまりよくないため、本番での使用は推奨されない。</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title"><code>cpuidle.governor=</code></p>
+<p>使用するCPUIdleガバナーを指定できる。利用可能なガバナー名と一致する文字列を付加する必要があり (例：cpuidle.governor=menu)、デフォルトのガバナーの代わりにそのガバナーが使用される。</p>
+</div>
+<p>以下に説明するCPUアイドル時間管理を制御するその他のカーネルコマンドラインパラメータは、x86アーキテクチャにのみ関連し、intel_idleへの言及はインテルプロセッサのみに影響する。</p>
+<div class="admonition success">
+<p class="admonition-title"><code>idle=poll</code>, <code>idle=halt</code></p>
+<p>acpi_idleドライバとintel_idleドライバを完全に無効にする。これにより、CPUIdleサブシステム全体が事実上無効になり、アイドルループがアーキテクチャサポートコードを呼び出してアイドルCPUを処理するようになる。<code>idle=halt</code>の場合、アーキテクチャサポートコードはこの目的のためにCPUのHLT命令を使用し、<code>idle=poll</code>が使用された場合、アイドル状態のCPUはタイトループで軽量な命令シーケンスを実行する。</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title"><code>idle=nomwait</code></p>
+<p>CPUがアイドル状態に入るためのMWAIT命令の使用を防ぐ。このオプションが使用されると、 acpi_idleドライバは、MWAITの代わりにHLT命令を使用する。Intelプロセッサを実行しているシステムでは、このオプションはintel_idleドライバを無効にし、代わりにacpi_idleドライバを強制的に使用する。</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title"><code>intel_idle.max_cstate=&lt;n&gt;</code>, <code>processor.max_cstate=&lt;n&gt;</code></p>
+<p>それぞれ <code>intel_idle</code> と <code>acpi_idle</code> ドライバはアイドル状態 <code>&lt;n&gt;</code> より深い全てのアイドル状態を無視する。ここで <code>&lt;n&gt;</code> はアイドル状態のインデックスであり、sysfs の該当する状態のディレクトリ名にも使用される。</p>
+</div>
+
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.expand", "navigation.indexes", "toc.integrate", "navigation.instant", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "search": "../../../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.220ee61c.min.js"></script>
+      
+        
+          <script src="../../../../javascripts/mathjax.js"></script>
+        
+      
+        
+          <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        
+      
+        
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

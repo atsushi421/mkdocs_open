@@ -1,0 +1,925 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://atsushi421.github.io/mkdocs_open/dvfs_old/ACPI_Concepts/summary_ACPI_Concepts/">
+      
+      
+        <link rel="prev" href="../../../dvfs/linux/CPU_Performance_Scaling/CPU_Performance_Scaling/">
+      
+      
+        <link rel="next" href="../../Declaring_Processors/summary_Declaring_Processors/">
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.20">
+    
+    
+      
+        <title>summary ACPI Concepts - Documents created by Atsushi Yano</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.eebd395e.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ecc896b0.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/mermaid@8.13.10/dist/mermaid.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/extra.css">
+    
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#system-power-management" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Documents created by Atsushi Yano" class="md-header__button md-logo" aria-label="Documents created by Atsushi Yano" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documents created by Atsushi Yano
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              summary ACPI Concepts
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+            
+              <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+              </label>
+            
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+            
+              <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+              </label>
+            
+          
+        </form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/atsushi421/mkdocs_open" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../.." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../dvfs/linux/Power_Management_in_Linux_Kernel/" class="md-tabs__link">
+        DVFS
+      </a>
+    </li>
+  
+
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Documents created by Atsushi Yano" class="md-nav__button md-logo" aria-label="Documents created by Atsushi Yano" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Documents created by Atsushi Yano
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/atsushi421/mkdocs_open" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          DVFS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          DVFS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_1" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+          Linux
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Linux
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dvfs/linux/Power_Management_in_Linux_Kernel/" class="md-nav__link">
+        Power Management in Linux Kernel
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_1_2" >
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1_2" id="__nav_2_1_2_label" tabindex="0">
+          CPU Idle Time Management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          CPU Idle Time Management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dvfs/linux/CPU_Idle_Time_Management/CPU_Idle_Time_Management/" class="md-nav__link">
+        CPU Idle Time Management
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_1_3" >
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1_3" id="__nav_2_1_3_label" tabindex="0">
+          CPU Performance Scaling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_1_3">
+          <span class="md-nav__icon md-icon"></span>
+          CPU Performance Scaling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dvfs/linux/CPU_Performance_Scaling/CPU_Performance_Scaling/" class="md-nav__link">
+        CPU Performance Scaling
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<p>\title{
+3.ACPIコンセプト
+}</p>
+<p>ACPI仕様に準拠したプラットフォームは、コンピュータの電源管理とマザーボードデバイス設定機能に対する直接的かつ排他的な制御をOSPMに提供する。OSの初期化中に、OSPMはAPM BIOS、SMMベースのファームウェア、レガシーアプリケーション、PNPBIOSなどのレガシー実装からこれらの機能を引き継ぎます。これにより、OSPMはマザーボードデバイスのコンフィギュレーションイベントを処理するだけでなく、ユーザの好み、アプリケーションの要求、およびOSに課せられたQOS (Quality of Service)/ユーザビリティの目標に基づいて、システムの電力、パフォーマンス、および熱の状態を制御する責任を負いる。ACPIは、OSPMがこれらの機能を実行するための低レベルインタフェースを提供する。ACPI仕様がカバーする機能領域は以下の通りである：</p>
+<h1 id="system-power-management">System power management<a class="headerlink" href="#system-power-management" title="Permanent link">#</a></h1>
+<p>ACPIは、コンピュータ全体をシステムスリープ状態にしたり、スリープ状態から解除したりするメカニズムを定義している。また、あらゆるデバイスがコンピュータをウェイクアップするための一般的なメカニズムも提供している。</p>
+<h1 id="device-power-management">Device power management<a class="headerlink" href="#device-power-management" title="Permanent link">#</a></h1>
+<p>ACPIテーブルには、マザーボードデバイスとその電源状態、デバイスが接続されている電源プレーン、デバイスを異なる電源状態にするためのコントロールが記述されている。これにより、OSはアプリケーションの使用状況に応じてデバイスを低電力状態にできる。</p>
+<p>プロセッサの電源管理</p>
+<p>OSがアイドル状態だがスリープしていない間は、ACPIで記述されたコマンドを使ってプロセッサを低消費電力状態にする。</p>
+<p>デバイスとプロセッサのパフォーマンス管理</p>
+<p>システムがアクティブである間、OSPMはデバイスとプロセッサをACPIによって定義された様々なパフォーマンス状態にマイグレーションさせ、パフォーマンスと省エネ目標、およびその他の環境要件 (例えば、視認性や音響)の望ましいバランスを達成する。</p>
+<p>設定/プラグ＆プレイ</p>
+<p>ACPIは、マザーボードデバイスの列挙と設定に使用される情報を規定している。この情報は階層的に配置されているため、ドッキングやドッキング解除などのイベントが発生した場合、OSはどのデバイスがそのイベントの影響を受けるかを先験的に正確に知ることができる。</p>
+<p>ACPIは、熱イベント、電源管理イベント、ドッキング、デバイスの挿抜などのシステムイベントに使用できる一般的なイベントメカニズムを提供する。このメカニズムは、イベントがコアロジックチップセットにどのようにルーティングされるかを具体的に定義していない点で、非常に柔軟である。</p>
+<h1 id="battery-management">Battery management<a class="headerlink" href="#battery-management" title="Permanent link">#</a></h1>
+<p>バッテリー管理ポリシーは APM BIOS から ACPI OS にマイグレーションする。ACPI互換バッテリーデバイスは、組み込みコントローラインタフェースを通じてOSが直接制御するスマートバッテリーサブシステムインタフェースか、制御方式バッテリーインタフェースのいずれかを必要とする。制御方式バッテリインタフェースはAML制御方式によって完全に定義されるため、OEMはACPIがサポートするあらゆる種類のバッテリとあらゆる種類の通信インタフェースを選択できる。バッテリーは、本書または他の適用規格に記載されているインタフェースの要件に準拠する必要がある。OSは、例えばローバッテリやバッテリ警告のトリップポイントを調整することにより、バッテリの動作を変更できる。複数のバッテリが存在する場合、バッテリサブシステムは、個別のバッテリのデータから「複合バッテリ」の合成を実行する必要はない。バッテリサブシステムが個別のバッテリのデータから "複合バッテリ "を合成しない場合は、OSがその合成を行わなければならない。</p>
+<p>熱管理</p>
+<p>OSはデバイスとプロセッサの電力とパフォーマンスの状態を制御するため、ACPIはシステムの熱管理にも対応している。ACPIは、OEMがサーマルゾーン、サーマルインジケータ、サーマルゾーンの冷却方法を定義できる、シンプルでスケーラブルなモデルを提供する。</p>
+<h1 id="embedded-controller">Embedded Controller<a class="headerlink" href="#embedded-controller" title="Permanent link">#</a></h1>
+<p>ACPIは、OSのバス列挙器と組み込みコントローラ間の標準的なハードウェアとソフトウェアの通信インタフェースを定義している。これにより、どのOSでも、システム内の組込みコントローラと直接通信できる標準バス列挙器を提供できるようになり、システム内の他のドライバがシステム組込みコントローラと通信し、そのリソースを使用できるようになる。これにより、OEMはOSやアプリケーションが使用できるプラットフォーム機能を提供できるようになる。</p>
+<h1 id="smbus-controller">SMBus Controller<a class="headerlink" href="#smbus-controller" title="Permanent link">#</a></h1>
+<p>ACPIは、OSのバスドライバとSMBusコントローラ間の標準的なハードウェアとソフトウェアの通信インタフェースを定義している。これにより、どのOSでも、システム内のSMBusデバイスと直接通信できる標準バスドライバを提供できるようになる。これにより、OEMはOSやアプリケーションが使用できるプラットフォーム機能を提供できるようになる。</p>
+<p>OSPMの使命は、プラットフォームを最適に構成し、ユーザの好みに応じてシステムの電力、性能、熱状態を最適に管理し、OSに課せられたQOS (Quality of Service)/ユーザビリティの目標をサポートすることである。これらの目標を達成するため、ACPIは、ACPI準拠プラットフォームがACPIモードになった後は、プラットフォームのハードウェア、ファームウェア、またはその他の非OSソフトウェアが、OSPMとは無関係にプラットフォームの設定、電力、性能、熱制御インタフェースを操作してはならないことを要求している。OSPMは単独で、システムのコンフィギュレーション、電源管理、パフォーマンス管理、および熱制御ポリシーを調整する責任がある。OSPM とは無関係にこれらのインタフェースを操作することは、OSPM/ACPI の目的を損ない、システムのコンフィギュレーション、電力、性能、熱ポリシーの目標に悪影響を与える可能性がある。この要件には2つの例外がある。1つ目は、ACPI互換OSが存在し、OSPMレイテンシが不利な熱状態を改善するのに不十分な場合、過度の熱状態によりシステムが損傷する可能性がある場合である。この場合、プラットフォームは、損傷を避けるためにシステムコンポーネントの性能を低下させるフェイルセーフ熱制御メカニズムを行使できる。このような場合、プラットフォームは、性能の低下が有意に持続する場合 (言い換えれば、性能低下の持続時間がOSPMの電力または性能制御ポリシーに悪影響を及ぼす可能性がある場合-この領域については、OSベンダがガイダンスを提供できる)、性能低下をOSPMに通知しなければならない。第二の例外は、プラットフォームが能動的冷却装置を含むが、受動的冷却温度トリップポイントまたは制御装置を含まない場合である。この場合、OSPMの目標に影響を与えることなく、ハードウェアベースのアクティブ冷却メカニズムを実装できる。アクティブ冷却とパッシブ冷却の両方が必要なプラットフォームでは、ACPIで定義されたアクティブ冷却とパッシブ冷却のインタフェースを介して、OSPMがプラットフォームの温度を管理できるようにする必要がある。</p>
+<h2 id="31-system-power-management">3.1. System Power Management<a class="headerlink" href="#31-system-power-management" title="Permanent link">#</a></h2>
+<p>OSPMでは、OSが全てのシステムおよびデバイスの電力状態遷移を指示す。ユーザの好みや、アプリケーションによるデバイスの使用状況を把握し、OSはデバイスを低電力状態にしたり、低電力状態から切り離したりする。使用されていないデバイスは電源を切ることができる。同様に、OSはアプリケーションやユーザ設定からの情報を利用して、システム全体を低消費電力状態にする。OSはACPIを使ってハードウェアの電力状態遷移を制御する。</p>
+<h2 id="32-power-states">3.2. Power States<a class="headerlink" href="#32-power-states" title="Permanent link">#</a></h2>
+<p>ユーザから見えるレベルでは、システムは次の図のいずれかの状態にあると考えることができる：</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_04_08_835fc3705c76774f44c7g-04.jpg?height=925&amp;width=1197&amp;top_left_y=29&amp;top_left_x=218" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_04_08_835fc3705c76774f44c7g-04.jpg?height=925&amp;width=1197&amp;top_left_y=29&amp;top_left_x=218" /></a></p>
+<p>図3.1 グローバルシステムパワーの状態と遷移</p>
+<p>これらの状態の詳細な定義については、セクション2.2を参照のこと。</p>
+<p>一般的に、コンピュータは作業状態とスリープ状態を交互に繰り返す。作業状態では、コンピュータは作業に使用される。ユーザモードのアプリケーションスレッドはディスパッチされ、実行される。個々のデバイスは低消費電力 (Dx)状態になり、プロセッサは使用されていなければ低消費電力 (Cx)状態になる。アクティブに使用されていないためにシステムがオフにしたデバイスは、短いレイテンシでオンにできる。("短い "が何を意味するかはデバイスによる。LCDディスプレイはサブ秒単位で起動する必要があるが、プリンターが起動するのに数秒待つのは一般的に許容される)。</p>
+<p>この正味の効果は、マシン全体が作動状態で機能することである。様々なWorkingサブステートは、計算速度、使用電力、発生する熱、発生するノイズが異なる。作動状態内でのチューニングは、速度、電力、発熱、ノイズのトレードオフに大きく関係する。</p>
+<p>コンピュータがアイドル状態であるか、ユーザが電源ボタンを押した場合、OSはコンピュータをスリープ (Sx)状態のいずれかにする。スリープ状態では、ユーザの目に見える計算は行われない。スリーピングサブステートは、どのようなイベントがシステムを作業状態に覚醒させるか、また覚醒に要する時間が異なる。マシンが全ての可能なイベントに対して目覚めなければならない場合、または非常に迅速に目覚めなければならない場合、システムの消費電力の部分的な削減を達成するサブ状態にのみ入ることができる。しかし、関心のあるイベントがユーザがスイッチを押すことだけで、数分のレイテンシが許容される場合、OSは全てのシステムコンテキストをNVSファイルに保存し、ハードウェアをS4スリープ状態にマイグレーションさせることができる。この状態では、マシンの消費電力はほぼゼロで、任意の期間 (必要であれば数年または数十年)システムコンテキストを保持する。</p>
+<p>他のステートはあまり使用されない。レガシーBIOS電源管理インタフェースをサポートするコンピュータは、Legacy状態で起動し、ACPI OSがロードされるとWorking状態に遷移する。レガシーをサポートしていないシステム (例えばRISCシステム)は、メカニカルオフ状態から作業状態に直接遷移する。ユーザは通常、コンピュータのメカニカルスイッチを切り替えるか、コンピュータのプラグを抜くことによって、コンピュータをメカニカルオフ状態にする。</p>
+<h2 id="321-power-button">3.2.1. Power Button<a class="headerlink" href="#321-power-button" title="Permanent link">#</a></h2>
+<p>レガシーシステムでは、電源ボタンは通常、マシンを強制的にソフトオフかメカニカルオフにするか、ノートパソコンでは強制的にスリープ状態にする。ユーザポリシー (たとえば、ユーザがマシンを「オフ」にしたときと同じコンテキストで、1秒以内にマシンを「オン」にしたい場合など)、システムアラート機能 (たとえば、システムが留守番電話やファックスとして使用されている場合など)、アプリケーション機能 (たとえば、ユーザファイルの保存など)については、考慮されていない。</p>
+<p>OSPMシステムには2つのスイッチがある。一つは、システムをメカニカルオフ状態にマイグレーションさせるものである。電流の流れを止める機構は、一部の管轄区域 (例えば、一部の欧州諸国)では法的な理由から必要とされる。もう一つは「メイン」電源ボタンである。これは目立つ場所にある (例えば、ノートパソコンのキーボードの横など)。レガシーのオン/オフボタンとは異なり、このボタンが行うのはシステムにリクエストを送ることだけである。システムがこのリクエストで何をするかは、ユーザ設定、ユーザ機能リクエスト、アプリケーションデータから導き出されるポリシーの問題に依存する。</p>
+<h2 id="322-platform-power-management-characteristics">3.2.2. Platform Power Management Characteristics<a class="headerlink" href="#322-platform-power-management-characteristics" title="Permanent link">#</a></h2>
+<h2 id="3221-mobile-pc">3.2.2.1. Mobile PC<a class="headerlink" href="#3221-mobile-pc" title="Permanent link">#</a></h2>
+<p>モバイルPCは、今後も積極的な電力管理機能を持ち続けるだろう。OSPM/ACPIにマイグレーションすることで、より強化された省電力技術と、より洗練されたユーザポリシーが可能になる。</p>
+<p>ACPI 仕様におけるモバイル PC の電源管理の側面は、熱管理である (セクション 3.10 参照)。</p>
+<h2 id="3222-desktop-pcs">3.2.2.2. Desktop PCs<a class="headerlink" href="#3222-desktop-pcs" title="Permanent link">#</a></h2>
+<p>パワーマネージドデスクトップには2つのタイプがあるが、最初のタイプは時間の経過とともに2番目のタイプにマイグレーションする。</p>
+<p>普通の "グリーンPC"</p>
+<p>ここでは、新しい電化製品の機能は問題ではない。マシンは本当に生産性計算のためだけに使われる。少なくとも当初は、このようなマシンは最小限の機能で乗り切ることができる。特に、通常のACPIタイマとコントロールは必要だが
+など、手の込んだスリープ状態をサポートする必要はない。しかし、OSができるだけ多くのデバイスやリソースを、できるだけ独立してデバイススタンバイ状態やデバイスオフ状態にできるようにする必要がある (未使用のデバイスで浪費される電力を最小限に抑えながら、最大限の計算速度を実現するため)。また、このようなPCは、タイマによるスリープ状態からの復帰をサポートする必要がある。なぜなら、これによって管理者は、出勤直前に強制的に電源を入れることができるからだ。</p>
+<h1 id="home-pc">Home PC<a class="headerlink" href="#home-pc" title="Permanent link">#</a></h1>
+<p>コンピュータは、エンターテインメントセンターで使われたり、電話応対などのジョブをこなしたりする家庭環境にマイグレーションしつつある。ホームPCは、通常のグリーンPCの全ての機能を必要とする。実際、ドッキングとリッドイベントを除けば、ノートPCのACPI電源機能を全て備えている (レガシー電源管理も必要ない)。ホームPCユーザは、システムをできるだけ静かに動作させたいため、多くの場合、熱的に制約のある環境で動作させることになる。</p>
+<h2 id="3223-multiprocessor-and-server-pcs">3.2.2.3. Multiprocessor and Server PCs<a class="headerlink" href="#3223-multiprocessor-and-server-pcs" title="Permanent link">#</a></h2>
+<p>意外可能性があるが、絶対的な節電効果が最も大きいのはサーバ機であることが多い。なぜか？ハードウェア構成が最大であることと、誰かが夜帰るときにスイッチを切るのは現実的ではないからだ。</p>
+<h1 id="day-mode">Day Mode<a class="headerlink" href="#day-mode" title="Permanent link">#</a></h1>
+<p>デイモードでは、サーバは企業の一般的なグリーンPCと同じようにパワーマネージメントされ、常に稼働状態を維持するが、未使用のデバイスは可能な限り低電力状態にする。サーバは非常に大きく、例えば多くのディスクスピンドルを持っているため、電力管理は大きな節約につながる。OSPMでは、これを実行するタイミングを注意深く調整できるため、実行可能である。</p>
+<h1 id="night-mode">Night Mode<a class="headerlink" href="#night-mode" title="Permanent link">#</a></h1>
+<p>ナイトモードでは、サーバは家庭用PCのようになる。できる限り深く眠り、指定されたレイテンシの範囲内で、ネットワークや電話回線などを介して送られてくるサービスリクエストに応答できる。たとえば、プリントサーバは、午前3時に印刷ジョブを受け取るまで深い眠りにつく。印刷要求がLAN経由で来る場合、このシナリオは、興味深い受信パケットに応答してシステムを目覚めさせることができるインテリジェントLANアダプタに依存する。</p>
+<h2 id="33-device-power-management">3.3. Device Power Management<a class="headerlink" href="#33-device-power-management" title="Permanent link">#</a></h2>
+<p>このセクションでは、ACPI互換デバイスの電源管理について説明する。ACPIデバイスの電源状態が紹介され、ACPI互換OSがデバイスの電源管理を実行するために必要な制御と情報が説明され、ウェイクオペレーションデバイスが説明される。
+コンピュータをスリープ状態から復帰させるために使用する方法について説明し、モデムを使用したACPI互換デバイス管理の例を示す。</p>
+<h2 id="331-device-power-management-model">3.3.1. Device Power Management Model<a class="headerlink" href="#331-device-power-management-model" title="Permanent link">#</a></h2>
+<p>ACPIデバイス電源管理は、以下の統合モデルに基づいている：</p>
+<h1 id="distributed-device-power-state-policy">Distributed device power state policy<a class="headerlink" href="#distributed-device-power-state-policy" title="Permanent link">#</a></h1>
+<p>システム上の各ハードウェアデバイスに対して、デバイスの最適な電力状態を継続的に決定する責任を負うOS内の電力ポリシー所有者が存在する。デバイスの最良の電力状態とは、いかなる時点においても、システム及びそのユーザによるデバイスの使用要件と一致し、デバイスによる電力消費を最小化するものである。方針は通常、デバイスのクラスに対して定義され、必要に応じてアプリケーションアクティビティ、ユーザシナリオ、および他の動作状態を組み込む。ポリシーは、指定されたクラスの全てのデバイスに適用される。</p>
+<h1 id="layered-device-power-state-control">Layered device power state control<a class="headerlink" href="#layered-device-power-state-control" title="Permanent link">#</a></h1>
+<p>デバイスの電源状態が決定されると、デバイスドライバによって実行されなければならない。このモデルでは、制御機能をデバイス、バス、プラットフォームの各レイヤに分割している。各レイヤのデバイスドライバは、OSPMによって調整された、そのレベルで利用可能なメカニズムを使用して制御を実行する。一般的に、デバイスのパワーダウン時にはデバイス/クラスレベルからバスレベル、プラットフォームレベルへと進み、パワーアップ時にはその逆となる。</p>
+<p>例えば、デバイスレベルドライバは、デバイスプログラミングインタフェースを介して、デバイス内の特定の、時には独自の電力制御機能を呼び出す設定や制御レジスタにアクセスできる。デバイスドライバは、ポリシー所有者によって決定されたターゲット ACPI 定義電力状態に適切なこれらの制御を使用する。同様に、デバイスのクラスは標準化された電力機能を持ち、クラスドライバがターゲット電力状態に入る際に使用する標準化された方法で呼び出される。</p>
+<p>バスレベルでは、デバイスクラスに関係なく、バスに接続された全てのデバイスに対して機能するバス固有の制御を提供するために、電源管理規格が登場する。例えばPCIでは、デバイスの電源状態 (D0-D3)を設定するためのフィールドがデバイス構成空間に定義されている。バスレベルドライバは、デバイス固有またはデバイスクラスドライバによって適用される制御に加えて、これらの規格を利用して制御を実行する。バス固有のメカニズムはまた、バス規格で定義されているように、バスインフラストラクチャハードウェア自体がより低い電力状態に入ることを可能にすることで、システムのさらなる省電力化を可能にする。</p>
+<p>最後に、プラットフォームレベルの電源状態制御のために、ACPIはデバイスを所定の電源状態にするためのメカニズム (_PRx、_PSx、_ON、_OFF)を定義している。OSの電源管理ソフトウェア (OSPM)は、これらのメカニズムを利用し、指定されたデバイスの最低レベルのプラットフォーム固有の制御 (パワーレールやクロックのオフ/オン、ハードウェアのリセットなど)を実行する。</p>
+<p>最後に、ACPI は、OSPM がパワーポリシーオーナーにサポートされる状態とウェイクアップ機能を通知し、電力を制御する様々なレベルのデバイスドライバの動作を調整することを可能にする情報と動作要件を定義する。OSPM は、この役割において、スリープ状態 (S1-S4)や低電力アイドル状態 (LPI)へのマイグレーションなど、デバイスの電源管理がシステム電源管理と協調することを保証する責任がある。デバイスの電源状態のポリシーと制御と統合され、ウェイクアップのポリシーと制御もOSPMによって調整される。パワーポリシーオーナーは、デバイスがシステムをウェイクアップする必要がある場合を決定し、プラットフォームがスリープ状態またはLPI状態になったときに、デバイスがウェイクアップできるデバイスの電源状態のみが選択されるようにする。ウェイクアップハードウェアの有効化もデバイス、バス、プラットフォームの各レベルで実行され、OSPMによって調整される。OSPM はさらに、システムに対して選択されたスリープまたは LPI 状態が、現在ウェイクアップが有効になっている全てのデバイスのデバイス状態およびウェイクアップ機能と互換性があることを保証する。</p>
+<h2 id="332-power-management-standards">3.3.2. Power Management Standards<a class="headerlink" href="#332-power-management-standards" title="Permanent link">#</a></h2>
+<p>システム内の全てのデバイスの電力を管理するために、OSはデバイスにコマンドを送信するための標準的な方法が必要である。これらの標準は、特定のI/Oインターコネクト上のデバイスの電力を管理するために使用される操作と、デバイスが入れる電力状態を定義する。I/Oインターコネクトごとにこれらの標準を定義することで、OSが利用できる電力管理サポートのベースラインレベルが作成される。独立系ハードウェアベンダー (IHV)は、自社のハードウェアのパワーを管理するソフトウェアを書くために余分な時間を費やす必要がない。OSベンダーにとっては、I/Oインターコネクト標準によって、電源管理コードを各I/Oインターコネクトのドライバーに集中させることができる。最後に、I/Oインターコネクト主導の電源管理により、OSは特定のI/Oインターコネクト上の全てのデバイスの状態を追跡できる。全てのデバイスが所定の状態 (たとえば、D3- オフ)にあるとき、OSはI/Oインターコネクト全体をその状態に適した電源モード (たとえば、D3- オフ)にできる。</p>
+<p>I/Oインターコネクトレベルの電力管理仕様は、以下を含む多くのバス用に記述されている：
+- <span class="arithmatex">\(\mathrm{PCl}\)</span>
+- <span class="arithmatex">\(\mathrm{PCl}\)</span> エクスプレス
+- カードバス
+- USB
+- IEEE 1394</p>
+<h2 id="333-device-power-states">3.3.3. Device Power States<a class="headerlink" href="#333-device-power-states" title="Permanent link">#</a></h2>
+<p>命名法を統一し、デバイス間で一貫した動作を提供するために、デバイスの電力状態には標準的な定義が使用される。一般的に、これらの状態は以下の基準で定義される：
+- 消費電力-デバイスが使用する電力量。
+- デバイスのコンテキスト-デバイスのコンテキストがハードウェアによってどれだけ保持されているか。
+- デバイスドライバ-デバイスを完全にオンに戻すためにデバイスドライバがしなければならないこと。
+- レストアレイテンシ-デバイスを完全にオンに戻すのにかかる時間。</p>
+<p>より具体的には、デバイスの各クラス (例えば、モデム、ネットワークアダプタ、ハードディスクなど) の電源管理仕様は、そのクラスの電源状態と電源ポリシーをより正確に定義している。一般的なデバイスの電源状態 (D0-D3)の詳細については、デバイスの電源状態を参照。</p>
+<h2 id="334-device-power-state-definitions">3.3.4. Device Power State Definitions<a class="headerlink" href="#334-device-power-state-definitions" title="Permanent link">#</a></h2>
+<p>デバイスの電源状態の定義はデバイスに依存しないが、バス上のデバイスのクラスは、電源関連の特性の一貫したセットをサポートしなければならない。例えば、デバイスの電力状態を所定のレベルに設定するバス固有のメカニズムが呼び出された場合、デバイスがその状態にある間に、デバイスが取り得る動作やOSが取り得る特定の動作は、デバイスの種類によって異なる。完全に統合されたデバイス電力管理システムのためには、これらのクラス固有の電力特性も標準化されなければならない：</p>
+<h1 id="device-power-state-characteristics">Device Power State Characteristics<a class="headerlink" href="#device-power-state-characteristics" title="Permanent link">#</a></h1>
+<p>各クラスのデバイスには、目標消費電力レベル、状態変化レイテンシ、およびコンテキストロスの標準定義がある。</p>
+<p>最小デバイス電力能力</p>
+<p>各クラスの機器には、最小限の標準的な電力能力がある。</p>
+<h1 id="device-functional-characteristics">Device Functional Characteristics<a class="headerlink" href="#device-functional-characteristics" title="Permanent link">#</a></h1>
+<p>例えば、ネットカードは受信はできるが送信はできない、サウンドカードはパワーアンプがオフである以外は完全に機能する、など)。</p>
+<h1 id="device-wakeup-characteristics">Device Wakeup Characteristics<a class="headerlink" href="#device-wakeup-characteristics" title="Permanent link">#</a></h1>
+<p>各クラスのデバイスには、ウェイクポリシーの標準的な定義がある。</p>
+<p>デバイスクラス電力管理仕様は、デバイスの各クラスについてこれらの電力状態特性を定義する。付録A：デバイスクラス仕様を参照。</p>
+<h2 id="34-controlling-device-power">3.4. Controlling Device Power<a class="headerlink" href="#34-controlling-device-power" title="Permanent link">#</a></h2>
+<p>ACPIインタフェースは、デバイスの電源管理に必要な制御方法と情報を提供する。OSPMはこれらのインタフェースを活用して、デバイスの能力を判断したり、デバイスの電源状態を設定したりステータスを取得したりするメソッドを実行したり、デバイスがマシンをウェイクアップできるようにしたりするなどのタスクを実行する。
+- 他のバスは、メインボード上のいくつかのデバイスを列挙する。例えば、 <span class="arithmatex">\(\mathrm{PCl}\)</span> デバイスは、標準的な <span class="arithmatex">\(\mathrm{PCl}\)</span> 列挙メカニズムを通じて報告される。これらのデバイスの電源管理は、それぞれのバス仕様 (この場合はPCI)を通じて行われる。メインボード上の他の全てのデバイスは、ACPIを通じて処理される。具体的には、ACPIテーブルには、独自のバス仕様で報告できないレガシーデバイス、システム内の各バスのルート、および独自のバス仕様ではカバーされない追加の電源管理や設定オプションがあるデバイスが列挙されている。</p>
+<p>詳細はセクション7を参照</p>
+<h2 id="341-getting-device-power-capabilities">3.4.1. Getting Device Power Capabilities<a class="headerlink" href="#341-getting-device-power-capabilities" title="Permanent link">#</a></h2>
+<p>OSがシステム内のデバイスを列挙する際、デバイスがサポートする電源管理機能に関する情報を取得する。プラットフォームブートファームウェアがOSに与えるDifferentiated Definition Blockには、ACPIが扱う全てのデバイスが記述されている。この記述には、以下の情報が含まれている：
+- デバイスがサポートする各電力状態において、デバイスが必要とする電力リソース (パワープレーンおよびクロックソース)の説明。たとえば、あるデバイスが DO ステートでは高電力バスとクロックを必要とするが、D2 ステートでは低電力バスのみでクロックを必要としない場合がある。
+- デバイスがマシンをウェイクアップするために必要な電源リソースの説明 (または、デバイスがウェイクアップをサポートしていないことを示す「なし」)。OS はこの情報を使用して、デバイスがウェイクをサポートできるデバイスとシステムの電源状態を推測できる。
+- OSがデバイスの電源状態の設定やリソースの取得設定に使用できるオプションの制御方法。</p>
+<p>この表は、ACPI が扱うデバイスの説明に加え、パワープレーンやクロックソースそのもの、およびそれらをオンオフするための制御方法の一覧である。詳細情報については、セクション7.</p>
+<h2 id="342-setting-device-power-states">3.4.2. Setting Device Power States<a class="headerlink" href="#342-setting-device-power-states" title="Permanent link">#</a></h2>
+<p>OSPM は、Set Power State オペレーションを使用して、デバイスを 4 つの電源状態のうちの 1 つにする。</p>
+<p>デバイスが低電力状態になると、バスからできるだけ電力を消費しないように設定される。OSはバス上の全デバイスの状態を追跡し、そのバスの現在のデバイス要件に基づいて、バスを最適な電力状態にする。例えば、バス上の全デバイスがD3状態の場合、OSはバス制御チップセットにコマンドを送り、バスから電力を除去する (したがって、バスはD3状態になる)。
+状態)。特定のバスが低電力供給状態をサポートしている場合、全てのデバイスがD1またはD2状態にあれば、OSはバスをその状態にする。デバイスがどのような電源状態にあるにせよ、OSはSet Power Stateコマンドを発行してデバイスを再開できなければならない。
+- そのためにデバイスに電源が入る必要はない。OSはデバイスにコマンドを送る前に、デバイスの電源をオンにしなければならない。</p>
+<p>OSPM はまた、ウェイクなどの電源管理機能を有効にするために、Set Power State オペレーションを使用する (「電源とパフォーマンス管理」で説明)。</p>
+<p>パワーダウン動作 (Dx からより深い Dy への遷移)では、OSPM はまずターゲット状態 (_PSx) に適した制御方法を評価し、次に未使用のパワーリソースを全てオフにする。これは、実際にデバイスから電力が取り除かれることを意味しない場合があることに注意されたい。他のアクティブデバイスが電力リソースを共有している場合、その電力リソースはオンのままである。パワーアップの場合 (あるDxからより浅いD0への遷移)、DOに必要なパワーリソースがまずオンにされ、次に制御方法 (_PSO)が評価される。</p>
+<h2 id="343-getting-device-power-status">3.4.3. Getting Device Power Status<a class="headerlink" href="#343-getting-device-power-status" title="Permanent link">#</a></h2>
+<p>OSPM は、Get Power Status オペレーションを使用して、現在の電源コンフィギュレーション (ステートと機能)、およびデバイスがサポートするバッテリーのステータスを決定する。デバイスは、電源ステータスの変化を OS に通知するために SCI をシグナルできる。例えば、デバイスは割り込みをトリガして、バッテリが低電力レベルに達したことをOSに通知できる。</p>
+<p>デバイスは、ACPIイベントモデルを使用して、電源ステータスの変化 (例えば、バッテリーステータスの変化)をOSPMに通知する。プラットフォームは、割り込み ( <span class="arithmatex">\(\mathrm{SCI}\)</span> またはGPIO)を介してOSにイベントを通知する。割り込みステータスビットが設定され、OSにイベントが通知される。OSはイベントに関連する制御メソッドを実行する。この制御メソッドは、どのデバイスが変更されたかをOSに知らせます。</p>
+<p>ACPIは、基本的なバッテリー状態情報のみを報告するバッテリーと、スマートバッテリーシステム実装者フォーラム「スマートバッテリー仕様」をサポートするバッテリーの2種類をサポートしている。基本的なバッテリステータス情報 (総容量や残容量など)のみを報告するバッテリの場合、OSはこの情報を読み取るためにバッテリの記述テーブルから制御メソッドを使用する。スマートバッテリのステータス情報を読み取るには、OSは適切なバス列挙器を通してスマートバッテリに直接インタフェースする標準スマートバッテリドライバを使用できる。</p>
+<h2 id="344-waking-the-system">3.4.4. Waking the System<a class="headerlink" href="#344-waking-the-system" title="Permanent link">#</a></h2>
+<p>ウェイクオペレーションは、デバイスがスリープ状態または低電力アイドル状態からシステムをウェイクさせることを可能にする。CPUは命令を実行しないため、この操作はCPUに依存してはならない。</p>
+<p>OSは、デバイスとコアロジック間のブリッジが、ウェイク信号を転送できる最も低い電力状態にあることを保証する。ウェイクを有効にしたデバイスがシステムのウェイクを決定すると、定義された信号をそのデバイスのバスに送る。バスブリッジは、そのバスに適した信号を使用して、この信号をアップストリームブリッジに転送する必要がある。こうして、信号は最終的にコアチップセット (例えばACPIチップセット)に到達し、コアチップセットがシステムをウェイクアップする。</p>
+<p>システムをスリープ電力状態にする前に、OSはアプリケーションの要求に基づいてシステムをウェイクさせる必要があるデバイスを決定し、デバイスとバスに応じた方法でそれらのデバイスのウェイクを有効にする。</p>
+<p>OSは、デバイスのSCI Enableビットを設定するか、ウェイク割り込みをマスク解除することで、デバイスのウェイク機能を有効にする。この制御の場所は、説明表のデバイスのエントリに記載されている。ウェイク機能を有効にしたデバイスだけがシステムをウェイクできる。OSはウェイクデバイスがサポートする電源状態を追跡し、ウェイクがシステムをウェイクできる電源状態にシステムを維持する (説明表に報告されている能力に基づいて)。</p>
+<p>システムがスリープ状態または低電力アイドル状態にあり、ウェイクデバイスがシステムのウェイクを決定すると、そのデバイスはコアロジックに信号を送る。システムをウェイクさせたデバイスに対応するステータスビットがセットされ、コアロジックはシステムを再開する。OSが再び実行されると、制御メソッド (ウェイクイベント用)を実行するか、デバイスのISR (ウェイク割り込み用)を処理することによって、ウェイクイベントを起こしたデバイスを決定する。
+- 特定のデバイスがシステムをウェイクできるように ACPI メカニズムを使用するほかに、ACPI プラットフォームはウェイク元を記録し、OSPM に報告できなければならない。システムが特定の状態 ( <span class="arithmatex">\(\$ 4\)</span> 状態など)からウェイクアップされると、非ACPIモードで起動することがある。この場合、 SCI ステータスビットは ACPI モードに再入力する際にクリアされる。しかし、プラットフォームは、後で OSPM が検索できるように、ウェイクソースの記録を試みなければならない。
+- 上記の説明では、デバイスがシステムをウェイクさせる方法を説明したが、デバイスは、SOシステム状態の間にも低電力状態にすることができ、このデバイスは、以下の例が示すように、SO状態でウェイク信号を生成できることに注意されたい。</p>
+<h2 id="345-example-modem-device-power-management">3.4.5. Example: Modem Device Power Management<a class="headerlink" href="#345-example-modem-device-power-management" title="Permanent link">#</a></h2>
+<p>ACPI においてこれらの電源管理方法がどのように機能するかを説明するために、内蔵モデムを考える。(モデムの電源状態は、以下のように定義されている (Modem Device Class Power Management Specificationより)：</p>
+<p>モデムコントローラが低電力モード (デバイスによってコンテキストが保持される) 電話回線から給電されているか、低電力モードの電話インタフェーススピーカーオフフック状態であること</p>
+<p>D2</p>
+<p>D3と同じ</p>
+<p>D3</p>
+<p>モデムコントローラオフ (コンテキストが失われた) 電話回線から電源供給されている、または電源が切れている電話インタフェーススピーカーオフオンフック</p>
+<p>モデムの電源ポリシーは以下のように定義されている：</p>
+<p>D3 D0</p>
+<p>COMポートオープン</p>
+<p>D0, D1 D3</p>
+<p>COMポートクローズ</p>
+<p>D0 D1</p>
+<p>モデムが応答モードになる</p>
+<p>D1 D0</p>
+<p>モデムが応答モードになっている間に、アプリケーションがダイヤルを要求するか、電話が鳴る</p>
+<p>モデムのウェイクポリシーは非常にシンプルだ：電話が鳴り、ウェイクが有効になっていたら、システムをウェイクする。</p>
+<p>そのポリシーに基づき、モデムとそれが接続される COM ポートは、図 3-2 に示すようにハードウェアで実装できる。これは、ACPI の機能を説明するための単なる例である。この例は、OEM がハードウェアをどのように構築すべきかを説明することを意図していない。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_04_08_835fc3705c76774f44c7g-14.jpg?height=845&amp;width=1599&amp;top_left_y=66&amp;top_left_x=226" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_04_08_835fc3705c76774f44c7g-14.jpg?height=845&amp;width=1599&amp;top_left_y=66&amp;top_left_x=226" /></a></p>
+<p>図3.2 モデムとCOMポートのハードウェア例</p>
+<h1 id="9-note">(9) Note<a class="headerlink" href="#9-note" title="Permanent link">#</a></h1>
+<p>上記には示されていないが、各ディスクリートパーツは、電源が切断されたときにパーツが絶縁されるように、いくつかの絶縁ロジックを備えている。絶縁ロジック制御は ACPI 差別化記述ブロックのパワーリソースとして実装され、電源プレーンが順次オフになるとデバイスが絶縁されるようになっている。</p>
+<h2 id="3451-obtaining-the-modem-capabilities">3.4.5.1. Obtaining the Modem Capabilities<a class="headerlink" href="#3451-obtaining-the-modem-capabilities" title="Permanent link">#</a></h2>
+<p>OSは、Differentiated Definition Blockのモデムのエントリを読み込んでモデムを列挙するときに、このモデムの能力を決定する。この場合、モデムのエントリは次のように報告される：</p>
+<p>デバイスはD0、D1、D3をサポートする：
+- D0は電源としてPWR1とPWR2を必要とする D1は電源としてPWR1を必要とする (D3は暗黙的に電源なしを必要とする)
+- システムをウェイクアップするために、モデムは電源リソースを必要としない (D0、D1、D3からシステムをウェイクアップできることを意味する)。</p>
+<p>電源状態とリソースを設定する制御方法</p>
+<h2 id="3452-setting-the-modem-power-state">3.4.5.2. Setting the Modem Power State<a class="headerlink" href="#3452-setting-the-modem-power-state" title="Permanent link">#</a></h2>
+<p>OSが動作している間 (GO状態)、モデム用に定義された電源ポリシーに従って、モデムを異なる電源状態に切り替えます。</p>
+<p>アプリケーションがCOMポートを開くと、OSはモデムをDO状態にして電源を入れます。その後、アプリケーションがモデムをアンサーモードにすると、OSはモデムをD1状態にして通話を待つ。このパワーダウン遷移を行うために、OSPMはまず、モデムのエントリに用意されている制御メソッド (_PS1)を実行し、デバイスをD1状態にする。この例では、この制御メソッドは MDM_D1 信号をアサートし、モデムコントローラに低電力モードにマイグレーションするよう指示す。次に OSPM は、モデムデバイスがもはや必要としない電源リソースを確認する。この場合、PWR2はもはや必要ない。次に、システム内の他のデバイスが PWR2 電力リソースの使用を必要としないことを確認する。リソースが不要になった場合、OSPMは、Differentiated Definition Block内のその電源リソースに関連する_OFF制御メソッドを使用して、PWR2電源プレーンをオフにする。この制御方法は、PWR2_EN ラインのアサートを停止するために、コアチップセットに適切なコマンドを送信する。</p>
+<p>OSPM は、あるデバイスが低電力状態になったとき、常に電力リソースをオフにするわけではない。例えば、PWR1 パワープレーンがアクティブなラインプリンタ (LPT)ポートにも電力を供給しているとする。ユーザがモデムアプリケーションを終了し、COMポートを閉じ、モデムをシャットオフ (状態D3)したとする。いつものように、OSPMはモデムの制御メソッドを実行してデバイスをD3電源状態に切り替えることで、状態遷移プロセスを開始する。制御メソッドは MDM_D3 ラインをアサートさせる。これらのレジスタはデバイス自体にはない可能性があることに注意。例えば、制御メソッドは、MDM_D3 を制御するレジスタを読み出すことができる。モデムコントローラは、PWR1 ラインから電力をほとんど消費しないように、主要な機能を全てオフにする。OSPM は、どの電力リソースが不要になったかを確認することで続行する。LPTポートはまだアクティブなので、PWR1は使用中である。OSPMはPWR1リソースをオフにしない。COM ポートは閉じられているため、同じ一連のイベントによって D3 状態になるが、LPT 依存のため電源リソースはオフにならない。</p>
+<h2 id="3453-obtaining-the-modem-power-status">3.4.5.3. Obtaining the Modem Power Status<a class="headerlink" href="#3453-obtaining-the-modem-power-status" title="Permanent link">#</a></h2>
+<p>一体型モデムにはバッテリーがないため、デバイスの電力状態情報はモデムの電力状態のみである。モデムの現在の電力状態 (DOD3)を決定するために、OSPMはDifferentiated Definition Blockのモデムのエントリに供給されている制御メソッド (_PSC)を実行する。この制御メソッドは、モデムの電力状態を決定するために必要なレジスタから読み出す。</p>
+<h2 id="3454-waking-the-system">3.4.5.4. Waking the System<a class="headerlink" href="#3454-waking-the-system" title="Permanent link">#</a></h2>
+<p>モデム機能で示したように、このモデムはどのデバイスの電源状態からでもマシンをウェイクできる。システムをスリープまたは LPI 状態にする前に、OS は、アプリケーションがシステムをウェイクできるよう要求したデバイスのウェイクを有効にする。次に、有効化された全てのウェイクデバイスがシステムをウェイクできるようにするために必要な電力リソースをまだ提供できる、最も深いスリープまたはLPI状態を選択する。次に、OSはこれらのデバイスをそれぞれ適切な電力状態にする。この場合、モデムはD3状態からのウェイクをサポートしているため、OSはモデムをD3状態にする。最後に、OSはシステムをスリープまたはLPI状態にする。</p>
+<p>モデム経由でのシステムのウェイクアップは、モデムの電話インタフェースが電話回線上のリングを検出すると、そのリングインジケータ (RI)ラインをアサートすることから始まる。このラインはコアロジックにルーティングされ、ウェイクイベントを生成する。その後、チップセットがシステムをウェイクし、ハードウェアは最終的にOSに制御を戻する (ウェイクのメカニズムはスリープ状態 (LPI)によって異なる)。OSは実行後、デバイスをD0状態にし、モデムからの割り込みの処理を開始してイベントを処理する。</p>
+<h2 id="35-processor-power-management">3.5. Processor Power Management<a class="headerlink" href="#35-processor-power-management" title="Permanent link">#</a></h2>
+<p>Working状態の電力をさらに節約するため、OSはアイドル時にCPUを低消費電力状態 (C1、C2、C3)にする。これらの低消費電力状態では、CPUは命令を実行せず、OSのスケジューラのタイマ割り込みなどの割り込みが発生したときにウェイクアップする。</p>
+<p>OSは、ACPIパワーマネージメントタイマを読み取ることで、アイドルループにどれだけの時間が費やされているかを判断する。このタイマは既知の固定周波数で動作し、OSがアイドル時間を正確に判断できるようになっている。このアイドル時間の推定値に応じて、OSはアイドルループに入るとCPUを様々な品質の低電力状態 (電力とレイテンシが異なる)にする。</p>
+<p>CPUの状態は、「プロセッサの構成と制御」で詳しく定義されている。</p>
+<h2 id="36-device-and-processor-performance-states">3.6. Device and Processor Performance States<a class="headerlink" href="#36-device-and-processor-performance-states" title="Permanent link">#</a></h2>
+<p>このセクションでは、デバイスとプロセッサのパフォーマンス状態の概念について説明する。デバイスとプロセッサのパフォーマンス状態 (Px状態)は、アクティブ/実行状態 (プロセッサはCO状態、デバイスはDO状態)内の消費電力と能力の状態である。パフォーマンスステートにより、OSPMはパフォーマンスと省エネのトレードオフを行うことができる。デバイスとプロセッサの性能状態は、性能とエネルギー消費の線形スケーリングとは対照的に、状態が異なるデバイスとプロセッサの効率レベルを呼び出す場合に最大の影響を与える。パフォーマンスステートの遷移は、アクティブ/実行デバイスステートで発生するため、パフォーマンスステートの遷移がシステムに悪影響を与えないように注意する必要がある。</p>
+<p>デバイスのパフォーマンス状態の例としては、以下のようなものがある：
+- 消費電力のレベルに対応する最大スループットのレベルを提供するハードディスクドライブ。
+- 消費電力に対応した複数の輝度レベルをサポートするLCDパネル。
+- 2D描画モードと3D描画モードの間で、消費電力レベルに対応した性能のスケーリングを行うグラフィックスコンポーネント。
+- 最大消費電力のレベルに対応する複数の最大音量レベルを提供するオーディオサブシステム。
+- Direct-RDRAMTMコントローラは、最大帯域幅スロットルを調整することにより、複数レベルの消費電力に対応する複数レベルのメモリスループット性能を提供する。</p>
+<h1 id="processor-performance-states-are-described-in-processor-configuration-and-control">Processor performance states are described in Processor Configuration and Control<a class="headerlink" href="#processor-performance-states-are-described-in-processor-configuration-and-control" title="Permanent link">#</a></h1>
+<h2 id="37-configuration-and-plug-and-play">3.7. Configuration and "Plug and Play"<a class="headerlink" href="#37-configuration-and-plug-and-play" title="Permanent link">#</a></h2>
+<p>電源管理に加えて、ACPIインタフェースは、OSPMがマザーボードデバイスの必要なリソースを構成するための制御と情報を提供し、その動的な挿入と削除を可能にする。Differentiated System Description Table (DSDT)とSecondary System Description Table (SSDT)を含むACPI定義ブロックは、ACPIネームスペースと呼ばれる階層形式でマザーボードデバイスを記述する。OSは、ハードウェアIDを持つデバイスを探すためにACPIネームスペースを読むだけで、マザーボードデバイスを列挙する。</p>
+<p>ACPIによって列挙される各デバイスには、ACPIネームスペース内の、デバイスが占有する可能性のあるハードウェアリソースを報告するACPI定義オブジェクト、デバイスによって現在使用されているリソースを報告するオブジェクト、およびそれらのリソースを設定するためのオブジェクトが含まれる。これらの情報は、プラグアンドプレイOS (OSPM)がデバイスを設定するために使用される。</p>
+<h1 id="9-note_1">(9) Note<a class="headerlink" href="#9-note_1" title="Permanent link">#</a></h1>
+<p>システムをブートする準備をするとき、プラットフォームブートファームウェアはブートデバイスを設定するだけでよい。これには、ACPI システム記述テーブルに記述されているブートデバイスと、他の規格で制御されているデバイスが含まれる。</p>
+<h2 id="371-device-configuration-example-configuring-the-modem">3.7.1. Device Configuration Example: Configuring the Modem<a class="headerlink" href="#371-device-configuration-example-configuring-the-modem" title="Permanent link">#</a></h2>
+<p>上のモデムデバイスの例に戻ると、OSがDSDTでモデムを見つけると、OSはそのモデム用のドライバをロードする。このテーブルは、OSに以下の情報を与える制御メソッドを持つ：
+- デバイスはIRQ 3、I/O 3F8-3FF、またはIRQ 4、I/O 2E8-2EFを使用できる。
+- デバイスは現在IRQ 3、I/O 3F8-3FFを使用している。</p>
+<p>OSはPlug and Playアルゴリズムを使ってモデムのハードウェアリソースを設定する。他のデバイスと競合しない、サポートされているコンフィギュレーションの1つを選択する。次にOSPMは、Differentiated Definition Blockのモデムのセクションで提供される制御メソッドを実行することにより、それらのリソース用にデバイスを設定する。この制御メソッドは、デバイスを指定されたリソースに設定するために必要なI/Oポートやメモリアドレスに書き込みます。</p>
+<h2 id="372-numa-nodes">3.7.2. NUMA Nodes<a class="headerlink" href="#372-numa-nodes" title="Permanent link">#</a></h2>
+<p>NUMA (Non Uniform Memory Access)アーキテクチャを採用したシステムは、プロセッサ、メモリ、I/Oバスなどのハードウェアリソースの集合体を含み、一般に「NUMAノード」と呼ばれるものを構成する。一般に、ローカルNUMAノード内のメモリやI/Oリソースへのプロセッサアクセスは、ローカルNUMAノード外のメモリやI/Oリソースへのプロセッサアクセスよりも高速である。ACPIは、プラットフォームがNUMAノードのトポロジ情報をブート時に静的に、また実行時にリソースの追加や削除に応じて動的にOSPMに伝えるためのインタフェースを定義している。</p>
+<h2 id="38-system-events">3.8. System Events<a class="headerlink" href="#38-system-events" title="Permanent link">#</a></h2>
+<p>ACPIには、プラグアンドプレイ、サーマル、パワーマネージメントの各イベントに使用される一般的なイベントモデルが含まれる。イベントモデルを構成するレジスタは、イベントステータスレジスタとイベントイネーブルレジスタの2つである。</p>
+<p>イベントが発生すると、コアロジックはステータスレジスタにイベントを示すビットをセットする。イネーブルレジスタの対応するビットがセットされると、コアロジックはOSに信号を送るために <span class="arithmatex">\(\mathrm{SCI}\)</span> をアサートする。OS はこの割り込みを受信すると、イベントステータスレジスタに設定されているビットに対応する制御メソッドを実行する。これらの制御メソッドは AML コマンドを使用して、OS にどのイベントが発生したかを伝えます。</p>
+<p>例えば、あるマシンのプラグアンドプレイ、サーマルイベント、パワーマネジメントイベントの全てがコアロジックの同じピンに接続されているとする。イベントステータスとイベントイネーブルレジスタには、イベントピンに対応するビットが1ビットずつしかない。</p>
+<p>システムがドッキングされると、コアロジックはステータスビットをセットし、SCIに信号を送る。ステータスビットが設定されると、OS はそのビットの制御メソッドを実行する。制御メソッドはハードウェアをチェックし、イベントがドッキングイベント (例えば)であると判断する。そして、ドッキングイベントが発生したことをOSに通知し、新しいデバイスがデバイス階層のどこに表示されるかを具体的にOSに伝えることができる。</p>
+<p>イベントモデルのレジスタは汎化されているため、様々なプラットフォームの実装を記述できる。上記のシングルピンモデルは一例に過ぎない。別の設計では、プラグアンドプレイ、サーマルイベント、パワーマネージメントイベントが 3 つの異なるピンに配線され、3 つのステータスビット (および 3 つのイネーブルビット)が存在する可能性がある。さらに別の設計では、個々のイベントをそれぞれのピンとステータスビットに配線する可能性がある。この設計は、シングルピン設計とは正反対の極端な設計であり、非常に複雑なハードウェアでありながら、非常にシンプルな制御方法を可能にする。イベントの配線には無数のバリエーションが可能である。しかし、イベントが信号を共有する場合、その信号を発生させたイベントが対応するイベント処理制御メソッドで決定され、適切なデバイス通知が送信されるように注意しなければならないことに注意。</p>
+<h2 id="39-battery-management">3.9. Battery Management<a class="headerlink" href="#39-battery-management" title="Permanent link">#</a></h2>
+<p>バッテリー管理ポリシーは APM BIOS から ACPI 互換 OS にマイグレーションする。バッテリは、本書または他の適用規格に記載されているように、関連インタフェースの要件に準拠する必要がある。OS は、例えばローバッテリやバッテリ警告のトリップポイントを調整することで、バッテリの動作を変更できる。複数のバッテリが存在する場合、バッテリサブシステムは、個別のバッテリのデータから「複合バッテリ」の合成を実行する必要はない。バッテリサブシステムが個別のバッテリのデータから "複合バッテリ "を合成しない場合は、OSがその合成を行わなければならない。</p>
+<p>ACPI互換バッテリーデバイスには、スマートバッテリーサブシステムインタフェースか、コントロールメソッドバッテリーインタフェースのどちらかが必要である。
+- スマートバッテリーは、組込みコントローラ (EC)を通してOSが直接制御する。詳細はセクション10.1とセクション12.9を参照。
+- 制御方法バッテリーはAMLコード制御方法によって完全にアクセスされるため、OEMはACPIがサポートするあらゆるタイプのバッテリーとあらゆる種類の通信インタフェースを選択できる。詳細はセクション 10.2 を参照。</p>
+<p>このセクションでは、全てのタイプのバッテリーに共通する概念について説明する。</p>
+<h2 id="391-battery-communications">3.9.1. Battery Communications<a class="headerlink" href="#391-battery-communications" title="Permanent link">#</a></h2>
+<p>スマートバッテリーおよび制御方法バッテリーの両インタフェースは、OSがプラットフォームのバッテリーシステムから情報を照会するためのメカニズムを提供する。この情報には、満充電容量、現在のバッテリ容量、放電率、その他のバッテリ状態の測定値が含まれる。全てのバッテリシステムタイプは、バッテリの挿入や取り外し、バッテリの放電開始や停止などの変化があったときに、OSに通知を提供する必要がある。スマートバッテリーと一部の制御方式バッテリーは、容量の変化に基づいて通知を行うこともできる。スマートバッテリーは、推定駆動時間、バッテリーが提供できる電力量に関する情報、所定の消費率での駆動時間などの追加情報を提供する。</p>
+<h2 id="392-battery-capacity">3.9.2. Battery Capacity<a class="headerlink" href="#392-battery-capacity" title="Permanent link">#</a></h2>
+<p>各バッテリーは、設計容量、最新のフル充電容量、現在の残容量を報告しなければならない。残容量は使用中に減少し、環境によっても変化する。そのため、OSは最新のフル充電容量を使ってバッテリー残量を計算しなければならない。さらに、バッテリシステムは、警告とバッテリ残量低下を報告し、ユーザに通知してシステムをスリープ状態にマイグレーションさせなければならない。これら5つの値の関係については、図3.3を参照されたい。</p>
+<p>システムは、バッテリ情報の計算および報告の単位に、レートおよび容量 <span class="arithmatex">\([\mathrm{mA} / \mathrm{mAh}]\)</span> または電力およびエネルギー <span class="arithmatex">\([\mathrm{mW} / \mathrm{mWh}]\)</span> のいずれかを使用できる。システムで <span class="arithmatex">\([\mathrm{mA}]\)</span> と <span class="arithmatex">\([\mathrm{mW}]\)</span> を混在させることはできない。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_04_08_835fc3705c76774f44c7g-20.jpg?height=722&amp;width=1103&amp;top_left_y=316&amp;top_left_x=248" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_04_08_835fc3705c76774f44c7g-20.jpg?height=722&amp;width=1103&amp;top_left_y=316&amp;top_left_x=248" /></a></p>
+<p>図3.3 バッテリー容量の報告</p>
+<h2 id="393-battery-gas-gauge">3.9.3. Battery Gas Gauge<a class="headerlink" href="#393-battery-gas-gauge" title="Permanent link">#</a></h2>
+<p>最も基本的なレベルでは、OSは以下の計算式で電池残量を算出す：</p>
+<div class="arithmatex">\[
+\text { Remaining Battery Percentage }[\%]=\frac{\text { Battery Remaining Capacity }[\mathrm{mAh} / \mathrm{mWh}]}{\text { Last Full Charged Capacity }[\mathrm{mAh} / \mathrm{mWh}]} * 100
+\]</div>
+<p>図3.4 電池残量の計算式</p>
+<p>制御方法バッテリーは、バッテリー残量を計算するために、現在のドレイン率[mAまたは <span class="arithmatex">\(\mathrm{mW}]\)</span>]も報告する。最も基本的なレベルでは、電池残量は以下の式で計算される：</p>
+<h1 id="remaining-battery-life-mathrmhfractext-battery-remaining-capacity-mathrmmah-mathrmmwhtext-battery-present-drain-rate-mathrmma-mathrmmw">Remaining Battery Life <span class="arithmatex">\([\mathrm{h}]=\frac{\text { Battery Remaining Capacity }[\mathrm{mAh} / \mathrm{mWh}]}{\text { Battery Present Drain Rate }[\mathrm{mA} / \mathrm{mW}]}\)</span><a class="headerlink" href="#remaining-battery-life-mathrmhfractext-battery-remaining-capacity-mathrmmah-mathrmmwhtext-battery-present-drain-rate-mathrmma-mathrmmw" title="Permanent link">#</a></h1>
+<p>図3.5 現在の排水量の計算式</p>
+<p>スマートバッテリーは現在の消耗率も報告するが、推定ランタイムを直接報告できるため、バッテリー固有の変動をより正確に考慮できるこの機能を代わりに使用する必要がある。</p>
+<h2 id="394-low-battery-levels">3.9.4. Low Battery Levels<a class="headerlink" href="#394-low-battery-levels" title="Permanent link">#</a></h2>
+<p>システムには、OEMが設計した警告用初期容量、低容量用初期容量、および重要バッテリーレベルまたはフラグがある。警告用と低下用の値は、システムが特定のアクションを実行するために必要なエネルギー量またはバッテリ容量を表す。クリティカルバッテリレベルまたはフラグは、システム内のバッテリが完全になくなったときを示すために使用される。
+排出される。OSPMは、OEMが設計したレベルに基づいて、独立した警告値と低バッテリー容量値を決定できるが、下図に示すように、これらの値をOEMが設計した値より低く設定することはできない。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_04_08_835fc3705c76774f44c7g-21.jpg?height=828&amp;width=1516&amp;top_left_y=303&amp;top_left_x=247" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_04_08_835fc3705c76774f44c7g-21.jpg?height=828&amp;width=1516&amp;top_left_y=303&amp;top_left_x=247" /></a></p>
+<p>図3.6 バッテリー残量と警告</p>
+<p>システム内の各制御方式バッテリは、OEMが設計した初期警告容量と初期低容量、およびバッテリがクリティカルエネルギーレベルに達したか、またはクリティカルエネルギーレベル以下になったことを報告するフラグを報告する。制御方式バッテリとは異なり、スマートバッテリは必ずしも特定のマシンタイプに特化されているわけではないため、OEMが設計した警告レベル、低レベル、および臨界レベルは、スマートバッテリ表 (SBST)で説明されているスマートバッテリ表で個別に報告される。</p>
+<p>以下の表は、これらの値をOEMがどのように設定し、OSがどのように解釈するかを示している。</p>
+<h1 id="level-description">Level Description<a class="headerlink" href="#level-description" title="Permanent link">#</a></h1>
+<p>警告バッテリーの使用可能エネルギー <span class="arithmatex">\((\mathrm{mWh})\)</span> または容量 <span class="arithmatex">\((\mathrm{mAh})\)</span> の合計が以下の場合。</p>
+<p>低この値は、エネルギー量またはバッテリ容量の推定値である <span class="arithmatex">\(r \in\)</span> クリティカルバッテリ状態は、使用可能なバッテリが全て放電していることを示す。</p>
+<p>クリティカルスマートバッテリーシステムの場合、これは通常、全てのバッテリー <span class="arithmatex">\(r\)</span></p>
+<p>複数のバッテリーを持つ制御方式バッテリーシステムの場合、フラグは <span class="arithmatex">\(r\)</span> となる。</p>
+<p>バッテリーの残量が少なくなるとシステムはスリープ状態になるはずなので、システム内の全てのバッテリーがクリティカルになるまで実行することは、通常遭遇すべき状況ではない。このような事態が発生した場合、OSはシステムの完全性へのダメージを最小限に抑えるための措置を講じるべきである。緊急シャットダウン手順は、電源がいつ失われるかわからないという前提で、悪い影響を最小限に抑えるように設計されるべきである。例えば、ハードディスクがスピンダウンした場合、OSはデータを書き込むためにディスクをスピンアップしようとしてはならない。ディスクがスピンアップしている場合でも、シャットダウンする前にシステム設定データまで保存しようとするかどうかは、書き込み操作の途中で電源が失われた場合に設定が破損する可能性があるよりは、以前の設定に戻す方が害が少ない可能性があるので、評価する必要がある。</p>
+<h2 id="395-battery-calibration">3.9.5. Battery Calibration<a class="headerlink" href="#395-battery-calibration" title="Permanent link">#</a></h2>
+<p>一般的に、多くのバッテリーの容量は時間の経過とともに低下し、ユーザにとってより短いランタイムを提供する。しかし、較正またはコンディショニングサイクルを時折実行すれば、多くのバッテリシステムで、古いバッテリでより多くの使用可能なランタイムを提供することが可能である。ユーザは通常、プラットフォームブートファームウェアのセットアップメニューに入るか、OEMが提供するカスタムドライバと較正アプリケーションを実行することで、較正サイクルを実行できる。較正プロセスには通常数時間かかり、その間ノートパソコンは接続されていなければならない。理想的には、これを制御するアプリケーションは、可能な限り良好なユーザエクスペリエンスを実現する必要がある。例えば、ユーザが、システムが使用されていないある時間に、システムをウェイクアップしてキャリブレーションを実行するようスケジュールできるようにする。キャリブレーションのユーザエクスペリエンスはシステムごとに異なる必要はないので、このサービスをOSPMが提供することは理にかなっている。このようにして、OSPMはエンドユーザに共通の体験を提供することができ、OEMがカスタムバッテリー校正ソフトウェアを開発する必要性をなくすことができる。</p>
+<p>OSPM が一般的なバッテリー校正を行うには、2 つの基本的な校正機能を制御する一般的なインタフェースが必要である。これらの機能は、電源と電力計デバイスおよび_BST (バッテリステータス)で定義されている。第一に、バッテリーを校正することが有益である時期を検出する手段がある。第二に、その較正サイクルを実行する手段がある。これらの機能は、バッテリーコントローラチップのような専用ハードウェア、組み込みコントローラ内のファームウェア、プラットフォームファームウェア、またはOSPMによって実装される。AMLコードがハードウェアに依存しているかどうかにかかわらず、AMLを通じて実装される機能は、AMLがハードウェアに制御を渡すかどうかにかかわらず、インタフェースは同じであるため、ここからは「AML制御」と呼ぶことにする。</p>
+<p>較正が必要な時期の検出は、ハードウェアまたはAMLコードによって実装することができ、_BMDメソッドを通して報告される。あるいは、_BMD メソッドは、キャリブレーションを実行するまでのサイクル数を単純に報告し、OS にサイクルのカウントを試みさせることもできる。ハードウェアまたはプラットフォームファームウェアによって実装されるカウンタは、OSが実行されていなくてもバッテリーを使用できるため、一般的により正確であるが、場合によっては、システム設計者がハードウェアまたはファームウェアの実装を簡素化することを選択することもある。</p>
+<p>較正が望ましく、ユーザが較正を行うようスケジュールした場合、較正サイクルはAML制御またはOSPM制御のいずれかになる。OSPMはバッテリーシステムの詳細を知らないため、非常に単純なアルゴリズムしか実行できない。OSPMは単純に、放電が終わるまでバッテリーを放電し、充電が終わるまでバッテリーを充電する。 <span class="arithmatex">\(A C\)</span> アダプタを_BMCで制御できない場合、システムの電源が切れた後、ACアダプタを抜いて再度接続するようユーザに促する。較正サイクルがAMLによって制御される場合、OSは_BMCを呼び出して較正サイクルを開始する。このメソッドはハードウェアに制御を委ねるか、較正サイクル自体を制御する。較正サイクルの制御が完全にAMLコードで実装されている場合、プラットフォームランタイムファームウェアは、_BMCへの最初の呼び出しがサイクルを開始し、いくつかの状態フラグを設定し、終了することによって、AMLコードを継続的に実行することを避けることができる。サイクルの後の部分の制御は、バッテリイベントハンドラ (_Qxx、_Lxx、または _Exx)にこれらの状態フラグをチェックするコードを配置することで実現できる。</p>
+<p>このインタフェースのコントロールメソッドの詳細は、コントロールメソッドバッテリーに定義されている。</p>
+<h2 id="396-battery-charge-limiting">3.9.6. Battery Charge Limiting<a class="headerlink" href="#396-battery-charge-limiting" title="Permanent link">#</a></h2>
+<p>プラットフォームがバッテリー充電制限機能をサポートしていると言われる場合、それは必須である：</p>
+<p>1.設置されている全てのバッテリについて，常に真の充電レベルをOSPMに通知する。</p>
+<p>2.バッテリー充電制限が有効な場合、バッテリーがフル充電容量に達するのを制限する。</p>
+<p>3.バッテリ充電制限がアクティブな場合は_BST.Battery State.Bit[3]を設定する。</p>
+<p>4.BST.バッテリ状態 (ビット0およびビット1)がバッテリの真の充放電状態を反映していることを確認する。</p>
+<p>OSPMは以下の設定を認識しなければならない：</p>
+<p>タック</p>
+<div class="arithmatex">\[\begin{tabular}{|l|l|l|}
+\hline _BST.Battery State.Bit[3] &amp; BST.Battery State.Bit[0] &amp; _BST.Battery State.Bit[1] \\
+\hline Cleared &amp; N/A &amp; N/A \\
+\hline Set &amp; Cleared &amp; Cleared \\
+\hline Set &amp; Cleared &amp; Set \\
+\hline Set &amp; Set &amp; Cleared \\
+\hline
+\end{tabular}\]</div>
+<h2 id="310-thermal-management-concepts">3.10. Thermal Management Concepts<a class="headerlink" href="#310-thermal-management-concepts" title="Permanent link">#</a></h2>
+<p>ACPIは、OSがシステムの熱管理において役割を果たすことを可能にする一方で、必要に応じて冷却動作を強制するプラットフォームの能力を維持する。パッシブ冷却モードでは、OSPMはCPUのアプリケーション負荷とシステムの熱ヒューリスティックに基づいて冷却を決定できる。OSPMはまた、高温の緊急事態が発生した場合に、コンピュータを優雅にシャットダウンすることもできる。</p>
+<p>ACPIの熱設計は、サーマルゾーンと呼ばれる領域に基づいている。一般的に、PC全体は1つの大きなサーマルゾーンであるが、OEMは必要に応じてシステムをいくつかの論理的なサーマルゾーンに分割できる。サーマルゾーンは、中央プロセッサを熱結合デバイスとする単一のサーマルゾーンを描いたモバイルPCの図の例である。この例では、ノートブック全体が1つの大きなサーマルゾーンとしてカバーされている。このノートブックでは、1つのファンをアクティブ冷却に、CPUをパッシブ冷却に使用している。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_04_08_835fc3705c76774f44c7g-24.jpg?height=862&amp;width=1307&amp;top_left_y=994&amp;top_left_x=226" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_04_08_835fc3705c76774f44c7g-24.jpg?height=862&amp;width=1307&amp;top_left_y=994&amp;top_left_x=226" /></a></p>
+<p>図3.7 サーマルゾーン</p>
+<p>以下のセクションは、コンピュータの熱制御と冷却特性の概要である。ACPIプラットフォームでの熱実装例については、セクション11.6を参照。</p>
+<h2 id="3101-active-and-passive-cooling-modes">3.10.1. Active and Passive Cooling Modes<a class="headerlink" href="#3101-active-and-passive-cooling-modes" title="Permanent link">#</a></h2>
+<p>ACPIは、アクティブとパッシブという2つの冷却モードを定義している：</p>
+<h1 id="passive-cooling">Passive cooling<a class="headerlink" href="#passive-cooling" title="Permanent link">#</a></h1>
+<p>OSは、システムの温度を下げるために、システム性能を犠牲にしてデバイスの消費電力を削減する。</p>
+<p>OSは、システムの温度を下げるために、システムの消費電力を増加させる (例えば、ファンをオンにする)。</p>
+<p>この2つの冷却モードは互いに反比例の関係にある。アクティブ冷却では、システム内の熱を下げるために電力を増やす必要があり、パッシブ冷却では、温度を下げるために電力を減らす必要がある。この関係の効果として、アクティブ冷却はシステム性能を最大限に引き出すが、望ましくないファンノイズを発生させる可能性があり、パッシブ冷却はシステム性能を低下させるが、本質的に静かである。</p>
+<h2 id="3102-performance-vs-energy-conservation">3.10.2. Performance vs. Energy Conservation<a class="headerlink" href="#3102-performance-vs-energy-conservation" title="Permanent link">#</a></h2>
+<p>堅牢な OSPM 実装は、エンドユーザが OSPM にパフォーマンスまたは省エネのどちらを優先するか (または優先するレベル)を伝える手段を提供する。エンドユーザがこの優先度を選択できるようにすることは、バッテリー充電でシステムランタイムを最大化することがシステム性能を最大化することよりも優先されることが多いモバイルシステムユーザにとって最も重要である。</p>
+<p>パフォーマンスを重視するユーザはアクティブ冷却モードに対応し、省エネを重視するユーザはパッシブ冷却モードに対応する。ACPIは、冷却モードをプラットフォームに伝えるインタフェースを定義している。アクティブ冷却は、最小限のOSPM熱ポリシーの介入で実行できる。例えば、プラットフォームは、サーマルゾーンパラメータを通じて、サーマルトリップポイントを超えるとファンをオンにする必要があることを示す。パッシブ冷却では、サーマルゾーンの温度を下げるために、OSPMサーマルポリシーがパフォーマンスを低下させるデバイスインタフェースを操作する必要がある。</p>
+<h2 id="3103-acoustics-noise">3.10.3. Acoustics (Noise)<a class="headerlink" href="#3103-acoustics-noise" title="Permanent link">#</a></h2>
+<p>アクティブ冷却モードは一般的に、システムを冷却するためにファンを使用することを意味し、ファンの可聴出力は様々である。ファンの騒音は、ファンの大音量と周囲の騒音環境を考慮すると、かなり望ましくない場合がある。この場合、ファンの静音性に対するエンドユーザの物理的要件が、性能または省エネルギーのいずれかを優先させる可能性がある。</p>
+<p>ファンの静音性に対するユーザの要望は、パッシブ冷却モードに対応する。従って、ファンが静かであることを望むということは、省エネを好むということでもある。</p>
+<p>サーマルマネージメントの詳細、およびアクティブ冷却とパッシブ冷却のプラットフォーム設定例については、セクション3.10を参照してください。</p>
+<h2 id="3104-multiple-thermal-zones">3.10.4. Multiple Thermal Zones<a class="headerlink" href="#3104-multiple-thermal-zones" title="Permanent link">#</a></h2>
+<p>基本的な熱管理モデルは1つのサーマルゾーンを定義しているが、複雑なシステムで拡張熱制御を提供するために、ACPIは複数のサーマルゾーンの実装を規定している。複数のサーマルゾーンモデルの下では、OSPMは複数の熱結合デバイスと、それぞれのサーマルゾーンを独立して管理する。
+各サーマルゾーンで利用可能な能動的冷却方法および/または受動的冷却方法を使用する熱結合デバイス。各サーマルゾーンは、複数のパッシブおよびアクティブ冷却装置を有できる。さらに、各ゾーンは、固有の冷却リソースまたは共有冷却リソースを持つことができる。複数のサーマルゾーン構成では、1つのゾーンがクリティカルな状態に達した場合、OSPMはシステム全体をシャットダウンしなければならない。</p>
+<h2 id="311-flexible-platform-architecture-support">3.11. Flexible Platform Architecture Support<a class="headerlink" href="#311-flexible-platform-architecture-support" title="Permanent link">#</a></h2>
+<p>ACPIは、従来のPCから逸脱したプラットフォームアーキテクチャに対応するためのメカニズムとモデルを定義している。ACPI は、低消費電力、低コスト、設計の柔軟性、デバイスの多様性を実現するプラットフォーム技術をサポートする。このサポートについては、以下のセクションで説明し、後の章で詳述する。</p>
+<h2 id="3111-hardware-reduced-acpi">3.11.1. Hardware-reduced ACPI<a class="headerlink" href="#3111-hardware-reduced-acpi" title="Permanent link">#</a></h2>
+<p>ACPIは、PCアーキテクチャを実装しないプラットフォーム向けに、ACPIハードウェア要件を削除する代替プラットフォームインタフェースモデルを提供する。Hardware-reduced ACPIモデルでは、第4章のFixedハードウェアインタフェース要件が削除され、代わりにGenericハードウェアインタフェースが使用される。これにより、低消費電力ハードウェア設計の革新と差別化に必要なレベルの柔軟性が提供される一方、複数のOSによるサポートが可能になる。</p>
+<p>ハードウェア削減型ACPIには以下の要件がある：
+- ブート用UEFIファームウェアインタフェース (レガシーBIOSはサポートされていない)。
+- ACPIモードのみでの起動 (ACPI Enable、ACPI Disable、SMI_CMD、レガシーモードはサポートされていない。)
+- OSPMと、UEFIランタイムサービスやシステム管理モードなどの他の非同期オペレーティング環境との間で、ハードウェアリソースを共有しない。(グローバルロックはサポートされていない)
+- プロセッサのスリープ状態をまたいでキャッシュのコヒーレンシを維持するためのOSサポートに依存しない (バスマスタリロードとアービターディセーブルはサポートされていない)
+- GPEブロックデバイスはサポートされていない</p>
+<p>上記の要件を満たさないシステムは、ACPI固定ハードウェアインタフェースを実装しなければならない。</p>
+<h2 id="31111-interrupt-based-wake-events">3.11.1.1. Interrupt-based Wake Events<a class="headerlink" href="#31111-interrupt-based-wake-events" title="Permanent link">#</a></h2>
+<p>HWを削減したACPIプラットフォームでは、ウェイクアップは接続された割り込みの属性である。プロセッサまたはプラットフォーム全体をウェイクアップするように設計された割り込みは、ウェイクアップ可能割り込みとして定義される。ウェイク対応割り込みは、OSPMによって有効化されると、アサート時にシステムをウェイクアップする。</p>
+<h2 id="3112-low-power-idle">3.11.2. Low-Power Idle<a class="headerlink" href="#3112-low-power-idle" title="Permanent link">#</a></h2>
+<p>プラットフォームアーキテクチャは、従来の ACPI スリープ/レジュームモデル以外のハードウェア電力管理モデルをサポートする場合がある。これらは通常、独自のハードウェアで実装され、ACPIスリープ状態と同程度のエネルギーを節約しながら、低レイテンシで接続されたアイドルを提供できる。ハードウェア実装の多様性をサポートするために、ACPI は、そのような機能が利用可能であることをプラットフォームが OSPM に示すメカニズムを提供する。</p>
+<h2 id="31121-low-power-so-idle-capable-flag">3.11.2.1. Low Power SO Idle Capable Flag<a class="headerlink" href="#31121-low-power-so-idle-capable-flag" title="Permanent link">#</a></h2>
+<p>FADT 内のこのフラグは、SO アイドルが一般的な S3 で達成される節電と同等かそれ以上の節電を達成するような高度なアイドル電力機能をプラットフォームが持っているかどうかを OSPM に通知する。このフラグにより、OSPM は、低レイテンシ応答と接続性のために、そのどちらでもないシステムスリープ状態にマイグレーションするのではなく、SO アイドルにシステムを維持できる。このフラグにより、従来のスリープ/レジュームシステム、高度なアイドル電力を持つシステム、どちらもサポートしないシステム、インストールされているOSの機能に応じて両方をサポートできるシステムなど、多様なプラットフォーム実装のサポートが可能になる。</p>
+<h2 id="3113-connection-resources">3.11.3. Connection Resources<a class="headerlink" href="#3113-connection-resources" title="Permanent link">#</a></h2>
+<p>汎用I/O (GPIO)とシンプルペリフェラルバス (SPB)コントローラは、シリコンソリューションで提供されるハードウェアリソースで、幅広いシステム設計の柔軟なコンフィギュレーションを可能にする。これらのコントローラは、システム内の任意のデバイスに入力、出力、割り込み、シリアル通信接続を提供できる。これらの接続がどのような機能を持つかは、関連する特定のデバイスとプラットフォーム設計のニーズに依存する。これらのプラットフォーム技術をサポートするために、ACPIは柔軟な接続のための一般的な抽象化を定義している。</p>
+<p>既存のソフトウェアモデルとの互換性を維持するため、ACPIはこれらの接続をハードウェアリソースとして抽象化する。</p>
+<p>コネクションリソース抽象化は、GPIOとSPBコントローラのハードウェア機能を反映する。他のリソースと同様に、これらのコネクションは使用前に割り当てられ、設定される。プラットフォームによって記述されたリソースによって、OSPMはデバイスドライバから基礎となるコンフィギュレーションを抽象化する。そのため、ドライバはデバイスの機能のみを記述することができ、特定のシステムにどのように統合されるかに関係なく、その機能ハードウェアを再利用できる。</p>
+<p>コネクションリソース抽象化の主要な側面は以下の通りである：
+- GPIO および SPB コントローラは、ACPI 名前空間のデバイスとして列挙される。
+- GPIOコネクションとSPBコネクションのリソースタイプが定義されている。
+- GPIOまたはSPBコントローラに接続されているネームスペースデバイスは、リソーステンプレートマクロを使用して、リソースメソッド (_CRS、_SRSなど)にコネクションリソースを追加する。
+- GPIOコネクションリソースは、GPIOsignaled ACPIイベントとして使用するためにプラットフォームによって指定できる。
+- コネクションリソースは、AML メソッドによって GPIO および SPB オペレーション領域を介してピンやペリフェラルにアクセスするために使用できる。</p>
+<h2 id="31131-supported-platforms">3.11.3.1. Supported Platforms<a class="headerlink" href="#31131-supported-platforms" title="Permanent link">#</a></h2>
+<p>HW-reducedACPIフラグとLow power SO Idle Capableフラグは、実装可能な4つのプラットフォームタイプを表している。以下の表は、これらと、意図される OSPM の動作および特定のプラットフォーム要件を列挙したものである。</p>
+<h1 id="low-power-so-idle-capable-hardware-reduced-acpi-ospm-behavior">Low Power SO Idle Capable Hardware-reduced ACPI OSPM Behavior<a class="headerlink" href="#low-power-so-idle-capable-hardware-reduced-acpi-ospm-behavior" title="Permanent link">#</a></h1>
+<div class="arithmatex">\[\begin{tabular}{|l|l|l|}
+\hline 0 &amp; 0 &amp; Fixed hardware interfacє \\
+\hline 0 &amp; 1 &amp; Fixed-feature hardware i \\
+\hline 1 &amp; 0 &amp; Fixed hardware interfacє \\
+\hline 1 &amp; 1 &amp; Fixed-feature hardware i \\
+\hline
+\end{tabular}\]</div>
+
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand", "navigation.indexes", "toc.integrate", "navigation.instant", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "search": "../../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.220ee61c.min.js"></script>
+      
+        
+          <script src="../../../javascripts/mathjax.js"></script>
+        
+      
+        
+          <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        
+      
+        
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

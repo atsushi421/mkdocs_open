@@ -1,0 +1,937 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://atsushi421.github.io/mkdocs_open/dvfs/linux/CPU_Performance_Scaling/CPU_Performance_Scaling/">
+      
+      
+        <link rel="prev" href="../../CPU_Idle_Time_Management/CPU_Idle_Time_Management/">
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.20">
+    
+    
+      
+        <title>CPU Performance Scaling - Documents created by Atsushi Yano</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.eebd395e.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ecc896b0.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/mermaid@8.13.10/dist/mermaid.css">
+    
+      <link rel="stylesheet" href="../../../../assets/css/extra.css">
+    
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../../custom.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cpu-performance-scaling" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Documents created by Atsushi Yano" class="md-header__button md-logo" aria-label="Documents created by Atsushi Yano" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documents created by Atsushi Yano
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CPU Performance Scaling
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+            
+              <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+              </label>
+            
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+            
+              <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+              </label>
+            
+          
+        </form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/atsushi421/mkdocs_open" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../../.." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../Power_Management_in_Linux_Kernel/" class="md-tabs__link md-tabs__link--active">
+        DVFS
+      </a>
+    </li>
+  
+
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Documents created by Atsushi Yano" class="md-nav__button md-logo" aria-label="Documents created by Atsushi Yano" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Documents created by Atsushi Yano
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/atsushi421/mkdocs_open" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          DVFS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          DVFS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+          Linux
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Linux
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Power_Management_in_Linux_Kernel/" class="md-nav__link">
+        Power Management in Linux Kernel
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_1_2" >
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1_2" id="__nav_2_1_2_label" tabindex="0">
+          CPU Idle Time Management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          CPU Idle Time Management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CPU_Idle_Time_Management/CPU_Idle_Time_Management/" class="md-nav__link">
+        CPU Idle Time Management
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_3" checked>
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1_3" id="__nav_2_1_3_label" tabindex="0">
+          CPU Performance Scaling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_3_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2_1_3">
+          <span class="md-nav__icon md-icon"></span>
+          CPU Performance Scaling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          CPU Performance Scaling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        CPU Performance Scaling
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    はじめに
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-concept-of-cpu-performance-scaling" class="md-nav__link">
+    The Concept of CPU Performance Scaling
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpu-performance-scaling-in-linux" class="md-nav__link">
+    CPU Performance Scaling in Linux
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpufreq-policy-objects" class="md-nav__link">
+    CPUFreq Policy Objects
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpu-initialization" class="md-nav__link">
+    CPU Initialization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#policy-interface-in-sysfs" class="md-nav__link">
+    Policy Interface in sysfs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generic-scaling-governors" class="md-nav__link">
+    Generic Scaling Governors
+  </a>
+  
+    <nav class="md-nav" aria-label="Generic Scaling Governors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    performance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#powersave" class="md-nav__link">
+    powersave
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#userspace" class="md-nav__link">
+    userspace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schedutil" class="md-nav__link">
+    schedutil
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frequency-boost-support" class="md-nav__link">
+    Frequency Boost Support
+  </a>
+  
+    <nav class="md-nav" aria-label="Frequency Boost Support">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    Background
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-boost-file-in-sysfs" class="md-nav__link">
+    The boost File in sysfs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="cpu-performance-scaling">CPU Performance Scaling<a class="headerlink" href="#cpu-performance-scaling" title="Permanent link">#</a></h1>
+<h2 id="_1">はじめに<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<p>本資料は <a href="https://www.kernel.org/doc/html/latest/admin-guide/pm/cpufreq.html">CPU Performance Scaling</a> を要約し、補足を入れたものである。<code>intel_pstate</code> に関する情報は省略している。</p>
+<h2 id="the-concept-of-cpu-performance-scaling">The Concept of CPU Performance Scaling<a class="headerlink" href="#the-concept-of-cpu-performance-scaling" title="Permanent link">#</a></h2>
+<p>最近のプロセッサの大半は、CPUを異なる周波数/電圧構成間で切り替えたり、異なるP-stateにしたりできるハードウェアインタフェースがある。このインタフェースは通常、CPUをどのP-stateにするかを決定するために、必要なCPU能力を推定するアルゴリズムとともに使用される。システムの利用率は一般に時間とともに変化するため、これは定期的に繰り返し実行されなければならない。これを実現する活動は、CPUパフォーマンススケーリングまたはCPU周波数スケーリングと呼ばれる。</p>
+<h2 id="cpu-performance-scaling-in-linux">CPU Performance Scaling in Linux<a class="headerlink" href="#cpu-performance-scaling-in-linux" title="Permanent link">#</a></h2>
+<p><a class="glightbox" href="../imgs/2024-03-12-06-02-53.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/2024-03-12-06-02-53.png" width="30%" /></a>
+ (引用：<a href="https://www.google.com/url?sa=i&amp;url=http%3A%2F%2Fwww.wowotech.net%2Fpm_subsystem%2Fcpufreq_overview.html&amp;psig=AOvVaw2F_88QpKQobZZbLFOliaVL&amp;ust=1710277140631000&amp;source=images&amp;cd=vfe&amp;opi=89978449&amp;ved=0CBUQjhxqFwoTCLD65P2M7YQDFQAAAAAdAAAAABAD">linux cpufreq framework(1)_概述</a>)</p>
+<p>Linuxカーネルは、CPUFreq core、scaling governor、scaling driverの3層のコードで構成されるCPUFreq (CPU Frequency scaling) サブシステムによって、CPUパフォーマンスのスケーリングをサポートしている。</p>
+<ul>
+<li><strong>CPUFreq core</strong>：CPUパフォーマンススケーリングをサポートする全てのプラットフォームに対して、共通のコードインフラストラクチャとユーザ空間インタフェースを提供する。CPUFreq coreは、他のコンポーネントが動作するための基本的なフレームワークを定義する。</li>
+</ul>
+<ul>
+<li><strong>scaling governor</strong>：必要なCPU能力を見積もるアルゴリズムを実装する。原則として、各governorは1つのスケーリングアルゴリズムを実装する。</li>
+</ul>
+<ul>
+<li><strong>scaling driver</strong>：ハードウェアと通信する。scaling driverは、利用可能なP-stateに関する情報をscaling governorに提供し、プラットフォーム固有のハードウェアインタフェースにアクセスして、scaling governorの要求に応じてCPUのP-stateを変更する。</li>
+</ul>
+<h2 id="cpufreq-policy-objects">CPUFreq Policy Objects<a class="headerlink" href="#cpufreq-policy-objects" title="Permanent link">#</a></h2>
+<pre class="mermaid"><code>graph TB
+    A[[CPUFreq core]] -- pointer --&gt; B[cpufreq_policy]
+    A -- pointer --&gt; C[cpufreq_policy]
+    A -- pointer --&gt; D[cpufreq_policy]
+    B --&gt; E[cpu0]
+    C --&gt; F[cpu1]
+    C --&gt; G[cpu2]
+    D --&gt; H[cpu3]</code></pre>
+<p>P-state制御用のハードウェアインタフェースは複数のCPUで共有される可能性がある。例えば、同じレジスタが複数のCPUのP-stateを同時に制御するために使用される場合である。ハードウェアのP-state制御インタフェースを共有するCPUのセットは、 struct <code>cpufreq_policy</code> オブジェクトとして表現される。一貫性を保つため、指定されたセット内にCPUが1つしかない場合にも <code>cpufreq_policy</code> が使用される。</p>
+<p>CPUFreq coreは、現在オフラインになっているCPUを含め、システム内の全てのCPUに対して <code>cpufreq_policy</code> オブジェクトへのポインタを保持する。複数のCPUが同じハードウェアP-state制御インタフェースを共有している場合、それらに対応する全てのポインタは同じ <code>cpufreq_policy</code> オブジェクトを指す。</p>
+<p>CPUFreqは <code>cpufreq_policy</code> を基本データ型として使用し、ユーザ空間インタフェースの設計はポリシーの概念に基づいている。</p>
+<h2 id="cpu-initialization">CPU Initialization<a class="headerlink" href="#cpu-initialization" title="Permanent link">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>以下では、明示的に別段の記載がない限り、"CPU "は常に "論理CPU "を意味し、"プロセッサ "という単語は、複数の論理CPUを含む可能性のある物理的な部分を指すために使用される</p>
+</div>
+<pre class="mermaid"><code>flowchart LR
+    A[CPUがready] --&gt; B[CPUFreq core&lt;br/&gt;呼び出し]
+    B --&gt; IF1{cpufreq_policyポインタ&lt;br/&gt;が設定されている?}
+    IF1 --&gt;|Yes| D
+    IF1 --&gt;|No| C[cpufreq_policyオブジェクトの&lt;br/&gt;作成 &amp; 設定] --&gt; D
+    D["driver-&gt;init(*cpufreq_policy)"]
+    D --&gt; E["governor-&gt;init(*cpufreq_policy)"]
+    E --&gt; F["governor-&gt;start()"]</code></pre>
+<p>CPUFreqが動作するためには、scaling driverが登録されていなければならない。CPUがreadyになるとscaling driverを登録するためにCPUFreq coreが呼び出される。
+CPUFreq coreが呼び出されると、与えられたCPUに対してポリシーポインタがすでに設定されているかどうかをチェックし、もしそうであれば、ポリシーオブジェクトの作成をスキップする。
+そうでなければ、新しいポリシーオブジェクトが作成され、初期化される。
+この時、同時にsysfsに新しいポリシーディレクトリが作成される。
+与えられたCPUに対応するポリシーポインタは、メモリ内の新しいポリシーオブジェクトのアドレスに設定される。</p>
+<p>次に、scaling driverの <code>init()</code> コールバックが、引数として渡された新しいCPUのポリシーポインタとともに呼び出される。このコールバックは、指定されたCPUのパフォーマンススケーリングハードウェアインタフェースを初期化し、呼び出されたポリシーオブジェクトが新しい場合、ハードウェアによってサポートされる最小および最大周波数、利用可能な周波数のテーブル、および同じポリシーに属すCPUのマスクなどのパラメータが設定される。</p>
+<p>その後、ポリシーオブジェクトのポインタがgovernorの <code>init()</code> コールバックに渡され、与えられたポリシーを処理するために必要な全てのデータ構造が初期化される。governorは <code>start()</code> コールバックを呼び出すことで開始される。<code>start()</code> コールバックは与えられたポリシーに属す全てのオンラインCPUのCPU毎の利用率更新コールバックをCPUスケジューラに登録する。</p>
+<p>利用率更新コールバックは、タスクのenqueue/dequeueのような重要なイベント時や、scheduler tickの各反復時、CPUの使用状況が変わる可能性がある時などに、スケジューラによって呼び出される。
+利用率更新コールバックは、ポリシーに基づいてP-stateを決定するために必要な計算を行い、ハードウェアに変更を加えるようscaling driverを呼び出す。</p>
+<!-- 同様の手順が、新しいポリシーオブジェクトではなく、以前に「非アクティブ」であったポリシーオブジェクト、つまり、それらに属す全ての CPU がオフラインであったポリシーオブジェクトに対しても取られる。この場合の唯一の実際的な違いは、CPUFreq coreがデフォルトのgovernorではなく、「非アクティブ」になった (そして現在再初期化されている)ポリシーで以前使用されていたscaling governorを使用しようとすることである。
+
+一方、以前オフラインだった CPU をオンラインに戻すが、その CPU とポリシーオブジェクトを共有する他の CPU がすでにオンラインになっている場合、ポリシーオブジェクトを再初期化する必要はまったくない。その場合、scaling governorを再起動して、新しいオンライン CPU を考慮できるようにするだけでよい。これは、governorの->stop と->start() コールバックを、ポリシー全体に対してこの順序で呼び出すことによって達成される。
+
+CPUの初期化中に作成されたポリシーオブジェクトと、それに関連するその他のデータ構造は、scaling driverが登録解除されたとき (例えば、それを含むカーネルモジュールがアンロードされたときに起こる)、または与えられたポリシーに属す最後のCPUが登録解除されたときに破棄される。 -->
+
+<h2 id="policy-interface-in-sysfs">Policy Interface in sysfs<a class="headerlink" href="#policy-interface-in-sysfs" title="Permanent link">#</a></h2>
+<p><a class="glightbox" href="../imgs/2024-03-12-21-42-20.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/2024-03-12-21-42-20.png" width="30%" /></a> <a class="glightbox" href="../imgs/2024-03-12-21-48-16.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/2024-03-12-21-48-16.png" width="50%" /></a></p>
+<p>カーネルの初期化中に、CPUFreq coreは <code>sys/devices/system/cpu/</code> の下に <code>cpufreq</code> ディレクトリを作成する。そのディレクトリには、CPUFreqコアによって管理されている各ポリシーオブジェクトに対する <code>policyX</code> サブディレクトリが含まれている。各 <code>policyX</code> ディレクトリは、 <code>/sys/devices/system/cpu/cpuY/</code> 内のポリシーに紐づくCPUからcpufreqシンボリックリンクによって指されている。</p>
+<p>各 <code>policyX</code> ディレクトリは、それぞれ対応するポリシーオブジェクトのCPUFreq動作を制御するためのポリシースペシフィックな属性 (ファイル) を含んでいる。
+以下の表はそれらの属性の概要を説明したものである：</p>
+<table>
+<thead>
+<tr>
+<th align="center">Attributes</th>
+<th align="left">Descriptions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>affected_cpus</code></td>
+<td align="left">このポリシーに属すオンラインCPUのリスト</td>
+</tr>
+<tr>
+<td align="center"><code>bios_limit</code></td>
+<td align="left">BIOSがOSにCPU周波数に上限を適用するように指示した場合、その上限が格納される</td>
+</tr>
+<tr>
+<td align="center"><code>cpuinfo_cur_freq</code></td>
+<td align="left">このポリシーに属すCPUの現在の動作周波数 [<span class="arithmatex">\(\mathrm{kHz}\)</span>]</td>
+</tr>
+<tr>
+<td align="center"><code>cpuinfo_max_freq</code></td>
+<td align="left">このポリシーに属すCPUの最大動作周波数 [<span class="arithmatex">\(\mathrm{kHz}\)</span>]</td>
+</tr>
+<tr>
+<td align="center"><code>cpuinfo_min_freq</code></td>
+<td align="left">このポリシーに属すCPUの最小動作周波数 [<span class="arithmatex">\(\mathrm{kHz}\)</span>]</td>
+</tr>
+<tr>
+<td align="center"><code>cpuinfo_transition_latency</code></td>
+<td align="left">このポリシーに属すCPUをあるP-stateから別のP-stateに切り替えるのにかかる時間 [ns]</td>
+</tr>
+<tr>
+<td align="center"><code>related_cpus</code></td>
+<td align="left">このポリシーに属す全ての(オンライン&amp;オフライン)CPUのリスト</td>
+</tr>
+<tr>
+<td align="center"><code>scaling_available_governors</code></td>
+<td align="left">このポリシーにアタッチできるCPUFreq scaling governorのリスト</td>
+</tr>
+<tr>
+<td align="center"><code>scaling_cur_freq</code></td>
+<td align="left">このポリシーに属す全てのCPUの現在の周波数 [<span class="arithmatex">\(\mathrm{kHz}\)</span>]</td>
+</tr>
+<tr>
+<td align="center"><code>scaling_driver</code></td>
+<td align="left">現在使用中のscaling driver</td>
+</tr>
+<tr>
+<td align="center"><code>scaling_governor</code></td>
+<td align="left">このポリシーに現在アタッチされているscaling governor。書き込み可能で、書き込むと、このポリシーに新しいscaling governorがアタッチされる</td>
+</tr>
+<tr>
+<td align="center"><code>scaling_max_freq</code></td>
+<td align="left">このポリシーに属すCPUの最大動作周波数 [<span class="arithmatex">\(\mathrm{kHz}\)</span>]。書き込み可能で、書き込むと、新しい上限が設定される</td>
+</tr>
+<tr>
+<td align="center"><code>scaling_min_freq</code></td>
+<td align="left">このポリシーに属すCPUの最小動作周波数 [<span class="arithmatex">\(\mathrm{kHz}\)</span>]。書き込み可能で、書き込むと、新しい下限が設定される</td>
+</tr>
+<tr>
+<td align="center"><code>scaling_setspeed</code></td>
+<td align="left">この属性は、<code>userspace</code> scaling governorがこのポリシーにアタッチされている場合にのみ機能する。書き込み可能で、書き込むと、新しい周波数が設定される</td>
+</tr>
+</tbody>
+</table>
+<h2 id="generic-scaling-governors">Generic Scaling Governors<a class="headerlink" href="#generic-scaling-governors" title="Permanent link">#</a></h2>
+<p>CPUFreqは、全てのscaling driverで使用できる汎用scaling governorを提供する。scaling governorはポリシーオブジェクトにアタッチされ、異なるポリシーオブジェクトを異なるscaling governorで同時に処理できる。ポリシーオブジェクトのscaling governorは、sysfs の <code>scaling_governor</code> 属性によっていつでも変更できる。</p>
+<p>governorによっては、実装されているスケーリングアルゴリズムを制御したり、微調整したりするために sysfs 属性を公開しているものがある。governorチューナブルと呼ばれるこれらの属性は、使用するscaling driverによって、グローバルまたはポリシーごとに設定できる。ドライバがgovernorチューナブルをポリシー単位で必要とする場合、governorチューナブルは各ポリシーディレクトリのサブディレクトリに配置される。そうでない場合は、<code>/sys/devices/system/cpu/cpufreq/</code> 以下のサブディレクトリに配置される。いずれの場合も、governorチューナブルを含むサブディレクトリの名前は、それらを提供するgovernorの名前である。
+以下では各汎用scaling governorの詳細を説明する。</p>
+<h3 id="performance">performance<a class="headerlink" href="#performance" title="Permanent link">#</a></h3>
+<p>ポリシーオブジェクトにアタッチされると、このgovernorは、そのポリシーの <code>scaling_max_freq</code> 属性の制限内で、最も高い周波数を要求する。
+このリクエストは、 <code>scaling_max_freq</code> または <code>scaling_min_freq</code> ポリシーのリミットが変更される度に行われる。</p>
+<h3 id="powersave">powersave<a class="headerlink" href="#powersave" title="Permanent link">#</a></h3>
+<p>ポリシーオブジェクトにアタッチされると、このgovernorは、そのポリシーに対して、 <code>scaling_min_freq</code> ポリシー制限内の最低周波数を要求する。
+このリクエストは、 <code>scaling_max_freq</code> または <code>scaling_min_freq</code> ポリシーのリミットが変更される度に行われる。</p>
+<h3 id="userspace">userspace<a class="headerlink" href="#userspace" title="Permanent link">#</a></h3>
+<p>このgovernorはそれ自身では何もしない。その代わり、ユーザがポリシーの <code>scaling_setspeed</code> 属性に書き込むことで、アタッチされているポリシーの CPU 周波数を設定できるようにする。</p>
+<h3 id="schedutil">schedutil<a class="headerlink" href="#schedutil" title="Permanent link">#</a></h3>
+<p>このgovernorは、CPUスケジューラから利用可能なCPU利用率データを使用する。一般にCPUスケジューラの一部とみなされるため、スケジューラの内部データ構造に直接アクセスできる。これは完全にスケジューラコンテキストで実行される。特定のCPUに対するこのgovernorの動作は、そのCPUの利用率更新コールバックを呼び出すスケジューリングクラスに依存する。</p>
+<ul>
+<li><strong>RTスケジューリングクラス or デッドラインスケジューリングクラス</strong>： governorは、許容される最大値 (scaling_max_freq) まで周波数を増やす。</li>
+<li><strong>CFSスケジューリングクラス</strong>： governorはCPU利用率の推定値として、指定されたCPUのルート制御グループの <a href="https://markdown-share.pages.dev/linux_kernel/pelt/pelt/">PELT (Per-Entity Load Tracking) メトリック</a> を使用する。次に、適用する新しいCPU周波数が、以下の式に従って計算される。<p>
+<script type="math/tex; mode=display">
+  \mathrm{f}=1.25 \times \mathrm{f}_{0} \times \frac{\text { util }}{\max}
+  </script>
+</p>
+<p>ここで、utilはPELT数、 <span class="arithmatex">\(\max\)</span> はutilの理論上の最大値、 <span class="arithmatex">\(\mathrm{f}_{0}\)</span> は与えられたポリシーで可能なCPU周波数の最大値 (PELT数が周波数に依存しない場合)、または現在のCPU周波数 (そうでない場合)のいずれかである。</p>
+</li>
+</ul>
+<p>このgovernorはまた、「IO-wait boosting」と呼ばれる、直近でI/O待ちをしていたタスクのCPU周波数を一時的に引き上げるメカニズムも採用している。これは、SCHED_CPUFREQ_IOWAITフラグがスケジューラからgovernorコールバックに渡されたときに発生するもので、このフラグによって、周波数がすぐに許容最大値まで上がり、その後、時間の経過とともに上記の式で返される値に引き戻される。</p>
+<p>このgovernorは、1つのチューナブルだけを公開する：</p>
+<div class="admonition quote">
+<p class="admonition-title">rate_limit_us</p>
+<p>governor計算の2つの連続した実行の間に経過しなければならない最小時間 (マイクロ秒単位) (デフォルト：scaling driverの遷移レイテンシの1000倍)。このチューナブルにより、governorのスケジューラコンテキストオーバーヘッドを調整できる。</p>
+</div>
+<p>このgovernorは、一般に、旧来の <code>ondemand</code> governorや <code>conservative</code> governorに取って代わると考えられている。なぜなら、このgovernorは、よりシンプルでCPUスケジューラと緊密に統合されており、CPUコンテキストスイッチなどのオーバーヘッドが少なく、スケジューラ独自のCPU利用率メトリックを使用するため、原則的に、このgovernorの決定が、スケジューラの他の部分の決定と矛盾することはないからである。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>上記理由により、本ドキュメントでは、<code>ondemand</code> 及び <code>conservative</code> governorの説明を省略する。</p>
+</div>
+<h2 id="frequency-boost-support">Frequency Boost Support<a class="headerlink" href="#frequency-boost-support" title="Permanent link">#</a></h2>
+<h3 id="background">Background<a class="headerlink" href="#background" title="Permanent link">#</a></h3>
+<p>プロセッサの中には、チップ全体が十分に利用されておらず、意図した熱や電力のバジェットを下回っている場合など、特定の条件下で、一部のコアの動作周波数を一時的に引き上げるメカニズムをサポートしているものがある。</p>
+<p>この機能は、ベンダーによって異なる名称が使われている。インテルプロセッサでは「ターボブースト」、AMDでは「ターボコア」または「コアパフォーマンスブースト」と呼ばれている。また、ベンダーによって実装方法も異なる。ここでは簡潔に「周波数ブースト」という用語を使用する。</p>
+<p>周波数ブーストメカニズムには、ハードウェアベースとソフトウェアベースがある。ハードウェアベース (x86など) の場合、ブーストをトリガするかどうかの判断はハードウェアが行う。ソフトウェアベース (ARMなど) の場合は、scaling driverが周波数ブーストをトリガするかどうかとそのタイミングを決定する。</p>
+<h3 id="the-boost-file-in-sysfs">The boost File in sysfs<a class="headerlink" href="#the-boost-file-in-sysfs" title="Permanent link">#</a></h3>
+<p>このファイルは <code>/sys/devices/system/cpu/cpufreq/boost</code> にあり、システム全体の周波数ブースト設定を制御する。基礎となるscaling driverが周波数ブーストメカニズムをサポートしていない、
+またはサポートしているが、intel_pstateのような周波数ブーストを制御するためのドライバ固有のインタフェースを提供している場合は、このファイルは存在しない。このファイルに書き込める値は <code>0</code> と <code>1</code> だけである。</p>
+<ul>
+<li><code>1</code> の場合：周波数ブーストメカニズムが有効になる。これは、ハードウェアがブーストをトリガできる状態 (ハードウェアベースの場合) になるか、ソフトウェアがブーストをトリガできる状態 (ソフトウェアベースの場合) になることを意味する。</li>
+<li><code>0</code> の場合：周波数ブーストメカニズムは無効となり、まったく使用できない。</li>
+</ul>
+
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.expand", "navigation.indexes", "toc.integrate", "navigation.instant", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "search": "../../../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.220ee61c.min.js"></script>
+      
+        
+          <script src="../../../../javascripts/mathjax.js"></script>
+        
+      
+        
+          <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        
+      
+        
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

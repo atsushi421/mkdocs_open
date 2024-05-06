@@ -1,0 +1,1500 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://atsushi421.github.io/mkdocs_open/dvfs_old/Declaring_Processors/summary_Declaring_Processors/">
+      
+      
+        <link rel="prev" href="../../ACPI_Concepts/summary_ACPI_Concepts/">
+      
+      
+        <link rel="next" href="../../Introduction/summary_Introduction/">
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.20">
+    
+    
+      
+        <title>Declaring Processors [[参考](https://uefi.org/htmlspecs/ACPI_Spec_6_4_html/08_Processor_Configuration_and_Control/declaring-processors.html?)] - Documents created by Atsushi Yano</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.eebd395e.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ecc896b0.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/mermaid@8.13.10/dist/mermaid.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/extra.css">
+    
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#declaring-processors" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Documents created by Atsushi Yano" class="md-header__button md-logo" aria-label="Documents created by Atsushi Yano" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documents created by Atsushi Yano
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Declaring Processors [[参考](https://uefi.org/htmlspecs/ACPI_Spec_6_4_html/08_Processor_Configuration_and_Control/declaring-processors.html?)]
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+            
+              <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+              </label>
+            
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+            
+              <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+              </label>
+            
+          
+        </form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/atsushi421/mkdocs_open" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../.." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../dvfs/linux/Power_Management_in_Linux_Kernel/" class="md-tabs__link">
+        DVFS
+      </a>
+    </li>
+  
+
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Documents created by Atsushi Yano" class="md-nav__button md-logo" aria-label="Documents created by Atsushi Yano" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Documents created by Atsushi Yano
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/atsushi421/mkdocs_open" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          DVFS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          DVFS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_1" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+          Linux
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Linux
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dvfs/linux/Power_Management_in_Linux_Kernel/" class="md-nav__link">
+        Power Management in Linux Kernel
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_1_2" >
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1_2" id="__nav_2_1_2_label" tabindex="0">
+          CPU Idle Time Management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          CPU Idle Time Management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dvfs/linux/CPU_Idle_Time_Management/CPU_Idle_Time_Management/" class="md-nav__link">
+        CPU Idle Time Management
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_1_3" >
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1_3" id="__nav_2_1_3_label" tabindex="0">
+          CPU Performance Scaling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_1_3">
+          <span class="md-nav__icon md-icon"></span>
+          CPU Performance Scaling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dvfs/linux/CPU_Performance_Scaling/CPU_Performance_Scaling/" class="md-nav__link">
+        CPU Performance Scaling
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="declaring-processors">Declaring Processors [<a href="https://uefi.org/htmlspecs/ACPI_Spec_6_4_html/08_Processor_Configuration_and_Control/declaring-processors.html?">参考</a>]<a class="headerlink" href="#declaring-processors" title="Permanent link">#</a></h1>
+<p>システム内の各プロセッサは、ACPIネームスペースの <span class="arithmatex">\(\backslash\)</span> _SBスコープで宣言する必要がある。 <span class="arithmatex">\(\backslash\)</span> _PRスコープでのプロセッサの宣言は、ACPI 1.0ベースのOSPM実装との互換性を必要とするプラットフォームでのみ必要でした。それ以外の用途では非推奨である。プロセッサは、ASL Device文によって宣言される。ASL Processor文による宣言は非推奨である。プロセッサのDevice定義は、ACPI0007ハードウェア識別子 (HID)を使用して宣言される。プロセッサの構成情報は、プロセッサデバイスのオブジェクトリスト内のオブジェクトによってのみ提供される。</p>
+<details class="quote">
+<summary>ACPI namespace</summary>
+<p>OSが管理するメモリ上の階層ツリー構造で、名前付きオブジェクトを含む。これらのオブジェクトは、データオブジェクト、制御メソッドオブジェクト、バス／デバイスパッケージオブジェクトなどである。OSは、ACPIシステムファームウェアに存在するACPIテーブルから定義ブロックをロードすることにより、実行時にネームスペースの内容を動的に変更する。ACPI名前空間内の全ての情報は、DSDT (Differentiated System Description Table)に由来し、DSDTにはDifferentiated Definition Blockと、1つ以上の他の定義ブロックが含まれている。</p>
+</details>
+<p>プラットフォームがAPIC割り込みモデルを使用している場合、プロセッサデバイスのUIDオブジェクト値は、プロセッサデバイスとMADTのエントリを関連付けるために使用される。</p>
+<p>プロセッサ固有のオブジェクトは、プロセッサデバイスのスコープ内で宣言できる。これらのオブジェクトは、プロセッサのパフォーマンス状態の制御など、複数の目的を果たす。その他のACPI定義デバイス関連オブジェクトも、プロセッサデバイスのスコープ内で宣言できる (例えば、前述の一意識別子オブジェクト_UID)。</p>
+<p>プロセッサにはデバイスのような特性があるため、少なくともデバイス通知を処理するために、プロセッサデバイスドライバがOSPMによってロードされる。OSPMは、ACPIネームスペース、プロセッサ固有のネイティブ識別命令、および_HIDメソッドを使用して、システム内のプロセッサを列挙する。</p>
+<p>プロセッサデバイスオブジェクトの宣言の詳細については、デバイス (デバイスパッケージの宣言)を参照してください。プロセッサ固有の子オブジェクトについては、以下のセクションで説明する。</p>
+<p>ACPI 6.0 では、プロセッサコンテナの概念が導入された。プロセッサコンテナは、プロセッサコンテナデバイスを使用して宣言される。プロセッサコンテナは、共有キャッシュなどの共通リソースを共有し、コレクション内のプロセッサに影響を与えるパワーステートを持つ、関連するプロセッサのコレクションを記述するために使用できる。詳細については、プロセッサコンテナデバイスを参照してください。</p>
+<h2 id="842-processor-power-state-control">8.4.2. Processor Power State Control<a class="headerlink" href="#842-processor-power-state-control" title="Permanent link">#</a></h2>
+<p>ACPI は、複数のプロセッサ電源状態 ( <span class="arithmatex">\(C\)</span> 状態)制御インタフェースを定義している。これらは以下のとおりである：</p>
+<p>1.プロセッサレジスタブロック (P_BLK)のP_LVL2およびP_LVL3レジスタは、FADTのP_LVLx_LAT値と組み合わされる。</p>
+<p>2.プロセッサのオブジェクトリストにある_CSTオブジェクト。</p>
+<p>3.プロセッサとプロセッサコンテナの_LPIオブジェクト。</p>
+<p>P_BLK ベースの C ステート制御は、ACPI ハードウェア仕様に記載されている。CST ベースの C ステート制御は、P_BLK ベースの制御の機能を拡張し、 <span class="arithmatex">\(\mathrm{C}\)</span> ステートの数とタイプをダイナミックに変更できるようにし、機能固定ハードウェアアドレス空間を使用して定義されたレジスタによって示される CPU アーキテクチャ固有の <span class="arithmatex">\(\mathrm{C}\)</span> ステート入出力メカニズムに対応する。</p>
+<p>CSTは、オプションのオブジェクトである：
+- プロセッサレジスタブロック (P_BLK)の P_LVL2 および P_LVL3 レジスタは、FADT の P_LVLx_LAT 値と結合する。
+- プロセッサのオブジェクトリストにある_CSTオブジェクト。</p>
+<p>ACPI 6.0 では、低消費電力アイドル状態オブジェクトである _LPI が導入された。LPIは、より詳細な電力状態情報を提供し、プロセッサコンテナと連携して複数の階層レベルでアイドル状態を記述できる。詳細については、_LPI (Low Power Idle States)を参照してください。</p>
+<h2 id="8421-_cst-c-states">8.4.2.1. _CST (C States)<a class="headerlink" href="#8421-_cst-c-states" title="Permanent link">#</a></h2>
+<p>CSTは、サポートされるプロセッサの電源状態 (Cステート)を宣言するための代替方法を提供するオプショナルオブジェクトである。CSTオブジェクトが提供する値は、P_BLKのP_LVLx値とFADTのP_LVLx_LAT値を上書きする。CSTオブジェクトを使用すると、 <span class="arithmatex">\(\mathrm{C} 1, \mathrm{C} 2\)</span> および <span class="arithmatex">\(\mathrm{C} 3\)</span> を超えて、プロセッサの電源状態を任意の数に拡張できる。これらの拡張状態のエントリセマンティクス (言い換えれば、これらの状態に入るための考慮事項)は、CステートタイプフィールドによってOSPMに伝えられ、セクション8.1.2からセクション8.1.4で説明されているC1 C2およびC3のエントリセマンティクスに対応する。CSTは、より低い消費電力とより高いエントリ/エグジットレイテンシを特徴とする上昇Cステートを定義する。</p>
+<h1 id="arguments">Arguments:<a class="headerlink" href="#arguments" title="Permanent link">#</a></h1>
+<p>なし</p>
+<h1 id="return-value">Return Value:<a class="headerlink" href="#return-value" title="Permanent link">#</a></h1>
+<p>以下のようなCステート情報パッケージのリストを含む可変長パッケージ。</p>
+<h1 id="return-value-information">Return Value Information<a class="headerlink" href="#return-value-information" title="Permanent link">#</a></h1>
+<p>CSTは、以下の要素を含む可変長のパッケージを返す：
+- Count CStateに続くサブパッケージの数を含む整数。
+- CStates[] Count CStateサブパッケージのリスト。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-04.jpg?height=271&amp;width=869&amp;top_left_y=70&amp;top_left_x=249" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-04.jpg?height=271&amp;width=869&amp;top_left_y=70&amp;top_left_x=249" /></a></p>
+<p>各固定長Cステートサブパッケージには、以下のエレメントが含まれる：</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-04.jpg?height=272&amp;width=1257&amp;top_left_y=637&amp;top_left_x=250" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-04.jpg?height=272&amp;width=1257&amp;top_left_y=637&amp;top_left_x=250" /></a></p>
+<h1 id="element-object-type-description">Element Object Type Description<a class="headerlink" href="#element-object-type-description" title="Permanent link">#</a></h1>
+<div class="arithmatex">\[\begin{tabular}{|l|l|l|}
+\hline Register &amp; Buffer &amp; Contains a Resource Descriptor with a single Regis \\
+\hline Type &amp; Integer (BYTE) &amp; The C State type $(1=\mathrm{C} 1,2=\mathrm{C} 2,3=\mathrm{C} 3)$. This field co \\
+\hline Latency &amp; Integer (WORD) &amp; The worst-case latency to enter and exit the C Sta \\
+\hline Power &amp; Integer (DWORD) &amp; The average power consumption of the processor \\
+\hline
+\end{tabular}\]</div>
+<p>プラットフォームは、そのプロセッサの全てまたはいずれかについて_CSTオブジェクトを公開する必要がある。CSTオブジェクトが存在する場合、OSPMは、 <span class="arithmatex">\(P_{-} B L K\)</span> で定義された <span class="arithmatex">\(P_{-} L V L 2\)</span> および <span class="arithmatex">\(P_{-} L V L 3\)</span> レジスタと、FADTで定義された <span class="arithmatex">\(P_{-}\)</span> LVLx_LAT値の代わりに、_CSTオブジェクトで指定されたCステート情報を使用する。また、_CSTオブジェクトが存在し、_PTCオブジェクトが存在しない場合、OSPMは_CSTオブジェクト内のP_BLKおよびC_State_Registerレジスタに定義されたプロセッサコントロールレジスタを使用することに注意。</p>
+<p>プラットフォームは、プロセッサオブジェクトに対して通知値 <span class="arithmatex">\(0 \times 81\)</span> のNotifyイベントを発行することで、OSPMが使用可能なCステートの数やタイプを動的に変更できる。これによりOSPMは、通知されたプロセッサオブジェクトの下に存在する_CSTオブジェクトを再評価する。例えば、プラットフォームは、非同期AC挿入/取り外しイベントの結果、サポートされる <span class="arithmatex">\(C\)</span> ステートの数が変更されたことをOSPMに通知できる。</p>
+<p>プラットフォームは、与えられた_CSTオブジェクト内の全エントリに対して、一意のC_State_Registerアドレスを指定しなければならない。</p>
+<p>CSTは、全てのプロセッサがCステートパリティを持たなければならないというACPI 1.0の制限を排除する。CSTを使用すると、各プロセッサは他のプロセッサから独立した独自の特性を持つことができる。例えば、プロセッサ0はC1、C2、C3をサポートし、プロセッサ1はC1のみをサポートできる。</p>
+<p>プロセッサ構造のフィールドは、後方互換性のために残っている。</p>
+<h1 id="example">Example<a class="headerlink" href="#example" title="Permanent link">#</a></h1>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-05.jpg?height=799&amp;width=1567&amp;top_left_y=636&amp;top_left_x=239" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-05.jpg?height=799&amp;width=1567&amp;top_left_y=636&amp;top_left_x=239" /></a></p>
+<p>上記の例では、OSPMは、CSTオブジェクトが同じC_State_Type値を持つ複数のエントリを提供する可能性を予期しなければならないことに注意。この場合、OSPMはどのC_State_Registerを使って <span class="arithmatex">\(\mathrm{C}\)</span> ステートに入るかを決めなければならない。</p>
+<h1 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">#</a></h1>
+<p>これは、ACPI 1.0で定義されている典型的な値を使用した_CSTオブジェクトの使用例である。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-05.jpg?height=575&amp;width=1483&amp;top_left_y=2165&amp;top_left_x=250" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-05.jpg?height=575&amp;width=1483&amp;top_left_y=2165&amp;top_left_x=250" /></a></p>
+<p>プラットフォームは、使用可能なプロセッサ電源状態の数が変更されると、このオブジェクトを再評価するよう OSPM に通知するために Notify (_SB.CPU0, 0x81) を発行する。</p>
+<h2 id="8422-_csd-c-state-dependency">8.4.2.2. _CSD (C-State Dependency)<a class="headerlink" href="#8422-_csd-c-state-dependency" title="Permanent link">#</a></h2>
+<p>このオプションのオブジェクトは、OSPMにCステートコントロールクロス論理プロセッサ依存情報を提供する。CSDオブジェクトは、_CSTオブジェクトによって返されるCステート情報に関連する情報のパッケージ化されたリストに評価される。各パッケージリストエントリは、依存関係が指定されている <span class="arithmatex">\(\mathrm{C}\)</span> ステート (_CSTオブジェクトリストへのインデックスとして)、そのCステートの依存関係ドメイン番号、その <span class="arithmatex">\(\mathrm{C}\)</span> ステートの調整タイプ、および特定のCステートのドメインに属す論理プロセッサの数を識別する。特定のC状態が複数のドメインに属す可能性がある。すなわち、_CSD リストには、同じ CStatelndex 値を持つ複数のエントリが存在する可能性がある。</p>
+<h1 id="arguments_1">Arguments:<a class="headerlink" href="#arguments_1" title="Permanent link">#</a></h1>
+<p>なし</p>
+<h1 id="return-value_1">Return Value:<a class="headerlink" href="#return-value_1" title="Permanent link">#</a></h1>
+<p>後述するC-state依存Packageのリストを含む可変長のPackage。</p>
+<h1 id="return-value-information_1">Return Value Information<a class="headerlink" href="#return-value-information_1" title="Permanent link">#</a></h1>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-06.jpg?height=222&amp;width=713&amp;top_left_y=1629&amp;top_left_x=250" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-06.jpg?height=222&amp;width=713&amp;top_left_y=1629&amp;top_left_x=250" /></a></p>
+<p>各 CstateDependency サブパッケージには、以下の要素が含まれる：</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-06.jpg?height=356&amp;width=868&amp;top_left_y=2152&amp;top_left_x=250" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-06.jpg?height=356&amp;width=868&amp;top_left_y=2152&amp;top_left_x=250" /></a></p>
+<div class="arithmatex">\[\begin{tabular}{|l|l|l|}
+\hline Element &amp; Object Type &amp; Description \\
+\hline NumEntries &amp; Integer &amp; The number of entries in the CStateDepen \\
+\hline Revision &amp; Integer (BYTE) &amp; The revision number of the CStateDepend \\
+\hline Domain &amp; Integer (DWORD) &amp; The dependency domain number to which \\
+\hline CoordType &amp; Integer (DWORD) &amp; See Table 8.1 for supported C-state coordi \\
+\hline Num Processors &amp; Integer (DWORD) &amp; The number of processors belonging to thı \\
+\hline Index &amp; Integer (DWORD) &amp; Indicates the index of the C-State entry in \\
+\hline
+\end{tabular}\]</div>
+<p>利用可能なCステートの数やタイプが動的に変化する可能性があるため、ACPIはプロセッサオブジェクトのNotifyイベントをサポートしており、タイプ0x81のNotifyイベントを受け取ると、OSPMは通知された特定のプロセッサオブジェクトの下に存在する_CSTオブジェクトを再評価する。タイプ0x81のNotifyイベントを受信すると、OSPMは現在存在する_CSDオブジェクトも再評価する必要がある。</p>
+<h1 id="example_2">Example<a class="headerlink" href="#example_2" title="Permanent link">#</a></h1>
+<p>これは、名前空間内の Processor 構造体における _CSD 構造体の使用例である。この例は、2 つのプロセッサ構成を表している。C1 タイプの状態は、各プロセッサで独立して入力できる。C2タイプの状態については、一方のプロセッサがC2タイプの状態に遷移すると、もう一方のプロセッサもC2タイプの状態に遷移するというように、2つのプロセッサ間に依存関係が存在する。C3タイプの状態にも同様の依存関係が存在する。OSPMは、2つのプロセッサ間のC2およびC3遷移を調整する必要がある。また、OSPMはどちらか一方のプロセッサでトランジションを開始し、両方を共通のターゲットであるCステートに遷移させることができる。</p>
+<p>Package() ︙{ResourceTemplate()︙{Register(FFixedHW, 0, 0, 0)︙}, 1, 20,1000}、</p>
+<p>Package() ╱{ResourceTemp late() ╱{Register(SystemI0, 8, <span class="arithmatex">\(0,0 \times 161)\}, 2,40,750\}\)</span> 、</p>
+<p>Package()╱{ResourceTemplate()╱{Register(SystemI0, 8, <span class="arithmatex">\(0,0 \times 162)\}, 3,60,500\}\)</span> ╱}) Name(_CSD, Package())</p>
+<p>{</p>
+<p>Package(){6, 0, 0, 0xFD, 2, 1} , // 6エントリ。6 エントリ、Revision <span class="arithmatex">\(\odot\)</span> 、Domain <span class="arithmatex">\(\odot\)</span> 、OSPM Coordinate</p>
+<p>// 任意の手順で開始、2手順、インデックス1 (C2-)</p>
+<p>タイプ)</p>
+<p>Package()♪{6, <span class="arithmatex">\(0, \oplus, 0 x F D, 2,2\}\)</span> // 6エントリ, 改訂 <span class="arithmatex">\(\odot\)</span> 領域 <span class="arithmatex">\(\odot\)</span> , OSPM座標</p>
+<p>// 任意の手順で開始、2手順、インデックス2 (C3-)</p>
+<p>タイプ)</p>
+<p>})</p>
+<p>}</p>
+<p>プロセッサ</p>
+<p>_SB.CPU1, // Processor Name</p>
+<p>2,</p>
+<p>// ACPI プロセッサ番号</p>
+<p>'</p>
+<p>// PBlkシステムIOアドレス</p>
+<p>)</p>
+<p>// PBlkLen</p>
+<p>{</p>
+<p>名前(_CST, パッケージ()</p>
+<p>{</p>
+<p>3, // ここでは、3つのセマンティクスを持つ3つのC状態が定義されている。</p>
+<p>Package() ︙{ResourceTemplate() ︙{Register(FFixedHW, <span class="arithmatex">\(0,0,0)\}, 1,20,1000\}\)</span> 、</p>
+<p>Package() ︙{ResourceTemplate() ︙{Register(SystemI0, 8, 0, 0x161)︙}, 2, 40, 750}、</p>
+<p>Package()╱{ResourceTemplate()╱{Register(SystemI0, 8, <span class="arithmatex">\(0,0 \times 162)\}, 3,60,500\}\)</span>)</p>
+<p>})</p>
+<p>名前(_CSD, パッケージ())</p>
+<p>{</p>
+<p>Package() {6, 0,0, ⓧFD, 2, 1}, // 6 entries,Revision <span class="arithmatex">\(\odot\)</span> , Domain <span class="arithmatex">\(\odot\)</span> , OSPM Coordinate</p>
+<p>// 任意のプロセッサで開始、2プロセッサ、インデックス1 (C2-)</p>
+<p>タイプ)</p>
+<p>Package(){6, <span class="arithmatex">\(\odot, \oplus, 0 x F D, 2,2\}\)</span> // 6エントリ、Revision <span class="arithmatex">\(\odot\)</span> 、Domain <span class="arithmatex">\(\odot\)</span> 、OSPM座標</p>
+<p>// 任意のProcで開始、2Proc、インデックス2 (C3-)</p>
+<p>タイプ)</p>
+<p>})</p>
+<p>}</p>
+<p>プラットフォームが、使用可能なプロセッサ電源状態の数が変化したときに_CSTを再評価するようにOSPMに通知するために、通知( <span class="arithmatex">\(\backslash\)</span> _SB.CPU0, 0x81)を発行するとき、OSPMは_CSDも評価すべきである。</p>
+<h2 id="843-processor-hierarchy">8.4.3. Processor Hierarchy<a class="headerlink" href="#843-processor-hierarchy" title="Permanent link">#</a></h2>
+<p>コンピューティングプラットフォームには、キャッシュなどの共通リソースを共有し、プロセッサ群に影響を与える共通の電力状態を持つ多数のプロセッサが存在するのが一般的である。これらは階層的に配置される。例えば、システムには、それぞれが多数のソケットを持つNUMAノードのセットが含まれることがあり、そのノードには複数のプロセッサグループが含まれることがあり、その各プロセッサコアには個別のプロセッサコアが含まれることがあり、その各プロセッサコアには複数のハードウェアスレッドが含まれることがある。アーキテクチャによって、論理的に関連付けられたプロセッサを表す用語は異なるが、パッケージ、クラスタ、モジュール、ソケットなどの用語が代表的な例である。ACPI では、プロセッサコンテナという用語を使用して、関連付けられたプロセッサのグループを表す。プロセッサは、共有キャッシュや低電力モードなど、何らかの方法で関連付けられ、その全てが影響を受ける場合に、コンテナに属すと言われる。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-09.jpg?height=1816&amp;width=1485&amp;top_left_y=917&amp;top_left_x=297" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-09.jpg?height=1816&amp;width=1485&amp;top_left_y=917&amp;top_left_x=297" /></a></p>
+<p>図8.6 プロセッサ階層</p>
+<p>上図はシステムの例を示しており、システムレベルのプロセッサコンテナで構成され、その中に2つのクラスタプロセッサコンテナがあり、それぞれに2つのプロセッサがある。全体的なコレクションはプロセッサ階層と呼ばれ、標準的なツリー用語はその様々な部分を参照するために使用される。例えば、個々のプロセッサやコンテナはノードと呼ばれ、プロセッサコンテナ内に存在するノードはその親の子などと呼ばれる。この例は対称的であるが、これは必要条件ではない。例えば、システムが異なるコンテナに異なる数のプロセッサを含む場合や、トポロジツリーの一方が他方より深い非対称階層を含む場合がある。また、この例では、全てのプロセッサを包含する単一のトップレベルプロセッサコンテナが含まれているが、これは要件ではないことに注意すること。ツリーの集合を用いてシステムを記述することは合法である (下記注参照)。</p>
+<h1 id="1-note">(1) Note<a class="headerlink" href="#1-note" title="Permanent link">#</a></h1>
+<p>プロセッサ階層は、システムトポロジの様々な特性を記述するために使用できる。主な例は、共有電力状態である。詳細は、「低電力アイドル状態」の「低電力アイドル状態」を参照。</p>
+<h2 id="8431-processor-container-device">8.4.3.1. Processor Container Device<a class="headerlink" href="#8431-processor-container-device" title="Permanent link">#</a></h2>
+<p>このオプションのデバイスは、ネームスペースのバスノードによく似た働きをするコンテナオブジェクトである。プロセッサデバイスまたは他のプロセッサコンテナである子オブジェクトを含むことができる。これにより、階層的なプロセッサトポロジを表現できる。本明細書では、階層内の各プロセッサコンテナまたはプロセッサをノードと呼ぶ。プロセッサコンテナデバイスは、ハードウェア識別子 (_HID)ACPI0010 を使用して宣言される。</p>
+<p>プロセッサコンテナを解析しないOSのサポートを支援するために、コンテナは汎用コンテナデバイスを表すPNPOA05の互換ID (_CID)を持つことができる (「デバイスクラス固有のオブジェクト」を参照)。</p>
+<p>プロセッサコンテナ宣言は、プロセッサコンテナ階層で一意であるIDを返す_UIDメソッドを提供しなければならない。プロセッサコンテナは、そのスコープ内で宣言された他のプロセッサコンテナまたは他のプロセッサデバイスを含まなければならない。さらに、プロセッサコンテナは、そのスコープ内に以下のメソッドを含むことができる：</p>
+<p>表 8.4 プロセッサコンテナデバイスオブジェクト</p>
+<h1 id="object-description">Object Description<a class="headerlink" href="#object-description" title="Permanent link">#</a></h1>
+<p>LPI procで表される階層ノードのローカル電源状態を宣言する。</p>
+<p>システムレベルの電力統計に影響する電力リソースの依存関係を宣言する。</p>
+<p>プロセッサコンテナのステータスを決定する。デバイスクラス固有 । を参照。</p>
+<p>LPIはプロセッサデバイスの下に存在する可能性があり、LPI (Low Power Idle States)で説明する。RDI は、単一のトップレベルプロセッサコンテナオブジェクトの下にのみ存在することができ、以下で説明する。</p>
+<p>ACPIでは、複数のルートレベルプロセッサコンテナを定義できる。言い換えれば、複数のトップレベルコンテナを定義することが可能である。例えば、NUMAシステムにおいて、アイドル状態やシステムレベルでカプセル化する必要のある他のオブジェクトがない場合、複数のNUMAノードレベルのプロセッサコンテナを階層のトップレベルで定義できる。</p>
+<p>プロセッサコンテナデバイスオブジェクトは、ACPI 6.0以上の実装でのみ有効である。プラットフォームは、_OSCメソッドによって、OSがプロセッサコンテナオブジェクトの解析をサポートしているかどうかを確認できる (「Platform-Wide OSPM Capabilities」参照)。</p>
+<h2 id="844-lower-power-idle-states">8.4.4. Lower Power Idle States<a class="headerlink" href="#844-lower-power-idle-states" title="Permanent link">#</a></h2>
+<p>ACPI 6.0 では、LPI (Lower Power Idle states)が導入された。これは、C ステートと同様に、プロセッサがアイドルになったときに OSPM によって選択されるアイドル状態を表現できるように仕様を拡張するものであるが、複数のプロセッサに影響を与える可能性があり、他のシステムコンポーネントにも影響を与える可能性がある。本仕様における LPI 拡張は、プロセッサコンテナデバイスを活用することで、与えられた LPI 状態がシステムのどの部分に影響するかを表現できる。</p>
+<p>LPIの状態は、以下のオブジェクトによって定義される：
+- LPIオブジェクトは状態そのものを定義し、プロセッサまたはプロセッサコンテナデバイスの内部で宣言できる。
+- RDIは、デバイスの使用状況から生じるLPI使用量の制約を表現できる。</p>
+<h2 id="8441-hierarchical-idle-states">8.4.4.1. Hierarchical Idle States<a class="headerlink" href="#8441-hierarchical-idle-states" title="Permanent link">#</a></h2>
+<p>プロセッサコンテナ (Processor Container Device)は、_LPI (_LPI (Low Power Idle States))と組み合わせて使用することで、アイドル状態を階層的に記述できる。プロセッサ階層内では、各ノードに固有の低消費電力状態がある。ACPIは、階層内のノードに固有の状態をローカル電力状態 (Local Power States)と呼ぶ。例えば、「プロセッサ階層の電力状態」に描かれているシステムでは、CPUOのローカル電力状態は、クロックゲート、リテンション、パワーダウンである。</p>
+<p>あるプロセッサ上で動作しているOSが、そのプロセッサ上でスケジューリングする作業がなくなったことを検出すると、アイドル状態を選択する必要がある。この状態は、そのプロセッサ以外にも影響する可能性がある。アイドル状態になるプロセッサは、システムの最後のプロセッサであったり、プロセッサコンテナ内のプロセッサであったりするため、複数のプロセッサに影響する電力状態を選択する可能性がある。このような状態を選択するために、OSはプロセッサ階層内の影響を受ける各レベルのローカル電源状態を選択する必要がある。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-12.jpg?height=1898&amp;width=1579&amp;top_left_y=79&amp;top_left_x=244" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-12.jpg?height=1898&amp;width=1579&amp;top_left_y=79&amp;top_left_x=244" /></a></p>
+<p>図8.7 プロセッサ階層の電力状態</p>
+<p>プロセッサ階層の電源状態 (Power states for processor hierarchy)の例で、Core 0が最後のアクティブコアである場合を考える。システムを可能な限り低いアイドル状態にできる。そのために、OSはCore0に対してローカルステート3 (パワーダウン)、Cluster0に対してローカルステート3 (パワーダウン)、システムに対してローカルステート1 (パワーダウン)を選択する。しかし、ほとんどのHWアーキテクチャは、OSからプラットフォームへの単一のパワーステート要求しかサポートしていない。すなわち、プラットフォームに対して階層ノードごとに個別のローカル電源状態要求を行うことはできない。そのため、OSは各階層のローカル電源状態を1つのコンポジット電源状態にまとめなければならない。その後、プラットフォームはコンポジット電源状態の要求に基づいて動作する。</p>
+<p>プラットフォームは限られたコンポジットパワーステートのセットしかサポートできず、レベル間のローカルパワーステートの全ての組み合わせが有効とは限らない。この例のシステムで有効な電力状態は、以下の表に示されている。</p>
+<p>表8.5 先行システム例における有効なローカル状態の組み合わせ</p>
+<div class="arithmatex">\[\begin{tabular}{l|l|l}
+System Level Processor Container &amp; Cluster level Processor Container &amp; Processc \\
+\hline Running &amp; Running &amp; Clock Gé \\
+\hline Running &amp; Running &amp; Retentio \\
+\hline Running &amp; Running &amp; Power D \\
+\hline Running &amp; Clock Gated &amp; Clock Géc \\
+\hline Running &amp; Clock Gated &amp; Retentio \\
+\hline Running &amp; Clock Gated &amp; Power D \\
+\hline Running &amp; Retention &amp; Retentio \\
+\hline Running &amp; Retention &amp; Power D \\
+\hline Running &amp; Power Down &amp; Power D \\
+\hline Power Down &amp; Power Down &amp; Power D \\
+\hline
+\end{tabular}\]</div>
+<h2 id="8442-idle-state-coordination">8.4.4.2. Idle State Coordination<a class="headerlink" href="#8442-idle-state-coordination" title="Permanent link">#</a></h2>
+<p>階層型アイドル状態の場合、複数のプロセッサがリーフ階層以外のノードのアイドル状態に影響する。プロセッサ階層における電力状態の例では、クラスタ 0 が低電力状態になるには、Core 0 と Core 1 の両方がアイドル状態でなければならない。さらに、Core 0とCore 1がアイドル状態になるときに行われる電力状態の選択は、クラスタ0に使用できる状態に影響する。このため、2つのプロセッサ間でアイドル状態の要求を調整する必要がある。ACPIは2つの異なる調整方式をサポートしている (以下のサブセクションで詳述)：
+- プラットフォーム
+- OSが開始した。</p>
+<p>OS とプラットフォームは、「Platform-Wide OSPM Capabilities」に記載されている _OSC メソッドを使用して、OS Initiated Idle または Platform Coordinated Idle のサポートについてハンドシェイクできる。OS Initiatedモードに入るには、アーキテクチャ固有のコマンドが必要な場合があり、その場合はアーキテクチャ固有のドキュメントを参照してください。(PSCIの文書については、http://uefi.org/acpi「PCSI Specification」を参照。ARM FFHの文書については、http://uefi.org/acpi「ARM FFH Specification」を参照)。</p>
+<h2 id="84421-platform-coordinated">8.4.4.2.1. Platform Coordinated<a class="headerlink" href="#84421-platform-coordinated" title="Permanent link">#</a></h2>
+<p>プラットフォーム協調方式では、プラットフォームがプロセッサ間のアイドル状態の調整に責任を持つ。OSPMは各プロセッサから全階層レベルの要求を行う。すなわち、各プロセッサは自分自身、その親、その親の親などのローカル電源状態を要求して投票を行う (場合によっては、特定の階層レベルに対する投票が暗黙のうちに行われることもある-詳細は後述の自動昇格の議論を参照)。より高いレベルのアイドル状態を選択する際、プロセッサ上のOSPMはより高いレベルのノードを実行状態に保つことを選ぶことができる。OSPMによって表明された投票は、プラットフォームがプロセッサと、投票によって影響を受ける全ての親ノードに対して選択できるローカルの電力状態に対する制約を設定する。特に、この投票はプラットフォームが進入してはならないことを表している：</p>
+<p>1.要求された状態よりも深い (低い)ローカル状態。</p>
+<p>2.要求されたウェイクアップレイテンシよりも高いローカル電源状態。</p>
+<p>3.要求された状態にはない、電力リソースに依存するローカル電力状態。</p>
+<p>プラットフォームは、全ての基礎となるコアからの各階層ノードに対する投票を横断的に調べ、全ての投票に関連する全ての制約を満たす最も深いローカルステートを選択する。通常、これはコアの1つが投票した最も浅いステートを選択することを意味する。なぜなら、浅いステートの方がウェイクアップレイテンシが短く、最小レジデンシが小さく、電力リソース依存が少ないからである。しかし、ステートの深さとレイテンシは常に一緒に増加するとは限らないため、これは常に正しいとは限らない。効率のために、プラットフォームは一般的に、要求されたものよりも高い最小残留時間を持つパワーステートに入るべきではない。しかし、これは厳密な機能要件ではない。プラットフォームは、特定の状態と状況に基づいてそれが最も効率的な選択であると考える場合、より高い最小残留性を持つ状態に解決できる。</p>
+<p>プロセッサ階層のパワーステートに上記の例を使うと、単純なフローは次のようになる：
+- Core0がアイドル状態になる- OSがCore0のパワーダウン、Cluster0の保持を要求
+- プラットフォームがCore0の要求を受信- Core0をパワーダウン状態にする
+- Core1がアイドル状態になる- OSがCore1のパワーダウン、Cluster0のパワーダウンを要求
+- プラットフォームがCore1のリクエストを受信- Core1をPower Down状態にし、Cluster0に対して最も浅い投票を行い、Retention状態にする。</p>
+<p>もしOSPMがクラスタレベル以上の電源状態を要求したい場合、CoreOとCore1は共にSystemレベルでもアイドル状態に投票し、プラットフォームはそれらの投票とSystem階層下の他のプロセッサからの投票を上記の方法で最終的な状態選択を解決する。</p>
+<p>前述したように、ある種のプラットフォームはオートプロモーションと呼ばれるメカニズムをサポートしている。この方式では、プラットフォームはOSPMに、より低いレベルのアイドル状態を要求するコマンドを提供する。
+これは、プロセッサ階層の各上位階層における特定のアイドル状態の要求を自動的に意味する。上位レベル状態への入力を明示的に要求するコマンドはなく、下位レベル状態に基づく暗黙の要求のみである。</p>
+<p>例えば、「プロセッサ階層の電源状態」で示したプラットフォームが Cluster0 Clock Gated 状態の自動促進を使用する場合、Core0 も Core1 も明示的に要求することはできない。しかし、Core0またはCore1のどちらかからコアレベルのクロックゲート要求があれば、Cluster0クロックゲート要求があることになる。したがって、両方のコアがコアクロックゲーティングを要求した場合 (またはそれ以上)、Cluster0はプラットフォームによって自動的にクロックゲーティングされる。ACPIでどのように自動昇格がサポートされるかの詳細については、「Entry Method and Composition」を参照してください。</p>
+<h2 id="84422-os-initiated">8.4.4.2.2. OS Initiated<a class="headerlink" href="#84422-os-initiated" title="Permanent link">#</a></h2>
+<p>OS Initiated Coordinationスキームでは、OSPMは最後のプロセッサがスリープ状態になったときのみ、特定の階層ノードに対してアイドル状態を要求する。当然ながら、プロセッサは常に自分自身のアイドル状態を選択するが、クラスタのような上位階層ノードのアイドル状態は、クラスタ内の最後のプロセッサがアイドルになったときにのみ選択される。プラットフォームはアイドル状態を決定する際に、特定のノードに対する最新のリクエストのみを考慮する。</p>
+<p>OS Initiated Coordinationの主な動機は以下の通りである：</p>
+<p>1.他のプロセッサがまだ起きているため使用されない高レベルのアイドル状態の選択を評価するOSPMのオーバーヘッドを回避する。</p>
+<p>2.OSPMが、特定のノードに対する最新のリクエストのみを受け取り、過去にスリープしたプロセッサからのリクエストを無視することで、最新の情報に基づいてより高いレベルのアイドル状態の選択を行うことができるようにする。</p>
+<p>上記の例を簡単なフローにすると以下のようになる。</p>
+<p>表8.6 OSが開始するフロー</p>
+<h1 id="step">Step<a class="headerlink" href="#step" title="Permanent link">#</a></h1>
+<p>0: <span class="arithmatex">\(\quad\)</span> コア 0 と 1 がともにアウェイク状態でコードを実行中</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-16.jpg?height=1402&amp;width=1627&amp;top_left_y=64&amp;top_left_x=243" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-16.jpg?height=1402&amp;width=1627&amp;top_left_y=64&amp;top_left_x=243" /></a></p>
+<p>Core1はCore0とCore1の両方に影響するクラスタ決定を行うので、OSPMはクラスタステートを要求する際に、Core1だけでなく両方のコアについて予想されるスリープ時間、ウェイクアップレイテンシ要件、デバイス依存性などを考慮する必要があることに注意。</p>
+<p>プラットフォームは依然として機能的な正しさを保証する責任がある。例えば、Core 0 がウェイクアップし直した場合、上記の例で Core 1 が要求したクラスタ状態を終了するか、その状態へのエントリを中断する必要がある。OSPMには、最後にダウンしたコアが最初にアップしたコアでもあること、あるいは他のコアがより高いレベルのスリープ状態を要求しているときにコアがウェイクアップしないことを保証する責任はない。</p>
+<h2 id="844221-os-initiated-request-semantics">8.4.4.2.2.1. OS Initiated Request Semantics<a class="headerlink" href="#844221-os-initiated-request-semantics" title="Permanent link">#</a></h2>
+<p>OS Initiated Coordinationでは、異なるコアからのリクエストの順序が決定的に重要である。プラットフォームがOSの意図した順序でリクエストを処理しない場合、プラットフォームが間違った状態になる可能性がある。このシナリオを、プロセッサ階層のパワー状態のシステム例で考える。</p>
+<h1 id="step_1">Step<a class="headerlink" href="#step_1" title="Permanent link">#</a></h1>
+<p>0: <span class="arithmatex">\(\quad\)</span> Core0 がパワーダウン中、Core1 が動作中</p>
+<p>1 Core 1がアイドル状態になる- OSPMがCore1のPowerDownとCluster0のReterを要求する</p>
+<p>2 Core0が割り込みを受け、プラットフォームへウェイクアップ</p>
+<p>3 Core0がOSPMにマイグレーションし、割り込み処理を開始</p>
+<p>4 Core0がアイドル状態になり、OSPMがCore0パワーダウン、Cluster0パワーダウンを要求</p>
+<p>5 Core0のアイドル要求はCore1の要求を「パス」する。プラットフォームはCore0をパワー状態にする</p>
+<p>6 Core1 の要求はプラットフォームによって観測される。プラットフォームはCore1をパワー <span class="arithmatex">\(\mathrm{C}\)</span> にする(1) 注記</p>
+<p>上の表の最後の行では、Cluster0の値が不一致である。</p>
+<p>ここでの重要な問題は、2つのコアからのリクエスト間の競合状態である。OSが作成したのと同じ順番でプラットフォームに到達するという保証はない。よくあることとは思われないが、Core0のリクエストがCore1のリクエストを「追い越す」可能性がある。周波数が低い、キャッシュの動作が異なる、OS以外の目に見えるイベントの処理など、様々な理由が考えられる。このような一連のイベントの結果、プラットフォームはCore0からの最新のリクエストではなく、Core1からの古いCluster0リクエストに対して誤って動作することになる。その結果、Cluster0は次のウェイクアップまで間違った状態のままになる。</p>
+<p>このような競合状態に対処し、プラットフォームとOSがリクエストの順序について一貫した見解を持つことを保証するために、OS Initiated idle state request semanticsは、階層的な依存性チェックを含むように強化されている。プラットフォームはリクエストを受け取ると、リクエストされたコアが本当にリクエストされたドメインで最後にダウンしたコアかどうかをチェックし、そうでなければリクエストを拒否する責任がある。OSPMとプラットフォームが正しく動作していても、様々な競合のためにシステムの状態について常に一致するとは限らないことに注意。例えば、プラットフォームはあるコアがOSPMより先にウェイクアップしているのを見て、そのコアを実行中と見なするが、OSPMはまだスリープ中と見なする。プラットフォームは、コアのリクエストを見てから (他のOSリクエストに対して正しく順序付けられるように)、依存性チェックのために特定のコアを低消費電力状態として扱い始めることができる。プラットフォームは、コアがアイドル状態からウェイクアップした後、OSに制御を戻す前に、コアを実行中として扱い始めなければならない。</p>
+<p>この依存性チェックによって、上記の例は次のように変わる：</p>
+<p>表8.8 OS Initia</p>
+<h1 id="step_2">Step:<a class="headerlink" href="#step_2" title="Permanent link">#</a></h1>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-18.jpg?height=956&amp;width=1631&amp;top_left_y=1755&amp;top_left_x=218" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-18.jpg?height=956&amp;width=1631&amp;top_left_y=1755&amp;top_left_x=218" /></a></p>
+<h1 id="step_3">Step:<a class="headerlink" href="#step_3" title="Permanent link">#</a></h1>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-19.jpg?height=657&amp;width=1642&amp;top_left_y=194&amp;top_left_x=204" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-19.jpg?height=657&amp;width=1642&amp;top_left_y=194&amp;top_left_x=204" /></a></p>
+<p>一旦OSに制御が戻ると、OSは適切と思われる処理を行うことができる (おそらく、両方のコアのアイドル状態を再評価するだけであろう)。リクエストが順番通りに受け取られない場合、コマンドを拒否してOSに再評価をさせることで、若干のオーバーヘッドが発生するが、これはまれなことだろう。OSから送信されたリクエストは、ほとんどの場合、同じ順番でプラットフォームから受信されるはずであり、この場合、アイドルコマンドは通常通り実行される。</p>
+<p>OSが特定の階層ノードを、その下のCPUが全てスリープ状態であっても実行し続けることを選択する可能性がある。これは別の潜在的なコーナーケースを生む。</p>
+<h1 id="step_4">Step<a class="headerlink" href="#step_4" title="Permanent link">#</a></h1>
+<p>0: <span class="arithmatex">\(\quad\)</span> Core0 がパワーダウン中、Core1 が動作中</p>
+<p>1 Core1がアイドル状態になる- OSPM OSがCore1のPowerDownを要求し、Cluster0がR</p>
+<p>2 Core0が割り込みを受け、プラットフォームへウェイクアップ</p>
+<h1 id="step_5">Step<a class="headerlink" href="#step_5" title="Permanent link">#</a></h1>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-20.jpg?height=1271&amp;width=1633&amp;top_left_y=198&amp;top_left_x=220" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-20.jpg?height=1271&amp;width=1633&amp;top_left_y=198&amp;top_left_x=220" /></a></p>
+<h1 id="9-note">(9) Note<a class="headerlink" href="#9-note" title="Permanent link">#</a></h1>
+<p>上の表の最後の行では、Cluster0の値が不一致である。</p>
+<p>根本的な問題は、どの階層が低電力モードに置かれているかに基づいて、要求がどの階層レベルに対するものかをプラットフォームが推測できないことである。これを軽減するために、各アイドル状態コマンドには、通常のアイドル状態識別子に加えて、OSが要求を行う最上位階層ノードを指定する階層パラメータを含める必要がある。OSがある上位階層ノードにアイドル状態に入ることを望まない場合でも、そのコアがそのノードの最後のコアダウンであるかどうかを示すべきである。これにより、プラットフォームはOSの階層状態の見方を理解することができ、OSが特定のノードに稼動状態を維持するよう要求した場合でも、要求の順序を確実にできる。</p>
+<p>この強化は以下の表に示されている。</p>
+<h1 id="step_6">Step<a class="headerlink" href="#step_6" title="Permanent link">#</a></h1>
+<h1 id="step_7">Step<a class="headerlink" href="#step_7" title="Permanent link">#</a></h1>
+<p>0: <span class="arithmatex">\(\quad\)</span> Core0 がパワーダウン中、Core1 が動作中</p>
+<p>1 Core1がアイドル状態になる- OSPM OSがCore1のPowerDownを要求し、Cluster0がR</p>
+<p>2 Core0が割り込みを受け、プラットフォームへウェイクアップ</p>
+<p>3 Core0がOSPMにマイグレーションし、割り込み処理を開始</p>
+<p>4 Core0がアイドル状態になり、OSPMがCore0のパワーダウンとクラスタ化を要求</p>
+<p>5 Core0のアイドル要求はCore1の要求を「パス」する。プラットフォームはCore0の要求を拒否</p>
+<p>6 Core1のリクエストはプラットフォームによって観察される。プラットフォームがCore1の要求を拒否</p>
+<p>7 OSがCore0で再開</p>
+<h1 id="step_8">Step<a class="headerlink" href="#step_8" title="Permanent link">#</a></h1>
+<p>8 Core1でOS再開</p>
+<p>以前と同様、制御がOSに戻ると、OSは適切と思われる処理を行うことができる--おそらく、両方のコアのアイドル状態を再要求するだけだろう。</p>
+<h2 id="8443-_lpi-low-power-idle-states">8.4.4.3. _LPI (Low Power Idle States)<a class="headerlink" href="#8443-_lpi-low-power-idle-states" title="Permanent link">#</a></h2>
+<p>LPIは、ローパワーアイドル状態を記述する方法を提供するオプションのオブジェクトで、階層プロセッサトポロジ内の各ノードのローカルパワー状態を定義する。OSPM は、_LPI オブジェクトを使用して、システム内のプロセッサ階層の各レベルのローカル電源状態を選択する。これらのローカル状態の選択は、OSPMによってプラットフォームに提示される複合電源状態要求を生成するために使用される。</p>
+<p>このオブジェクトは、プロセッサコンテナまたはプロセッサ宣言の内部で使用できる。LPIは以下の形式を取る：</p>
+<h1 id="arguments_2">Arguments:<a class="headerlink" href="#arguments_2" title="Permanent link">#</a></h1>
+<p>なし</p>
+<h1 id="return-value_2">Return Value:<a class="headerlink" href="#return-value_2" title="Permanent link">#</a></h1>
+<p>親プロセッサまたはプロセッサコンテナーデバイスのローカル電源状態を含む可変長パッケージ。LPI 評価は以下のフォーマットを返す：</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-22.jpg?height=356&amp;width=799&amp;top_left_y=2052&amp;top_left_x=250" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-22.jpg?height=356&amp;width=799&amp;top_left_y=2052&amp;top_left_x=250" /></a></p>
+<h1 id="element-object-type-description_1">Element Object Type Description<a class="headerlink" href="#element-object-type-description_1" title="Permanent link">#</a></h1>
+<div class="arithmatex">\[\begin{tabular}{|l|l|l|}
+\hline Revision &amp; Integer (WORD) &amp; The revision number of the _LPI object. Current re \\
+\hline LevellD &amp; Integer (QWORD) &amp; A platform defined number that identifies the leve \\
+\hline Count &amp; Integer (WORD) &amp; The count of following LPI packages. \\
+\hline LPI[1] &amp; Package &amp; A Package containing the definition of LPI state 1. \\
+\hline LPI[N] &amp; Package &amp; A Package containing the definition of LPI state N. \\
+\hline
+\end{tabular}\]</div>
+<p>各LPIサブパッケージは、以下に説明する要素を含んでいる：</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-23.jpg?height=579&amp;width=1277&amp;top_left_y=887&amp;top_left_x=250" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-23.jpg?height=579&amp;width=1277&amp;top_left_y=887&amp;top_left_x=250" /></a></p>
+<p>要素オブジェクトタイプ説明</p>
+<div class="arithmatex">\[\begin{tabular}{|c|c|c|}
+\hline Min Residency &amp; Integer (DWORD) &amp; Minimum Residenc \\
+\hline Worst case wakeup latency &amp; Integer (DWORD) &amp; Worst case time in \\
+\hline Flags &amp; Integer (DWORD) &amp; Valid flags are desc \\
+\hline Arch. Context Lost Flags &amp; Integer (DWORD) &amp; Architecture specif \\
+\hline Residency Counter Frequency &amp; Integer (DWORD) &amp; Residency counter \\
+\hline Enabled Parent State &amp; Integer (DWORD) &amp; Every shallower po' \\
+\hline Entry Method &amp; Buffer or Integer (QWORD) &amp; This may contain a \\
+\hline Residency Counter Register &amp; Buffer &amp; Optional residency \\
+\hline Usage Counter Register &amp; Buffer &amp; \begin{tabular}{r}
+Optional register that \\
+ResourceTemplat
+\end{tabular} \\
+\hline
+\end{tabular}\]</div>
+<h1 id="element-bits-description">Element Bits Description<a class="headerlink" href="#element-bits-description" title="Permanent link">#</a></h1>
+<p>有効 <span class="arithmatex">\(0 \quad 1\)</span> 電源状態が使用可能の場合 0 電源状態が無効の場合</p>
+<p>全てのプロセッサまたはプロセッサコンテナーが_LPIオブジェクトを持つ必要はない。ただし、プロセッサコンテナーが_LPIオブジェクトを含む場合、全ての子プロセッサまたはプロセッサコンテナーは_LPIオブジェクトを持たなければならない。</p>
+<p>以下のセクションでは、LPIのより複雑な特性と、LPI ステートに対するウェイクアップのルールについてより詳しく説明する。</p>
+<h2 id="84431-disabling-a-state">8.4.4.3.1. Disabling a State<a class="headerlink" href="#84431-disabling-a-state" title="Permanent link">#</a></h2>
+<p>FlagsフィールドのEnabledビットをクリアしてローカルステートを無効にすると、そのノードのより深いステートの番号は変更されない。これにより、そのノードの状態リストへのインデックスに依存する他のプロパティ (例えば、Enabled Parent State)は変更されない。</p>
+<p>無効状態はOSから要求されるべきではなく、残留/使用カウンタレジスタが返す値は未定義である。</p>
+<h2 id="84432-enabled-parent-state">8.4.4.3.2. Enabled Parent State<a class="headerlink" href="#84432-enabled-parent-state" title="Permanent link">#</a></h2>
+<p>前述したように、LPIはローカルな状態を表し、それらを組み合わせて複合状態にする必要がある。しかし、全ての組み合わせが可能なわけではない。プロセッサ階層のパワーステートで説明したシステム例を考える。このシステムでは、 <span class="arithmatex">\(\mathrm{Core} \mathrm{O}\)</span> のローカル状態としてクロックゲーティングを、ClusterOのローカル状態としてパワーダウンを同時に選択することはできない。CoreOは物理的にClusterO内にあるため、クラスタのパワーゲーティングはコアのパワーゲーティングを意味する。このサンプルシステムでの正しいローカルステートの組み合わせは、「先行するサンプルシステムでの有効なローカルステートの組み合わせ」に記載されている。LPIステートは、Enabled Parent State (EPS)プロパティによって正しい組み合わせを列挙できる。</p>
+<p>LPIステートは1インデックスである。 <span class="arithmatex">\(\mathrm{C}\)</span> および <span class="arithmatex">\(\mathrm{S}\)</span> ステートと同様に、LPIO は実行中のステートとみなされる。ある LPI に対して、EPS はプロセッサコンテナの _LPI ステートへの 1 ベースのインデックスである。このインデックスは、次のような親プロセッサの最も深いローカル電源状態を指す。
+が有効になる。親の LPI ステートより浅いパワーステートは全てイネーブルになる。図8.7のシステムを例に、各状態と各状態に対するEPS値を以下の表8.14に示す。</p>
+<p>表8.14 exarの有効な親状態の値</p>
+<h1 id="category-bit-value">Category / Bit Value<a class="headerlink" href="#category-bit-value" title="Permanent link">#</a></h1>
+<p>州</p>
+<p>有効親スタル</p>
+<div class="arithmatex">\[\begin{tabular}{|l|l|l|}
+\hline System Level ProcessorContainer LPI States &amp; &amp; \\
+\hline 0 &amp; Running &amp; N/A \\
+\hline 1 &amp; Power Down &amp; 0 \\
+\hline Cluster Level ProcessorContainer LPI States &amp; &amp; \\
+\hline 0 &amp; Running &amp; N/A \\
+\hline 1 &amp; Clock Gating &amp; 0- System must be \\
+\hline 2 &amp; Retention &amp; 0- System must be \\
+\hline 3 &amp; Power Down &amp; $1-$ System may be \\
+\hline Core Level ProcessorContainer LPI States &amp; &amp; \\
+\hline 0 &amp; Running &amp; N/A \\
+\hline 1 &amp; Clock Gating &amp; 1- Cluster may be \\
+\hline 2 &amp; Retention &amp; $2-$ Cluster may run \\
+\hline 3 &amp; Power Down &amp; $3-$ All states at clus \\
+\hline
+\end{tabular}\]</div>
+<h2 id="84433-power-minimum-residency-and-worst-case-wakeup-latency">8.4.4.3.3. Power, Minimum Residency, and Worst Case Wakeup Latency<a class="headerlink" href="#84433-power-minimum-residency-and-worst-case-wakeup-latency" title="Permanent link">#</a></h2>
+<p>OSPM のアイドル状態の決定には、絶対的な電力ではなく、異なる状態の相対的な電力 (遷移エネルギーを理解するための最小残留時間と共に)が用いられるため、_LPI には電力は含まれない。相対的な電力を正しく伝えるために、_LPIのローカルステートは消費電力順に宣言されなければならない。すなわち、特定の階層ノードのローカルステートは、消費電力が最も大きい (浅い)ものから最も小さい (深い)ものへと並べなければならない。</p>
+<p>特定のローカルステートの最悪ウェイクアップレイテンシ (WCWL)とは、ウェイク割り込みがアサートされてから、階層ノードが実行に復帰できるまでの最長時間のことである。一般的に、WCWLはアイドル状態の終了レイテンシに、エントリレイテンシの一部を加えたものになる。エントリフローがどの程度含まれるかは、プラットフォームが保留中のウェイクイベントのチェックとアイドル状態エントリの中断をサポートしているか (しているか)に依存する。どのような電力状態であっても、「戻れないポイント」が存在し、そのポイントを過ぎると、アイドル状態への入力は中断される。
+電源状態を逆転させることはできない。これは以下の最悪のウェイクテンシに示されている。WCWL には、復帰不能時点からウェイクアップ割り込みを処理できるまでの時間を含める必要がある。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-26.jpg?height=654&amp;width=1604&amp;top_left_y=313&amp;top_left_x=226" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-26.jpg?height=654&amp;width=1604&amp;top_left_y=313&amp;top_left_x=226" /></a></p>
+<p>図8.8 最悪の場合の航跡レイテンシ</p>
+<p>他の最悪のパスがWCWLを決定することになる可能性もあるが、上述したものが最も一般的であると予想されることに注意されたい。例えば、OSがアイドル要求を出してから、プラットフォームがウェイクアップイベントをチェックしないポイントオブノーリターンまでの間に、電源状態に入ったり出たりするのにかかる時間よりも長い別の期間が存在する可能性がある。その場合、その期間が最悪の場合のウェイクアップレイテンシとなる。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-27.jpg?height=1582&amp;width=1616&amp;top_left_y=60&amp;top_left_x=217" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-27.jpg?height=1582&amp;width=1616&amp;top_left_y=60&amp;top_left_x=217" /></a></p>
+<p>図8.9 状態A、B、Cのエネルギー対睡眠時間</p>
+<p>最小残留時間 (MR)は、ある状態がより浅い状態よりもエネルギー効率が高くなる時間である。このパラメータは基本的な問いに答えるものである。アイドル状態にマイグレーションするためのエネルギーコストを克服し、より浅い代替案と比較してその状態を選択することが正味の利益になるには、階層ノードはどのくらいの時間アイドル状態にとどまる必要があるのか？これには、アイドル状態に入らずノードを稼動し続けることとの比較も含まれることに注意。これは、状態 <span class="arithmatex">\(A, B\)</span> と <span class="arithmatex">\(C\)</span> のスリープ時間に対するエネルギーに示されており、スリープ時間の関数として3つの異なる状態選択に関連するエネルギーを示している。ノードの実行を維持した場合の状態AのMRは描かれていないことに注意。</p>
+<p>一般的に、最小レジデンシーと最悪のウェイクアップレイテンシは、より深いステートほど大きくなるが、必ずしもそうなるとは限らない。上記とは異なる例として、StateYとStateZの2つのシステムレベルステートを考える。抽象的なステートリストは次のようになる：</p>
+<p>エネルギーの観点からは、常にStateZが望ましいが、この例では、StateZは特定のデバイス依存性が満たされた場合にのみ利用可能である。このため、依存関係が満たされない場合は、StateYが魅力的な状態になる。より深い (より低い消費電力の)ステートであるにもかかわらず、StateZはStateYより低いMRを持つ。これは、エントリオーバーヘッドが同程度であり、StateZのより低い消費電力がより早くトランジションコストを償却するためである。MRを設定するクロスオーバーは通常、次に浅い状態に対して行われるべきであるが、このようなケースに対処するために、MRは浅い (より高いパワーの)状態に対して定義される。この場合、StateZのMRは、StateXとのクロスオーバーによって設定される。なぜなら、StateZは (デバイス依存関係に基づいて許可されていれば)常にStateYよりも優先されるからである。最も低いエネルギーを達成するために、OSPMは、全てのエントリ制約が満たされる最も深い (最も低い電力)状態を選択しなければならず、より浅い状態のWCWL/MR閾値が満たされなかったからといって、より深い状態が実行可能ではないと仮定してはならない。</p>
+<p>WCWLはOSPMがアイドル状態の選択を制限し、クリティカルな割り込みに対する応答時間を保証するために使用される可能性があるため、OSPMが規定以上の割り込み応答時間に驚かないよう、控えめに (高い側に)設定すべきである。一方、MRはOSPMが効率的な決定を下すのに役立つ。あるシナリオでMRが不正確で、OSPMが特定のアイドル期間に最適な状態よりも深いか浅い状態を選択した場合、エネルギーの浪費はある可能性があるが、システムが機能的に壊れることはない。これは、MRが重要でない-エネルギー効率は重要である-ということではなく、プラットフォームが最悪のケースではなく、典型的なケースに基づいてMRを最適化することを選択する可能性があるということである。</p>
+<h2 id="844331-minimum-residency-and-worst-case-wakeup-latency-combination-across-hierarchy-levels">8.4.4.3.3.1. Minimum Residency and Worst Case Wakeup Latency Combination Across Hierarchy Levels<a class="headerlink" href="#844331-minimum-residency-and-worst-case-wakeup-latency-combination-across-hierarchy-levels" title="Permanent link">#</a></h2>
+<p>LPIのWCWLは特定のローカル状態のものである。アイドル状態の選択の一部として、複合状態の選択とシステムのレイテンシ耐性を評価する場合、OSPMは階層レベル間のウェイクアップレイテンシを追加する。例えば、システムがWCWL <span class="arithmatex">\(=50\)</span> usでコアパワーダウンを持ち、WCWL <span class="arithmatex">\(=20\)</span> usでクラスタパワーダウンを持つ場合、コアパワーダウン+クラスタパワーダウンの複合ステートレイテンシは70usとして計算される。</p>
+<p>LPIで定義されたMRは、特定の階層ノードに適用される。暗黙の前提は、各階層ノードは独立した電力管理可能なドメインを表し、個別に考慮できるということである。たとえば、基礎となるコアがコアパワーダウンまたはコア保持にある場合、クラスタ保持状態は合法であると仮定する。クラ スタ 保持のMR は、 コアの外にある共有ロ ジッ クを保持し たり 保持を解除し たり する こと にかかる エネ ルギーコ スト と 、 その状態にある とき に共有ロ ジッ クで達成さ れる 定常状態の消費電力削減量に基づいている。重要なのは、コアレベルで選択される特定の状態は、共有ロジックのプロパティに関連するため、クラスタレベルの決定に根本的な影響を与えないことである。
+ロジックはコアの外部にある。クラスタ状態に入る/出るためのエネルギーコストと、それによってもたらされる省電力は、コアがリテンションかパワーダウンかに依存しない。これに基づき、ACPI では MR はレベルごとに独立していると考えられる。すなわち、異なるステートの MR を特定のノードの予想スリープ時間と比較する場合、OSPM はそのノードの _ LPI で定義された MR をそのまま使用し、下位階層のステートに基づく調整は行いない (もちろん、下位階層のステートの Enabled Parent State プロパティに基づくステートは合法でなければならない)。</p>
+<h2 id="844332-known-limitations-with-minimum-residency-and-worst-case-wakeup-latency">8.4.4.3.3.2. Known Limitations with Minimum Residency and Worst Case Wakeup Latency<a class="headerlink" href="#844332-known-limitations-with-minimum-residency-and-worst-case-wakeup-latency" title="Permanent link">#</a></h2>
+<p>WCWLとMRのパラメータは完全なものではないことに注意されたい。例えば、周波数、電圧、温度、その他様々な要因に影響される。また、レベル間の組み合わせのルールも完全ではない。例えば、クラスタレベルの MR は、コアステートの選択に基づいてわずかに移動する可能性がある。これは、コアステートのエントリレイテンシによってクラスタステートへのエントリがレイテンシし、予想されるスリープ期間が緩和されるためである。クラスタレベルのMRはこれを理解するように調整できるが、異なるエントリレイテンシを持つ複数のコアレベルステートが同じクラスタステートを有効にする場合、そのMRはそれら全てを完全に理解することはできない。とはいえ、この一連のパラメータと組み合わせスキームは、シンプルさ/使いやすさと精度の間で良いバランスを保っていると考えられる。</p>
+<h2 id="84434-entry-method-and-composition">8.4.4.3.4. Entry Method and Composition<a class="headerlink" href="#84434-entry-method-and-composition" title="Permanent link">#</a></h2>
+<p>OSPM は、ローカル LPI 状態を組み合わせて、総合的な複合電力状態を作成する。各 LPI 状態は、エントリ方法フィールドを提供する。これらのフィールドは、選択されたローカル電力状態について組み合わされ、所定の複合電力状態に入るために読み出されなければならない入力方法レジスタを作成する。</p>
+<p>ローカルステートの入力メソッドから適切なレジスタアドレスを導き出すには、次のような方法がある：</p>
+<p>1.プロセッサのローカルステートは、常にレジスタベースの入力方法を宣言する。これはベースレジスタを提供する。</p>
+<p>2.より高いレベルでは、整数またはレジスタを使用できる。整数が使用される場合、その値はステップ 1 で得られたベースレジスタに加算されなければならない。レジスタが使用される場合、これは新しいベースレジスタとなり、以前の値を上書きする。この場合、選択されたLPIは全ての下位ノードの特定のローカルLPI選択を意味しなければならないことに注意。</p>
+<p>3.OS Initiated モードでは、OSPM が、呼び出し元のプロセッサがどの階層レベルで最後にアイドル状態になるかをプラットフォームに通知する必要もある。これは、階層ノードの LPI のレベル ID プロパティをベースレジスタに追加することで行われる。</p>
+<p>エントリステートの基本的な合成アルゴリズムを、プラットフォーム協調システムについての以下の擬似コードに示す：</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-30.jpg?height=845&amp;width=1081&amp;top_left_y=67&amp;top_left_x=247" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-30.jpg?height=845&amp;width=1081&amp;top_left_y=67&amp;top_left_x=247" /></a></p>
+<p>OS Initiatedモードでは、OSPMが、呼び出し元のプロセッサがどの階層レベルで最後にアイドル状態になり、電源状態を要求するかをプラットフォームに伝える必要もある。これを行うために、上記のアルゴリズムは以下のように変更される：</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-30.jpg?height=1453&amp;width=1427&amp;top_left_y=1334&amp;top_left_x=247" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-30.jpg?height=1453&amp;width=1427&amp;top_left_y=1334&amp;top_left_x=247" /></a></p>
+<p>プラットフォーム協調システムでは、プロセッサレベルより上の階層ノードに属す LPI が、そのエントリメソッドとして整数値 0 を使用することが可能である。エントリメソッドの構成は加算によって行われるため、この場合、そのステートのエントリコマンドは、子ステートのみを含む複合ステートと同じになる。エントリ値0は、基本的にステートを "自動プロモータ可能 "と識別する。これは、OSが明示的にこのステートへのエントリを要求するのではなく、全ての子ステートがEPSプロパティに基づいて親ステートを許可するステートに入ったときに、プラットフォームが自動的にこのステートに入ることができることを意味する。OSPMは、オートプロモータブルローカルステートを含むコンポジットステートを含む場合、他のパラメータ (最悪のウェイクアップレイテンシ、最小レジデンシーなど)については通常のコンポジション手順に従うべきである。</p>
+<p>これは次の例で説明する：</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-32.jpg?height=2761&amp;width=1281&amp;top_left_y=70&amp;top_left_x=252" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-32.jpg?height=2761&amp;width=1281&amp;top_left_y=70&amp;top_left_x=252" /></a></p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-33.jpg?height=1761&amp;width=1303&amp;top_left_y=39&amp;top_left_x=251" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-33.jpg?height=1761&amp;width=1303&amp;top_left_y=39&amp;top_left_x=251" /></a></p>
+<p>上記の例では、CPUOとCPU1上のOSPMは以下の複合状態を選択できる：</p>
+<p>表8.15</p>
+<h1 id="core-lpi-cluster-lpi">Core LPI \ Cluster LPI<a class="headerlink" href="#core-lpi-cluster-lpi" title="Permanent link">#</a></h1>
+<div class="arithmatex">\[\begin{tabular}{|l|l|l|}
+\hline Retention Register: 0xDEAF &amp; Run &amp; Run \\
+\hline Power Down Register 0xDEAD &amp; Run &amp; Run \\
+\hline Retention Register: 0xDEAF &amp; Retention Integer: 0x0 &amp; Run \\
+\hline Power Down Register: 0xDEAD &amp; Retention Integer: 0x0 &amp; Run \\
+\hline Power Down Register: 0xDEAD &amp; Power Down Integer: 0x1020000 &amp; Run \\
+\hline
+\end{tabular}\]</div>
+<p>この例でわかるように、クラスタレベルのリテンション状態は、そのエントリ方法として整数値0を定義している。構成により、これは、複合状態Core Power DownとCore Power Down|Cluster Retentionのエントリメソッドが同じ (FFHレジスタOxDEAD)であることを意味する。同様に、Core RetentionとCore Retention|Cluster Retentionの複合状態は同じである (FFHレジスタOxDEAF)。その結果、CPU0とCPU1の両方がパワーダウンまたはパワーリテンションにある場合、プラットフォームはクラスタCLUOからリテンションに入る可能性がある。</p>
+<p>この例では、上位レベルのレジスタベースのエントリメソッドが、下位レベルのエントリメソッド定義をどのように上書きするかも示している。上述したように、これは選択された LPI が全ての下位レベルの特定の LPI を意味する場合にのみ可能である。この例では、FFH レジスタ OxDECEA5ED から入力されたシステムパワーダウン LPI は、コアおよびクラスタレベルのパワーダウン LPI を意味する。</p>
+<h2 id="84435-architecture-specific-context-loss-flags">8.4.4.3.5. Architecture Specific Context Loss Flags<a class="headerlink" href="#84435-architecture-specific-context-loss-flags" title="Permanent link">#</a></h2>
+<p>インテルベースのシステムでは、このフラグレジスタの値は0である。</p>
+<p>ARMベースのシステムについては、「ARM FFH仕様」の見出しにあるACPI関連文書(http://uefi.org/acpi)へのリンクを参照してください。</p>
+<h2 id="84436-residency-and-entry-counter-registers">8.4.4.3.6. Residency and Entry Counter Registers<a class="headerlink" href="#84436-residency-and-entry-counter-registers" title="Permanent link">#</a></h2>
+<p>LPI ステート記述は、OSPM が特定のローカルステートのプラットフォーム使用に関する統計情報を収集できるように、 オプションで残留レジスタと使用回数レジスタを提供できる。両レジスタは、それぞれの統計の実行カウントを提供する。ある時間ウィンドウにわたって統計を測定するには、OSPMは開始時と終了時にサンプリングし、その差分を計算する必要がある。様々な種類のリセット/ステート終了時にカウンタが0から再スタートするかどうかは実装で定義されているため、OSPMはリセットまたはSx終了時にベースラインを再同期する必要がある。</p>
+<p>レジスタはオプションであり、その機能がない場合、プラットフォームは以下の形式のNULLレジスタを使用しなければならない：</p>
+<p><span class="arithmatex">\(\{(\)</span> SystemMemory, <span class="arithmatex">\(\odot, 0,0,0)\}\}\)</span> を登録する。</p>
+<p>Usage Countレジスタは、ローカルステートが何回使われたかをカウントする。</p>
+<p>エントリとイグジットのどちらをカウントするかは、実装で定義されている。</p>
+<p>Residencyレジスタは、LPIのResidency Counter Frequencyフィールドで指定された割合で、 階層ノードが指定されたLPI状態にある時間をカウントする。頻度 0 は、カウンタがアーキテクチャ固有の頻度で動作することを示す。残留カウンタがローカル状態の間継続的に実行されるか、終了時にのみ更新されるかは、実装で定義される。OSPM が特定の状態の読み取り値が最新であることを保証したい場合は、そのプロセッサ自身 (または上位のアイドル状態の場合は下位の子プロセッサの1つ)から読み取る必要がある。</p>
+<h2 id="84437-wake-from-lpi-states">8.4.4.3.7. Wake from LPI States<a class="headerlink" href="#84437-wake-from-lpi-states" title="Permanent link">#</a></h2>
+<p>LPIを使用すると、バスクロックや割り込みコントローラなどの基本リソースをオフにする可能性のある深いS0アイドル状態を記述できるため、これらの状態からプラットフォームが確実にウェイクアップできるように特別な注意を払う必要がある。このセクションでは、デバイスが起動するウェイクの処理について説明する。タイマのようなウェイクソースは他にもあるが、それは別の場所で説明する。</p>
+<p>デバイスのウェイクの場合、OSPM は、ウェイクが有効なデバイスがシステムをウェイクするのを妨げるような LPI ステートに入ってはならない。これは、_RDI(アイドルのリソース依存性)の項を参照)に記載されているパワーリソースがオンである必要がある LPI 状態に入らないことを意味する。プラットフォーム協調システムでは、RDIにリストされたリソースがオンであっても、OSPMは_LPI状態を選択できる。しかし、OSPM がすでにデバイスのウェイクを有効にしており、ウェイクに必要な電源リソースがオンであることを確認している場合、プラットフォームは LPI 状態を当該リソースがオンのままである状態に降格させる。</p>
+<p>ウェイクデバイスは、 <span class="arithmatex">\(\mathrm{D}\)</span> 状態とウェイクイネーブル状態に基づいて <span class="arithmatex">\(\mathrm{ON}\)</span> であるために必要な電源リソースを記述するために、標準の _PRx と _PRW メソッドを使用する。さらに、LPI 状態の一部としてオフにされる可能性のあるリソースに依存するウェイク有効デバイスは、 _PRx/_PRW =&gt;_RDI =&gt;_LPI によってその依存関係を記述しなければならない。</p>
+<p>これは次の例で説明する：</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-36.jpg?height=2113&amp;width=1560&amp;top_left_y=67&amp;top_left_x=246" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-36.jpg?height=2113&amp;width=1560&amp;top_left_y=67&amp;top_left_x=246" /></a></p>
+<p>上記の例では、電力リソースのセット (PWRA/B/C/D)を宣言している。さらに、以下の依存関係を持つ4つのシステムレベルローカルステートがある：
+- LPI 1: 電力リソースに依存しない
+- LPI 2: PWRAとPWRBがオフであることが必要
+- LPI 3: PWRA、PWRB、PWRCがオフであることが必要
+- LPI 4: 例の全ての電源リソースをオフにする必要がある。</p>
+<p>デバイスBAHがシステムをウェイクアップできるのは、それがDO状態にある場合のみである。DO 状態であるためには、PWRA、PWRB、PWRC がオンである必要がある。従って、デバイス BAH は LPI 1 からしかシステムをウェイクアップできない。このデバイスがウェイクアップに有効な場合、プラットフォームは LPI 2 以上になってはならない。</p>
+<p>デバイス BAR は、システムが D3Cold 以外のデバイス状態にある間にウェイクインできる。ただし、そのためには PWRC がオンである必要がある。従って、LPI 1 または LPI 2 からしかシステムをウェイクアップできない。このデバイスがウェイクアップに有効になっている場合、プラットフォームは LPI 3 以上になってはいけません。</p>
+<p>デバイスFOOは、どのデバイスの状態であってもシステムをウェイクアップできる。ただし、そのためには PWRD がオンである必要がある。したがって、LPI 1 または LPI 2 または LPI 3 からしかシステムをウェイクアップできない。</p>
+<h2 id="84438-default-idle-state">8.4.4.3.8. Default Idle State<a class="headerlink" href="#84438-default-idle-state" title="Permanent link">#</a></h2>
+<p>階層内の各リーフノードの最も浅いアイドル状態は、そのプロセッサの「デフォルト」アイドル状態であり、常に入力可能であると仮定される。この状態の最悪の場合のウェイクアップレイテンシと最小残留時間は、OSPMがこの状態を使用するかどうかを決定する際に考慮する必要がないほど低くなければならない。プロセッサを電源状態にする以外には、この状態はソフトウェアから見える効果を持たない。例えば、OSPMが保存/復元しなければならないコンテキストを失ったり、デバイスに依存したりすることはない。</p>
+<h2 id="8444-_rdi-resource-dependencies-for-idle">8.4.4.4. _RDI (Resource Dependencies for Idle)<a class="headerlink" href="#8444-_rdi-resource-dependencies-for-idle" title="Permanent link">#</a></h2>
+<p>プラットフォームによっては、デバイスとプロセッサの間で共有される電力リソースがある場合がある。抽象的には、これらのリソースは2段階で管理される。まず、OSは通常の電源リソースの参照カウントを行い、全てのデバイス依存が満たされ、デバイスの観点からリソースが電源管理されたことを検出する。次に、プロセッサもアイドルになると、OSは特定のLPI状態へのマイグレーションを要求し、プラットフォームはマイグレーションの一部としてリソースを物理的にパワー管理する。電源リソースと LPI 状態の間の依存関係は、_RDI に記述されている。</p>
+<p>RDIオブジェクトは、システムのプロセッサ階層を記述するルートプロセッサコンテナにのみ存在できる。複数のルートノードを持つシステムでは、_RDIはサポートされない。RDIは、システム内の全てのプロセッサを包含する単一のトップレベルコンテナでのみ有効である。</p>
+<p>OSPMはルートノード以外のノードに存在する_RDIオブジェクトを無視する。この単純化により、あるプロセッサがデバイスの状態や電力リソースを変更している間に、ある階層のプロセッサがリソース依存のアイドル状態を選択するような複雑な競合を避けることができる。</p>
+<h1 id="arguments_3">Arguments:<a class="headerlink" href="#arguments_3" title="Permanent link">#</a></h1>
+<p>リソース依存関係を含む可変長のPackage：</p>
+<h1 id="return-value-information_2">Return Value Information<a class="headerlink" href="#return-value-information_2" title="Permanent link">#</a></h1>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-38.jpg?height=266&amp;width=616&amp;top_left_y=509&amp;top_left_x=250" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-38.jpg?height=266&amp;width=616&amp;top_left_y=509&amp;top_left_x=250" /></a></p>
+<p>表 <span class="arithmatex">\(8.16 \_R D I\)</span> パッケージの戻り値</p>
+<div class="arithmatex">\[\begin{tabular}{|l|l|l|}
+\hline Element &amp; Object Type &amp; Description \\
+\hline Revision &amp; Integer (WORD) &amp; The revision number of the _RDI object. Current rev \\
+\hline RDI[1] &amp; Package &amp; A variable length Package containing the power resc \\
+\hline RDI[N] &amp; Package &amp; A variable length Package containing the power resc \\
+\hline
+\end{tabular}\]</div>
+<p>各 RDI[x]サブパッケージには、電力リソースへの参照が可変数含まれている：</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-38.jpg?height=222&amp;width=1187&amp;top_left_y=1618&amp;top_left_x=250" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-38.jpg?height=222&amp;width=1187&amp;top_left_y=1618&amp;top_left_x=250" /></a></p>
+<p>パッケージには、ルートプロセッサコンテナノードの_LPIオブジェクト内のシステムレベルのパワーステートの数だけRDIパッケージが含まれる。この_LPIオブジェクトのLPIパワーステートのインデックス付けは、_RDIオブジェクトのRDIパッケージのインデックス付けと一致している。したがって、システムレベルのn番目のLPI状態には、n番目のRDIにリストされたリソース依存関係がある。各 RDI パッケージは、プラットフォームが LPI 状態に入るために OFF 状態でなければならない電源リソースオブジェクト (パッシブ電源リソースまたは標準電源リソース)のリストを返す。システムレベルの LPI にリソース依存がない場合、対応する RDI は空のパッケージでなければならない。</p>
+<p>従来の電力リソースと受動的な電力リソースの両方を、_RDI に依存関係として列挙できる。従来の電源リソースの場合、OSPM は依存 LPI 状態を要求する前に、リソースが OFF であることを確認する。パッシブ電源リソースの場合、_ON/_OFF/_STA メソッドは存在しないため、依存 LPI 状態を要求する前に参照カウントが 0 であることを確認することだけが必要である。</p>
+<p>デバイス/電力リソースの遷移と電力リソースに依存する LPI 状態間の順序に関する OSPM 要件は、調整スキームによって異なる。</p>
+<p>プラットフォーム協調システムでは、プラットフォームは正しさを保証し、要求された電源状態を、 リソースとプロセッサの依存関係を満たすものに降格させなければならない。OSPM は、_RDI の依存情報を適切なように使用することができ、リソースがオンのままであっても、依存 LPI 状態を選択できる。</p>
+<p>OS が起動したシステムにおいて、OSPM は、依存 LPI ステートを要求する前に、全ての電力リソースがオフであること  (または、受動的な電力リソースの場合は参照カウントが 0 であること)を保証しなければならない。</p>
+<h1 id="_rdi-example">_RDI Example<a class="headerlink" href="#_rdi-example" title="Permanent link">#</a></h1>
+<p>以下の ASL は、_RDI を使用して、3 つの電源リソースとシステムレベルの電源状態の間の依存関係を記述するシステムを説明する：</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-40.jpg?height=1805&amp;width=1523&amp;top_left_y=66&amp;top_left_x=247" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-40.jpg?height=1805&amp;width=1523&amp;top_left_y=66&amp;top_left_x=247" /></a></p>
+<p>OSPMは、参照カウントが0になるのを待ち (DEVAがDOから離れたことを意味する)、_OFFメソッドを実行することで、従来のパワーリソース (PWRA)をONまたはOFFにする。同様に、PWRBはDEVBの状態に基づいてON/OFFされる。CPUが動作している間は共有パワーレールがONである必要があるため、PWRBの_ONと_OFFはパワーレールの物理的なHW制御ではなく、投票によって駆動されることに注意。この場合、_STAはPWRBの物理的な状態ではなく、投票の状態を反映する。</p>
+<p>OSPMは、PWRA/PWRBの_ONおよび_OFF遷移と、DEVA/DEVBのDステート遷移との間の順序を保証する。すなわち、PWRAはDEVAがDOを出た後にのみOFFにすることができ、DEVAをDOに遷移させる前にONにしなければならない。ただし、電源リソースの遷移と電源リソースに依存する LPI ステート間の順序に関する OS の要件は、調整方式によって異なる。</p>
+<p>プラットフォーム協調システムでは、OSPMはローカルステート2または3を選択する前にPWRAの電力状態を追跡してもしなくてもよい。プラットフォームは、ローカルステート2または3に入る前にPWRAがOFFであることを独自に保証しなければならず、PWRAがまだONの時にOSPMがローカルステート2または3を選択した場合、より浅い状態に降格しなければならない。OSPM はデバイスの電源遷移と電源リソースの遷移を正しくシーケンス化する必要があるため、プラットフォームは DEVA の状態を確認する必要はなく、PWRA の状態から DEVA が適切な D ステートにあることを推測できる。</p>
+<p>同様に、OSPMはローカル状態3を選択する前にPWRBとPWRCの状態を追跡してもしなくてもよく、プラットフォームはいずれの状態に入る前にもPWRBがオフであることを独自に保証しなければならない。PWRCは受動的な電力リソースであるため、プラットフォームは電力リソースの参照カウントがいつ0になるかを知らない。プラットフォームがDEVCの状態を追跡する他のメカニズムを持っていない限り、プラットフォームが動作の正しさを保証するために_ONおよび_OFFメソッドを使用できるように、PWRCは従来のパワーリソースとして定義されるべきである。</p>
+<p>OSが起動するシステムでは、OSPMはローカルステート2または3を選択する前にPWRAがOFFであることを保証する必要がある。OSPMは、PWRAの状態を確認する前に、プロセッサがシステム内で最後のマンダウンになったと確信するまで待ち、この場合にのみローカルステート2または3を選択することで、この保証を満たすことができる。そのプロセッサが最後のマンダウンであった場合、ローカルステート2または3に入る要求は合法であり、プラットフォームはそれを尊重できる。その間に別のプロセッサが起きてPWRAをオンにした場合、これはプロセッサ間の競争になり、OS Initiated Request Semanticsのセクションで扱われる (OS Initiated Request Semantics)。同様に、OSPMはローカルステート3を選択する前に、PWRBがオフでPWRCの参照カウントが0であることを保証しなければならない。</p>
+<p>OS が開始するシステムでは、OSPM は、システム電源状態を選択する前に、電源リソースが正しい状態にあることを保証するため、電源リソースを OFF にすることによる実行時消費電力の削減がない限り、プラットフォームは受動電源リソースを使用すべきである。OS が開始する遷移のみをサポートするプラットフォームでは、PWRB はプロセッサと共有され、システム電源状態に入ったときのみオフにできるため、パッシブ電源リソースとして定義されるべきである。</p>
+<h2 id="8445-compatibility">8.4.4.5. Compatibility<a class="headerlink" href="#8445-compatibility" title="Permanent link">#</a></h2>
+<p>新しいアイドル管理インフラストラクチャをサポートしていない古いOSをサポートするために、_OSCメソッドを使用して、OSPMがLPIと(_LPI, _RDI)に関連付けられたプロセッサコンテナとオブジェクトの解析をサポートしているかどうかを検出できる。これについては_OSCを評価するルールで説明する。</p>
+<p>プラットフォームは、_LPIをサポートしていないOSとの後方互換性のために、_CSTと_LPIの両方を公開することを選択できる。この場合、OSPMが_LPIをサポートしていれば、_CSTよりもそちらを優先して使用すべきである。実行時には、プロセッサ階層全体で_LPIまたは_CSTのどちらか1つのアイドル状態メソドロジのみを使用する。</p>
+<h2 id="845-processor-throttling-controls">8.4.5. Processor Throttling Controls<a class="headerlink" href="#845-processor-throttling-controls" title="Permanent link">#</a></h2>
+<p>ACPIは、2つのプロセッサスロットル ( <span class="arithmatex">\(T\)</span> 状態)制御インタフェースを定義している。これらは
+- プロセッサレジスタブロック (P_BLK)のP_CNTレジスタ。
+- プロセッサのオブジェクトリストにある_PTC、_TSS、_TPCオブジェクトを合わせたもの。</p>
+<p>P_BLKベースのスロットリング状態制御は、ACPIハードウェア仕様に記載されている。複合_PTC、_TSS、および_TPCベースのスロットリング状態制御は、P_BLKベースの制御の機能を拡張し、 <span class="arithmatex">\(T\)</span> 状態の数をダイナミックにし、機能固定ハードウェアアドレス空間を使用して定義されたレジスタによって示されるCPUアーキテクチャ固有のT状態制御メカニズムに対応できるようにする。PTC、_TSS、および_TPC オブジェクトのプラットフォーム定義はオプションであるが、OSPM がこれらの制御によってプロセッサスロットリングを正常に実行するには、3 つのオブジェクトが全てプロセッサの下に存在する必要がある。</p>
+<h2 id="8451-_ptc-processor-throttling-control">8.4.5.1. _PTC (Processor Throttling Control)<a class="headerlink" href="#8451-_ptc-processor-throttling-control" title="Permanent link">#</a></h2>
+<p>PTCは、ACPIハードウェア仕様に記載されているI/Oアドレス間隔ベースのP_BLKスロットリング制御レジスタ (P_CNT)に代わるプロセッサスロットリング制御インタフェースを定義するオプションのオブジェクトである。</p>
+<p>OSPM は、_PTC オブジェクトによって定義されたスロットリング制御レジスタ (THROTTLE_CTRL) に、スロットリング対応状態オブジェクト (_TSS) から取得したターゲットスロットリング状態 (T-state) の制御フィールド値を書き込むことで、プロセッサのスロットリング制御を実行する。OSPM は、_TPC 制御メソッドによって返される値によって利用可能であると示される、任意のプロセッサスロットリング状態を選択できる。</p>
+<p>プロセッサのスロットリング状態遷移の成否は、スロットリングステータスレジスタ (THROTTLE_STATUS) を読み出して、プロセッサの現在のスロットリング状態を決定することによって決定される。マイグレーションが成功した場合、THROTTLE_STATUSから読み出された値は、ターゲットとなるプロセッサのスロットリング状態に対応する_TSSエントリの「Status」フィールドと一致する。</p>
+<h1 id="arguments_4">Arguments:<a class="headerlink" href="#arguments_4" title="Permanent link">#</a></h1>
+<p>なし</p>
+<h1 id="return-value_3">Return Value:<a class="headerlink" href="#return-value_3" title="Permanent link">#</a></h1>
+<p>以下のパッケージ</p>
+<h1 id="return-value-information_3">Return Value Information<a class="headerlink" href="#return-value-information_3" title="Permanent link">#</a></h1>
+<div class="arithmatex">\[\begin{tabular}{l|l|l}
+Element &amp; Object Type &amp; Description \\
+\hline Control Register &amp; Buffer &amp; Contains a Resource Descriptor with a single Re: \\
+\hline Status Register &amp; Buffer &amp; Contains a Resource Descriptor with a single Re:
+\end{tabular}\]</div>
+<p>プラットフォームは、そのプロセッサの全てまたはいずれかについて _PTCオブジェクトを公開しなければならない。PTCオブジェクトが存在する場合、プロセッサ項で指定されたP_CNTレジスタの代わりに、指定されたレジスタが使用されることに注意。また、_PTCオブジェクトが存在し、_CSTオブジェクトが存在しない場合、OSPMは_PTCオブジェクトのプロセッサ制御レジスタとP_BLKのP_LVLxレジスタを使用することに注意。</p>
+<h1 id="example_3">Example<a class="headerlink" href="#example_3" title="Permanent link">#</a></h1>
+<p>これは、Processorオブジェクトリストにおける_PTCオブジェクトの使用例である：</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-43.jpg?height=535&amp;width=1509&amp;top_left_y=1619&amp;top_left_x=250" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-43.jpg?height=535&amp;width=1509&amp;top_left_y=1619&amp;top_left_x=250" /></a></p>
+<h1 id="example_4">Example<a class="headerlink" href="#example_4" title="Permanent link">#</a></h1>
+<p>これは、ACPI 1.0で定義された値を使用した_PTCオブジェクトの使用例である。これは、よく知られた値を使ってメカニズムを示すための例示である。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-44.jpg?height=619&amp;width=1556&amp;top_left_y=70&amp;top_left_x=250" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-44.jpg?height=619&amp;width=1556&amp;top_left_y=70&amp;top_left_x=250" /></a></p>
+<h2 id="8452-_tss-throttling-supported-states">8.4.5.2. _TSS (Throttling Supported States)<a class="headerlink" href="#8452-_tss-throttling-supported-states" title="Permanent link">#</a></h2>
+<p>このオプションのオブジェクトは、プラットフォームがサポートするプロセッサスロットリングステートの数を OSPM に示す。このオブジェクトは、内部CPUコア周波数の最大値のパーセンテージ、最大消費電力、スロットリング状態間の遷移に必要な制御レジスタ値、OSが開始した遷移変更要求後にOSPMがスロットリング状態の遷移状態を確認できるようにするステータスレジスタ値など、利用可能なスロットリング状態に関する情報のパッケージ化されたリストとして評価される。このリストは、消費電力が小さい順にソートされている。その結果、0番目のエントリは、最高性能のスロットリング状態 (スロットリングが適用されていない) を表し、「n番目」のエントリは、最低性能のスロットリング状態 (最大スロットリングが適用されている) を表す。</p>
+<p>TSSを提供する場合、プラットフォームはPercentフィールド値が100である_TSSエントリを提供しなければならない。これはOSPMがスロットリングを無効にして最大のパフォーマンスを得るための手段である。</p>
+<h1 id="arguments_5">Arguments:<a class="headerlink" href="#arguments_5" title="Permanent link">#</a></h1>
+<p>なし</p>
+<h1 id="return-value_4">Return Value:<a class="headerlink" href="#return-value_4" title="Permanent link">#</a></h1>
+<p>以下に説明するTstateサブパッケージのリストを含む可変長パッケージ。</p>
+<h1 id="return-value-information_4">Return Value Information<a class="headerlink" href="#return-value-information_4" title="Permanent link">#</a></h1>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-44.jpg?height=225&amp;width=880&amp;top_left_y=2486&amp;top_left_x=239" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-44.jpg?height=225&amp;width=880&amp;top_left_y=2486&amp;top_left_x=239" /></a></p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-45.jpg?height=310&amp;width=618&amp;top_left_y=202&amp;top_left_x=250" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-45.jpg?height=310&amp;width=618&amp;top_left_y=202&amp;top_left_x=250" /></a></p>
+<h1 id="element-object-type-description_2">Element Object Type Description<a class="headerlink" href="#element-object-type-description_2" title="Permanent link">#</a></h1>
+<div class="arithmatex">\[\begin{tabular}{|l|l|l|}
+\hline Percent &amp; Integer (DWORD) &amp; Indicates the percent of the core CPU operating fr \\
+\hline Power &amp; Integer (DWORD) &amp; Indicates the throttling state's maximum power dis \\
+\hline Latency &amp; Integer (DWORD) &amp; Indicates the worst-case latency in microseconds t \\
+\hline Control &amp; Integer (DWORD) &amp; Indicates the value to be written to the Processor । \\
+\hline Status &amp; Integer (DWORD) &amp; Indicates the value that OSPM will compare to a vi \\
+\hline
+\end{tabular}\]</div>
+<h2 id="8453-_-tpc-throttling-present-capabilities">8.4.5.3. _ TPC (Throttling Present Capabilities)<a class="headerlink" href="#8453-_-tpc-throttling-present-capabilities" title="Permanent link">#</a></h2>
+<p>このオプションのオブジェクトは、プラットフォームが現在サポートしているスロットリング状態の数を OSPM に動的に示すメソッドである。このメソッドは、ある時点で OSPM が使用できる最も高いパワーのスロットリング状態の _TSS エントリ番号を示す数値を返す。OSPM は、_TPC メソッドが返す値で示される _TSS 内の対応するステートエントリ、または _TSS 内のより低いパワー (より高い番号)のステートエントリを選択できる。</p>
+<h1 id="arguments_6">Arguments:<a class="headerlink" href="#arguments_6" title="Permanent link">#</a></h1>
+<p>なし</p>
+<h1 id="return-value_5">Return Value:<a class="headerlink" href="#return-value_5" title="Permanent link">#</a></h1>
+<p>サポートされている状態の数を含む整数：</p>
+<p>0- 状態 <span class="arithmatex">\(0 \ldots\)</span> n番目の状態が利用可能 (全ての状態が利用可能)</p>
+<p>1- 状態 <span class="arithmatex">\(1 \ldots\)</span> n番目の状態が使用可能</p>
+<p>2- 状態2 ... n番目の状態が利用可能</p>
+<p><span class="arithmatex">\(n\)</span>- state <span class="arithmatex">\(n\)</span> available only</p>
+<p>TPCオブジェクトの動的な変更をサポートするために、0x82型のプロセッサオブジェクトに対するNotifyイベントは、プロセッサのオブジェクトリスト内の任意の_TPCオブジェクトをOSPMに再評価させる。これにより AML コードは、非同期イベントの結果、サポートされるスロットリング状態の数が変更された場合に OSPM に通知できる。OSPM は、プラットフォームが OSPM による P ステートの使用を最低消費電力の P ステートに制限していない限り、P ステートをサポートするプラットフォーム上の _TPC Notify イベントを無視する。OSPM は、プラットフォームが最低消費電力の P ステート以外の OSPM の使用を許可している場合、プラットフォームから伝達された T ステートの制限を無視することを選択できる。</p>
+<h2 id="8454-_tsd-t-state-dependency">8.4.5.4. _TSD (T-State Dependency)<a class="headerlink" href="#8454-_tsd-t-state-dependency" title="Permanent link">#</a></h2>
+<p>このオプションのオブジェクトは、OSPMにTステート制御の論理プロセッサ間の依存情報を提供する。TSDオブジェクトは、一連の論理プロセッサ間のTステート制御依存関係を表す1つのエントリを含むパッケージ化されたリストに評価される。</p>
+<h1 id="arguments_7">Arguments:<a class="headerlink" href="#arguments_7" title="Permanent link">#</a></h1>
+<p>なし</p>
+<h1 id="return-value_6">Return Value:<a class="headerlink" href="#return-value_6" title="Permanent link">#</a></h1>
+<p>以下に説明されるように、T-state依存Packageからなる一つのエントリを含むPackage。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-47.jpg?height=532&amp;width=1360&amp;top_left_y=75&amp;top_left_x=239" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-47.jpg?height=532&amp;width=1360&amp;top_left_y=75&amp;top_left_x=239" /></a></p>
+<p>要素オブジェクトタイプ説明</p>
+<div class="arithmatex">\[\begin{tabular}{|l|l|l|}
+\hline NumEntries &amp; Integer &amp; The number of entries in the TStateDepen \\
+\hline Revision &amp; Integer (BYTE) &amp; The revision number of the TStateDepend \\
+\hline Domain &amp; Integer (DWORD) &amp; The dependency domain number to which \\
+\hline CoordType &amp; Integer (DWORD) &amp; See Table 8.1 for supported T-state coordi \\
+\hline Num Processors &amp; Integer (DWORD) &amp; The number of processors belonging to thı \\
+\hline
+\end{tabular}\]</div>
+<h1 id="example_5">Example<a class="headerlink" href="#example_5" title="Permanent link">#</a></h1>
+<p>これは、名前空間の Processor 構造体における _TSD 構造体の使用例である。この例は、プロセッサごとに 3 つの T ステートを持つ 2 つのプロセッサ構成を表している。全てのTステートについて、2つのプロセッサ間には依存関係があり、一方のプロセッサが特定のTステートに遷移すると、もう一方のプロセッサも同じTステートに遷移する。OSPMは、2つのプロセッサ間のTステート遷移を調整する必要があり、どちらかのプロセッサ上で遷移を開始し、両方を共通のターゲットTステートに遷移させることができる。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-48.jpg?height=2765&amp;width=1534&amp;top_left_y=70&amp;top_left_x=250" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-48.jpg?height=2765&amp;width=1534&amp;top_left_y=70&amp;top_left_x=250" /></a></p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-49.jpg?height=2638&amp;width=1564&amp;top_left_y=40&amp;top_left_x=246" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-49.jpg?height=2638&amp;width=1564&amp;top_left_y=40&amp;top_left_x=246" /></a></p>
+<h2 id="8455-_tdl-t-state-depth-limit">8.4.5.5. _TDL (T-state Depth Limit)<a class="headerlink" href="#8455-_tdl-t-state-depth-limit" title="Permanent link">#</a></h2>
+<p>このオプションのオブジェクトは、OSPMが使用する可能性のある最低電力スロットリング状態の_TSSエントリ番号と評価される。TDLは、OSPMが不利な熱状態を緩和するためにプロセッサのスロットリング制御を使用して実行する性能低下の量を、プラットフォームが制限することを可能にする。OSPMは、_TDLオブジェクトが返す値で示される_TSS内の対応するステートエントリ、または_TPCオブジェクトが返す_TSSエントリ番号またはテーブルの最初のエントリ (_TPCが実装されていない場合)を含む、_TSS内のより高性能な (番号の小さい)ステートエントリを選択できる。TDLオブジェクトが返す値は、_TPCオブジェクトが返す値、または_TPCが実装されていない場合は_TSSの最後のエントリに対応する値以上でなければならない。TDLオブジェクトと_TPCオブジェクトの評価によって返される値が競合する場合、OSPMは_TPCオブジェクトを優先し、消費電力を制限する。</p>
+<h1 id="arguments_8">Arguments:<a class="headerlink" href="#arguments_8" title="Permanent link">#</a></h1>
+<p>なし</p>
+<h1 id="return-value_7">Return Value:<a class="headerlink" href="#return-value_7" title="Permanent link">#</a></h1>
+<p>スロットリング深度制限_TSSエントリ番号を含む整数：</p>
+<p>0- スロットリング無効。</p>
+<p>1- ステート1は、利用可能な最低電力のTステートである。</p>
+<p>2- ステート2は、利用可能な最低電力のTステートである。</p>
+<p><span class="arithmatex">\(n\)</span>- state <span class="arithmatex">\(n\)</span> is the lowest power T-state available.</p>
+<p>プラットフォームが OSPM で使用可能なパフォーマンス低減の限界を動的に示すために、0x82 型のプロセッサオブジェクトに対する Notify イベントは、プロセッサのオブジェクトリスト内の _TDL オブジェクトを OSPM に再評価させる。これにより AML コードは、非同期イベントの結果、サポートされるスロットリング状態の数が変更された場合に OSPM に通知できる。OSPM は、プラットフォームが OSPM による P ステートの使用を最低消費電力の P ステートに制限していない限り、P ステートをサポートするプラットフォーム上の _TDL Notify イベントを無視する。OSPMは、プラットフォームが最低消費電力のPステート以外のOSPM使用を許可している場合、プラットフォームから伝達されたTステート深度制限を無視することを選択できる。</p>
+<h2 id="846-processor-performance-control">8.4.6. Processor Performance Control<a class="headerlink" href="#846-processor-performance-control" title="Permanent link">#</a></h2>
+<p>プロセッサパフォーマンス制御は、3つのオプションオブジェクトを通して実装され、そのオブジェクトが存在することで、プラットフォームとCPUが複数のパフォーマンス状態をサポートできることをOSPMに示す。プロセッサパフォーマンス制御が実装されている場合、プラットフォームは3つのオブジェクトを全て提供しなければならない。プラットフォームは、そのプロセッサの全て、またはいずれかについてプロセッサパフォーマンス制御オブジェクトを公開しなければならない。プロセッサパフォーマンス制御オブジェクトは、サポートされるプロセッサパフォーマンス状態を定義し、プロセッサを特定のパフォーマンス状態にすることを可能にし、システム上で現在利用可能なパフォーマンス状態の数を報告する。</p>
+<p>マルチプロセッシング環境では、全てのCPUが同じ数のパフォーマンスステートをサポートし、各プロセッサのパフォーマンスステートが同一のパフォーマンスと消費電力パラメータを持っている必要がある。OSPMがこの機能を利用するためには、システム内の各プロセッサオブジェクトの下にパフォーマンスオブジェクトが存在する必要がある。</p>
+<p>プロセッサパフォーマンスコントロールオブジェクトには、以下に詳述するように、'_PCT'パッケージ、'_PSS'パッケージ、および'_PPC'メソッドが含まれる。</p>
+<h2 id="8461-_pct-performance-control">8.4.6.1. _PCT (Performance Control)<a class="headerlink" href="#8461-_pct-performance-control" title="Permanent link">#</a></h2>
+<p>このオプションのオブジェクトは、OSPM がプロセッサをパフォーマンス状態にマイグレーションさせるためのインタフェースを宣言する。OSPM は、パフォーマンスコントロールレジスタ (PERF_CTRL)にパフォーマンス状態固有の制御値を書き込むことで、プロセッサのパフォーマンス遷移を実行する。</p>
+<p>OSPM は、_PPC メソッドによって返されるパフォーマンスステート値によって示されるプロセッサパフォーマンスステート、または任意の低電力 (高番号)ステートを選択できる。書き込む制御値は、対応する_PSSエントリの "Control "フィールドに含まれる。</p>
+<p>プロセッサパフォーマンスマイグレーションの成否は、パフォーマンスステータスレジスタ (PERF_STATUS)を読み出して、プロセッサの現在のパフォーマンス状態を判断することによって決定される。マイグレーションが成功した場合、PERF_STATUS から読み出された値は、希望するプロセッサの性能状態に対応する _PSS エントリの「Status」フィールドと一致する。</p>
+<h1 id="arguments_9">Arguments:<a class="headerlink" href="#arguments_9" title="Permanent link">#</a></h1>
+<p>なし</p>
+<h1 id="return-value_8">Return Value:<a class="headerlink" href="#return-value_8" title="Permanent link">#</a></h1>
+<p>以下のパッケージ</p>
+<div class="arithmatex">\[\begin{tabular}{|l|l|l|}
+\hline \multicolumn{1}{|c|}{ Element } &amp; Object Type &amp; Description \\
+\hline Control Register &amp; Buffer &amp; Contains a Resource Descriptor with a single Re: \\
+\hline Status Register &amp; Buffer &amp; Contains a Resource Descriptor with a single Re: \\
+\hline
+\end{tabular}\]</div>
+<h1 id="example_6">Example<a class="headerlink" href="#example_6" title="Permanent link">#</a></h1>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-52.jpg?height=229&amp;width=1426&amp;top_left_y=1121&amp;top_left_x=250" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-52.jpg?height=229&amp;width=1426&amp;top_left_y=1121&amp;top_left_x=250" /></a></p>
+<h2 id="8462-_pss-performance-supported-states">8.4.6.2. _PSS (Performance Supported States)<a class="headerlink" href="#8462-_pss-performance-supported-states" title="Permanent link">#</a></h2>
+<p>このオプションのオブジェクトは、任意のシステムがサポート可能なプロセッサパフォーマンス状態の数を OSPM に示す。このオブジェクトは、内部CPUコア周波数、標準的な消費電力、パフォーマンスステート間のマイグレーションに必要なコントロールレジスタ値、OS主導のマイグレーション変更要求後にOSPMがパフォーマンスマイグレーションステータスを確認するためのステータスレジスタ値など、利用可能なパフォーマンスステートに関する情報をパッケージ化したリストとして評価される。このリストは、標準的な消費電力の降順でソートされている。その結果、0 番目のエントリは最高性能の状態を表し、「n 番目」のエントリは最低性能の状態を表す。</p>
+<h1 id="arguments_10">Arguments:<a class="headerlink" href="#arguments_10" title="Permanent link">#</a></h1>
+<p>なし</p>
+<h1 id="return-value_9">Return Value:<a class="headerlink" href="#return-value_9" title="Permanent link">#</a></h1>
+<p>以下のPstateサブパッケージのリストを含む可変長パッケージ。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-53.jpg?height=225&amp;width=1107&amp;top_left_y=70&amp;top_left_x=250" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-53.jpg?height=225&amp;width=1107&amp;top_left_y=70&amp;top_left_x=250" /></a></p>
+<p>各Pstateサブパッケージには、以下の要素が含まれている：</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-53.jpg?height=359&amp;width=845&amp;top_left_y=596&amp;top_left_x=250" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-53.jpg?height=359&amp;width=845&amp;top_left_y=596&amp;top_left_x=250" /></a></p>
+<div class="arithmatex">\[\begin{tabular}{l|l|l}
+Element &amp; Object Type &amp; Description \\
+\hline Core Frequency &amp; Integer (DWORD) &amp; Indicates the core CPU operating freq \\
+\hline Power &amp; Integer (DWORD) &amp; Indicates the performance state's maxi \\
+\hline Latency &amp; Integer (DWORD) &amp; Indicates the worst-case latency in mic \\
+\hline Bus Master Latency &amp; Integer (DWORD) &amp; Indicates the worst-case latency in mic \\
+\hline Control &amp; Integer (DWORD) &amp; Indicates the value to be written to the \\
+\hline Status &amp; Integer (DWORD) &amp; Indicates the value that OSPM will cor
+\end{tabular}\]</div>
+<h2 id="8463-_ppc-performance-present-capabilities">8.4.6.3. _PPC (Performance Present Capabilities)<a class="headerlink" href="#8463-_ppc-performance-present-capabilities" title="Permanent link">#</a></h2>
+<p>このオプションのオブジェクトは、プラットフォームが現在サポートしているパフォーマンスステートの数を動的にOSPMに示すメソッドである。このメソッドは、ある時点でOSPMが使用できる最高のパフォーマンス状態の_PSSエントリ番号を示す数値を返す。OSPMは、_PPCメソッドが返す値で示される_PSS内の対応するステートエントリ、または_PSS内の任意の低電力 (より高い番号の)ステートエントリを選択できる。</p>
+<h1 id="arguments_11">Arguments:<a class="headerlink" href="#arguments_11" title="Permanent link">#</a></h1>
+<p>なし</p>
+<p>サポートされる状態の範囲を含む整数</p>
+<p>0- 状態0からn番目の状態が利用可能 (全ての状態が利用可能)</p>
+<p>1- 状態1からn番目の状態が利用可能</p>
+<p>2- 状態2からn番目の状態が使用可能</p>
+<p><span class="arithmatex">\(n\)</span>- State <span class="arithmatex">\(n\)</span> is available only</p>
+<p>PPCオブジェクトの動的な変更をサポートするために、プロセッサオブジェクトに対するNotifyイベントが許可されている。タイプ0x80のNotifyイベントは、通知された特定のプロセッサオブジェクトの下に存在する_PPCオブジェクトをOSPMに再評価させる。これにより、非同期イベント (AC の挿入/取り外し、ドッキング、ドッキング解除など)の結果、サポートされるステートの数が変更された場合に、AML コードが OSPM に通知できるようになる。</p>
+<h2 id="84631-ospm-_ost-evaluation">8.4.6.3.1. OSPM _OST Evaluation<a class="headerlink" href="#84631-ospm-_ost-evaluation" title="Permanent link">#</a></h2>
+<p>PPCオブジェクトの評価処理が完了すると、OSPMは_OSTオブジェクトを評価し、_PPC評価ステータスをプラットフォームに伝えます。PPC評価に固有の_OST引数については後述する。</p>
+<p>論拠(2)</p>
+<p>Arg0- ソースイベント (整数) ：0x80 Arg1- ステータスコード(整数) : 以下を参照。</p>
+<p>戻り値：</p>
+<p>なし</p>
+<p>議論情報：</p>
+<p>Arg1- ステータスコード 0: 成功- OSPMは指定されたパフォーマンス状態を使用している。</p>
+<h2 id="8464-processor-performance-control-example">8.4.6.4. Processor Performance Control Example<a class="headerlink" href="#8464-processor-performance-control-example" title="Permanent link">#</a></h2>
+<p>これは、プロセッサオブジェクトリスト内のプロセッサパフォーマンスコントロールオブジェクトの例である。</p>
+<p>この例では、以下の3つの性能状態をサポートするプロセッサ性能機能を持つユニプロセッサプラットフォームを想定している：
+1. <span class="arithmatex">\(500 \mathrm{MHz}(8.2 \mathrm{~W})\)</span> は随時対応
+2. <span class="arithmatex">\(600 \mathrm{MHz}(14.9 \mathrm{~W})\)</span> はAC電源供給時のみサポート</p>
+<p>あるパフォーマンス状態から他のパフォーマンス状態にマイグレーションするのに500マイクロ秒以上かかることはない。</p>
+<p>パフォーマンス遷移中、バスマスタは最大300マイクロ秒間、メモリにアクセスできない。</p>
+<p>PERF_CTRLとPERF_STATUSレジスタは機能固定ハードウェアとして実装されている。</p>
+<p>システム内には以下のASLオブジェクトが実装されている：</p>
+<p>_SB.DOCK：システムがドッキングしていれば1、そうでなければ0と評価される。</p>
+<p>_SB.AC：ACが接続されていれば1、そうでなければ0と評価される。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-55.jpg?height=1627&amp;width=1559&amp;top_left_y=1135&amp;top_left_x=247" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-55.jpg?height=1627&amp;width=1559&amp;top_left_y=1135&amp;top_left_x=247" /></a></p>
+<p>プラットフォームは、利用可能なプロセッサ性能状態の数が変化したときに、このオブジェクトを再評価するように OSPM に通知するために、Notify(_SB.CPU0, 0x80)を発行する。</p>
+<h2 id="8465-_psd-p-state-dependency">8.4.6.5. _PSD (P-State Dependency)<a class="headerlink" href="#8465-_psd-p-state-dependency" title="Permanent link">#</a></h2>
+<p>このオプションのオブジェクトは、パフォーマンス制御、PステートまたはCPPC、論理プロセッサの依存情報をOSPMに提供する。PSDオブジェクトは、論理プロセッサのセット間のパフォーマンス制御の依存関係を表す1つのエントリを含むパッケージ化されたリストに評価される。</p>
+<h1 id="arguments_12">Arguments:<a class="headerlink" href="#arguments_12" title="Permanent link">#</a></h1>
+<p>なし</p>
+<h1 id="return-value_10">Return Value:<a class="headerlink" href="#return-value_10" title="Permanent link">#</a></h1>
+<p>後述のP-state依存Packageからなる一つのエントリを持つPackage。</p>
+<h1 id="return-value-information_5">Return Value Information<a class="headerlink" href="#return-value-information_5" title="Permanent link">#</a></h1>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-56.jpg?height=92&amp;width=689&amp;top_left_y=1320&amp;top_left_x=252" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-56.jpg?height=92&amp;width=689&amp;top_left_y=1320&amp;top_left_x=252" /></a></p>
+<p>PStateDependency サブパッケージには、以下の要素が含まれる：</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-56.jpg?height=311&amp;width=854&amp;top_left_y=1755&amp;top_left_x=242" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-56.jpg?height=311&amp;width=854&amp;top_left_y=1755&amp;top_left_x=242" /></a></p>
+<p>要素オブジェクトタイプ説明</p>
+<div class="arithmatex">\[\begin{tabular}{|l|l|l|}
+\hline NumEntries &amp; Integer &amp; The number of entries in the PStateDepen \\
+\hline Revision &amp; Integer (BYTE) &amp; The revision number of the PStateDepend \\
+\hline Domain &amp; Integer (DWORD) &amp; The dependency domain number to which \\
+\hline CoordType &amp; Integer (DWORD) &amp; See Table 8.1 for supported P-state coordi \\
+\hline
+\end{tabular}\]</div>
+<h1 id="element-object-type-description_3">Element Object Type Description<a class="headerlink" href="#element-object-type-description_3" title="Permanent link">#</a></h1>
+<p>Num Processors 整数 (DWORD) 番目に属すプロセッサの数。</p>
+<h1 id="example_7">Example<a class="headerlink" href="#example_7" title="Permanent link">#</a></h1>
+<p>これは、名前空間の Processor 構造体における _PSD 構造体の使用例である。この例は、プロセッサごとに 3 つのパフォーマンス状態を持つ 2 つのプロセッサ構成を表している。全てのパフォーマンス状態において、2つのプロセッサ間には依存関係があり、一方のプロセッサが特定のパフォーマンス状態に遷移すると、もう一方のプロセッサも同じパフォーマンス状態に遷移する。OSPMは、2つのプロセッサ間のPステートの遷移を調整する必要があり、どちらかのプロセッサで遷移を開始することで、両方を共通のターゲットPステートに遷移させることができる。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-58.jpg?height=2722&amp;width=1561&amp;top_left_y=70&amp;top_left_x=246" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-58.jpg?height=2722&amp;width=1561&amp;top_left_y=70&amp;top_left_x=246" /></a></p>
+<h2 id="8466-_pdl-p-state-depth-limit">8.4.6.6. _PDL (P-state Depth Limit)<a class="headerlink" href="#8466-_pdl-p-state-depth-limit" title="Permanent link">#</a></h2>
+<p>このオプションのオブジェクトは、OSPMがパッシブ熱制御を実行する際に使用する可能性のある最も低い性能のPstateの_PSSエントリ番号に評価される。OSPMは、_PDLオブジェクトが返す値で示される_PSS内の対応する状態エントリ、または_PPCオブジェクトが返す_PSSエントリ番号またはテーブルの最初のエントリ (_PPCが実装されていない場合)を含むまでの_PSS内のより高い性能の (番号の小さい)状態エントリを選択できる。PDL オブジェクトによって返される値は、_PPC オブジェクトによって返される値、または _PPC が実装されていない場合は _PSS の最後のエントリに対応する値以上でなければならない。PDLオブジェクトと_PPCオブジェクトの評価によって返される値が競合する場合、OSPMは_PPCオブジェクトを優先し、消費電力を制限する。</p>
+<h1 id="arguments_13">Arguments:<a class="headerlink" href="#arguments_13" title="Permanent link">#</a></h1>
+<p>なし</p>
+<p>戻り値：</p>
+<p>P-state Depth Limit _PSS のエントリ番号を含む整数：</p>
+<p>0- POは、OSPMで使用可能な唯一のPステートである。</p>
+<p>1- 状態1は、利用可能な最低電力のP状態である。</p>
+<p>2- ステート2は、利用可能な最低電力のPステートである。</p>
+<p><span class="arithmatex">\(n\)</span>- state <span class="arithmatex">\(n\)</span> is the lowest power P-state available</p>
+<p>プラットフォームが P ステート深度制限の変更を動的に示すために、0x80 タイプのプロセッサオブジェクトに対する Notify イベントは、プロセッサのオブジェクトリスト内の _PDL オブジェクトを OSPM に再評価させる。これにより、非同期イベントの結果、サポートされるパフォーマンスステートの数が変更された可能性がある場合に、AML コードが OSPM に通知できるようになる。\</p>
+<h2 id="847-collaborative-processor-performance-control">8.4.7. Collaborative Processor Performance Control<a class="headerlink" href="#847-collaborative-processor-performance-control" title="Permanent link">#</a></h2>
+<p>協調プロセッサ性能制御は、論理プロセッサの性能を管理するためにOSPMがプラットフォーム内のエンティティと協調するための抽象化された柔軟なメカニズムを定義する。この方式では、プラットフォームエンティティが、連続的で抽象的なユニットレスの性能スケールを裏付ける性能定義の作成と維持に責任を持つ。ランタイム中、OSPMはこの抽象的なスケール上で望ましい性能を要求し、プラットフォームエンティティはOSPMの性能要求を実際のハードウェア性能状態に変換する責任を負う。プラットフォームはまた
+は、現在のワークロードに適したパフォーマンスレベルを自律的に選択する機能をサポートする。この場合、OSPMはプラットフォームのパフォーマンスレベル選択の指針となる情報をプラットフォームに伝える。</p>
+<p>先行するプロセッサ性能制御 (PステートとTステート)は、プロセッサ性能への影響をプロセッサ周波数という観点から説明してきた。プロセッサの周波数は、プロセッサが作業を完了する速度の大まかな近似値であるが、ワークロード性能は周波数によってスケールすることは保証されていない。そのため、コラボレーティブプロセッサパフォーマンスコントロールでは、プロセッサ性能の特定の指標を規定するのではなく、正確な性能指標の定義をプラットフォームに委ねます。プラットフォームは、プロセッサ周波数のような単一のメトリックを使用することを選択することもできるし、複数のハードウェアメトリックをブレンドしてパフォーマンスの総合的な尺度を作成することを選択することもできる。このように、プラットフォームは、必ずしも特定のプロセッサ周波数を提供しなくても、OSPMが要求する性能レベルを自由に提供できる。OSPMは、プラットフォームが提示する性能値の正確な意味や、プロセッサ周波数のような特定のハードウェアメトリクスとの相関関係について、一切仮定してはならない。</p>
+<p>プラットフォームは、システム内の全てのプロセッサに同じ性能スケールを使用しなければならない。ヘテロジニアスプロセッサを持つプラットフォームでは、全てのプロセッサの性能特性が同じとは限らない。この場合、プラットフォームはプロセッサの違いを調整する性能スケールを合成し、同じ性能レベルで同じワークロードを実行する2つのプロセッサがほぼ同じ時間で完了するようにしなければならない。プラットフォームは、各プロセッサの性能特性を正確に反映するために、プロセッサのクラスごとに異なる能力を公開する必要がある。</p>
+<p>制御メカニズムは_CPCオブジェクトメソッドによって抽象化されており、一般的な方法でプロセッサのパフォーマンスを制御および監視する方法が記述されている。レジスタメソッドは、プラットフォーム通信チャネル (PCC)インタフェースに実装できる (プラットフォーム通信チャネル (PCC)を参照)。これにより、OSPMが通信する相手がプロセッサ自身であったり、プラットフォームチップセットであったり、別のエンティティ (BMCなど)であったりする柔軟性が提供される。</p>
+<p>プロセッサ性能を周波数として報告する既存のツールとの後方互換性を提供するために、_CPC オブジェクトは、OS が使用するプロセッサ周波数範囲の値をオプションで提供できる。OSPMはプラットフォームから提示された性能値の正確な意味について仮定してはならず、プラットフォームとの全ての機能的な決定や対話は、依然として抽象的な性能スケールを使用して行われる。周波数値が_CPCオブジェクトに含まれるのは、OSが性能データを単純な周波数範囲で提示できるようにするためだけであり、周波数が他のメカニズムによってプラットフォームから発見できない場合である。</p>
+<h2 id="8471-_cpc-continuous-performance-control">8.4.7.1. _CPC (Continuous Performance Control)<a class="headerlink" href="#8471-_cpc-continuous-performance-control" title="Permanent link">#</a></h2>
+<p>このオプションのオブジェクトは、OSPMが連続した許容値の範囲に基づいてプロセッサをパフォーマンス状態にマイグレーションさせるためのインタフェースを宣言する。OSPMは希望する性能値をDesired Performance Registerに書き込み、プラットフォームは希望する性能を内部性能状態にマッピングする。プラットフォームがサポートしている場合、OSPMは代わりに、最小および最大性能要件を指定しながら自律的な性能レベル選択を可能にすることもできる。</p>
+<p>プラットフォームがサポートしていないオプションの_CPCパッケージフィールドは、以下のようにエンコードされるべきである：
+- 整数フィールド：整数 0
+- レジスタフィールド：以下のNULLレジスタ記述子を使用すべきである：</p>
+<p><span class="arithmatex">\(\{(\)</span> SystemMemory, <span class="arithmatex">\(\odot, \odot, \odot, \odot)\}\}\)</span> を登録する。</p>
+<p>論拠：</p>
+<p>なし</p>
+<p>戻り値：</p>
+<p>パフォーマンスコントロール情報を含むパッケージ。</p>
+<p>パフォーマンスコントロールパッケージには、以下の要素が含まれる：</p>
+<p>NumEntries、</p>
+<p>改定だ、</p>
+<p>最高のパフォーマンス、</p>
+<p>ディスクリプタ)</p>
+<p>公称性能、</p>
+<p>ディスクリプタ)</p>
+<p>最も低い非線形性能、</p>
+<p>ディスクリプタ)</p>
+<p>最低のパフォーマンス、</p>
+<p>ディスクリプタ)</p>
+<p>GuaranteedPerformanceRegister、</p>
+<p>希望パフォーマンス登録</p>
+<p>MinimumPerformanceRegister 、</p>
+<p>MaximumPerformanceRegister 、</p>
+<p>PerformanceReductionToleranceRegister、</p>
+<p>TimeWindowRegister、</p>
+<p>CounterWraparoundTime、</p>
+<p>ディスクリプタ)</p>
+<p>ReferencePerformanceCounterRegister、</p>
+<p>DeliveredPerformanceCounterRegister、</p>
+<p>PerformanceLimitedRegister、</p>
+<p>CPPCEnableRegister</p>
+<p>AutonomousSelectionEnable、</p>
+<p>ディスクリプタ)</p>
+<p>AutonomousActivitywindowRegister、</p>
+<p>EnergyPerformancePreferenceRegister、</p>
+<p>リファレンスパフォーマンス</p>
+<p>ディスクリプタ)</p>
+<p>最低周波数、</p>
+<p>ディスクリプタ)</p>
+<p>公称周波数</p>
+<p>ディスクリプタ)</p>
+<p>}
+// 整数</p>
+<p>// 整数</p>
+<p>// 整数またはバッファ (リソース</p>
+<p>// 整数またはバッファ (リソース</p>
+<p>// 整数またはバッファ (リソース</p>
+<p>// 整数またはバッファ (リソース</p>
+<p>// バッファ (リソース記述子)</p>
+<p>// バッファ (リソース記述子)</p>
+<p>// バッファ (リソース記述子)</p>
+<p>// バッファ (リソース記述子)</p>
+<p>// バッファ (リソース記述子)</p>
+<p>// バッファ (リソース記述子)</p>
+<p>// 整数またはバッファ (リソース</p>
+<p>// バッファ (リソース記述子)</p>
+<p>// バッファ (リソース記述子)</p>
+<p>// バッファ (リソース記述子)</p>
+<p>// バッファ (リソース記述子)</p>
+<p>// 整数またはバッファ (リソース</p>
+<p>// バッファ (リソース記述子)</p>
+<p>// バッファ (リソース記述子)</p>
+<p>// 整数またはバッファ (リソース</p>
+<p>// 整数またはバッファ (リソース</p>
+<p>// 整数またはバッファ (リソース
+エレメント</p>
+<div class="arithmatex">\[\begin{tabular}{l|l|l}
+\hline NumEntries &amp; Integer &amp; The nı \\
+\hline Revision &amp; Integer (BYTE) &amp; The re \\
+\hline Highest Performance &amp; Integer (DWORD) or Buffer &amp; Indicat \\
+\hline Nominal Performance &amp; Integer (DWORD) or Buffer &amp; Indicat \\
+\hline Lowest Nonlinear Performance &amp; Integer (DWORD) or Buffer &amp; Indicat \\
+\hline Lowest Performance &amp; Integer (DWORD) or Buffer &amp; Indicat \\
+\hline Guaranteed Performance Register &amp; Buffer &amp; Optior \\
+\hline Desired Performance Register &amp; Buffer &amp; Contai \\
+\hline Minimum Performance Register &amp; Buffer &amp; Optior \\
+\hline
+\end{tabular}\]</div>
+<div class="arithmatex">\[\begin{tabular}{|c|c|c|}
+\hline Element &amp; Object Type &amp; Descri \\
+\hline Maximum Performance Register &amp; Buffer &amp; Optior \\
+\hline Performance Reduction Tolerance Register &amp; Buffer &amp; Optior \\
+\hline Time Window Register &amp; Buffer &amp; Optior \\
+\hline Counter Wraparound Time &amp; Integer (DWORD) or Buffer &amp; Optior \\
+\hline Reference Performance Counter Register &amp; Buffer &amp; Contai \\
+\hline Delivered Performance Counter Register &amp; Buffer &amp; Contai \\
+\hline Performance Limited Register &amp; Buffer &amp; Contai \\
+\hline CPPC EnableRegister &amp; Buffer &amp; Optior \\
+\hline Autonomous Selection Enable &amp; Integer (DWORD) or Buffer &amp; Optior \\
+\hline AutonomousActivity-WindowRegister &amp; Buffer &amp; Optior \\
+\hline EnergyPerformance-PreferenceRegister &amp; Buffer &amp; Optior \\
+\hline Reference Performance &amp; Integer (DWORD) or Buffer &amp; Optior \\
+\hline Lowest Frequency &amp; Integer (DWORD) or Buffer &amp; Optior \\
+\hline Nominal Frequency &amp; Integer (DWORD) or Buffer &amp; Optior \\
+\hline
+\end{tabular}\]</div>
+<p>CPCオブジェクトは、OSPMにプラットフォーム固有のパフォーマンス能力/閾値と、OSPMがプラットフォームのプロセッサパフォーマンス設定を制御するために使用するコントロールレジスタを提供する。これらについては以下のセクションで説明する。プラットフォームは許容範囲内でレジスタサイズを指定できるが、能力/閾値レジスタのサイズは制御レジスタのサイズと互換性がなければならない。プラットフォームがCPPCをサポートしている場合、_CPCオブジェクトは全てのプロセッサオブジェクトの下に存在しなければならない。すなわち、OSPM は混合モード (CPPC ⇄レガシー PSS、_PCT、_PPC)動作をサポートしないものとする。</p>
+<p>ACPI仕様6.2以降、全ての_CPCレジスタは、PCC、システムメモリ、システムIO、または機能固定ハードウェアのアドレス空間に置くことができる。このより柔軟なレジスタ空間スキームに対するOSPMのサポートは、"Flexible Address Space for CPPC Registers" _OSCビットによって示される。</p>
+<h2 id="84711-performance-capabilities-thresholds">8.4.7.1.1. Performance Capabilities / Thresholds<a class="headerlink" href="#84711-performance-capabilities-thresholds" title="Permanent link">#</a></h2>
+<p>パフォーマンスベースの制御は、個別のプロセッサの状態ではなく、連続的なプロセッサのパフォーマンスレベルの範囲で動作する。その結果、プラットフォームの能力と OSPM 要求は、性能閾値で指定される。プラットフォーム性能閾値は、プラットフォームの静的性能閾値と動的性能保証閾値の概要を示す。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-64.jpg?height=1248&amp;width=1562&amp;top_left_y=61&amp;top_left_x=270" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-64.jpg?height=1248&amp;width=1562&amp;top_left_y=61&amp;top_left_x=270" /></a></p>
+<p>図8.10 プラットフォーム性能の閾値</p>
+<h1 id="1-note_1">(1) Note<a class="headerlink" href="#1-note_1" title="Permanent link">#</a></h1>
+<p>全ての性能レベルが一意である必要はない。例えば、あるプラットフォームの公称性能レベルが、そのプラットフォームの最高性能レベルである場合もある*。</p>
+<h2 id="847111-highest-performance">8.4.7.1.1.1. Highest Performance<a class="headerlink" href="#847111-highest-performance" title="Permanent link">#</a></h2>
+<p>レジスタまたはDWORD属性：読み取り</p>
+<p>サイズ <span class="arithmatex">\(\quad 8-32\)</span> ビット</p>
+<p>最高性能とは、理想的な状態を想定した場合に、個々のプロセッサが到達しうる絶対的な最大性能のことである。この性能レベルは、長時間維持できない可能性があり、他のプラットフォームコンポーネントが特定の状態にある場合にのみ達成可能である。</p>
+<p>プロセッサデバイスオブジェクトに対するタイプ 0x85 の通知イベントにより、OSPM は最高性能レジスタを再評価するが、これはバッファとしてエンコードされている場合に限る。注意：通知の結果として、OSPMが_CPCオブジェクトを再評価することはない。</p>
+<h2 id="847112-nominal-performance">8.4.7.1.1.2. Nominal Performance<a class="headerlink" href="#847112-nominal-performance" title="Permanent link">#</a></h2>
+<p>公称性能 (Nominal Performance)とは、理想的な動作条件を想定した場合の、プロセッサの最大持続性能レベルのこと。外部からの制約 (電力、熱など)がない場合、プラットフォームが継続的に維持できると期待される性能レベルである。全てのプロセッサが同時に公称性能状態を維持できることが期待される。</p>
+<h2 id="847113-reference-performance">8.4.7.1.1.3. Reference Performance<a class="headerlink" href="#847113-reference-performance" title="Permanent link">#</a></h2>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-65.jpg?height=87&amp;width=919&amp;top_left_y=794&amp;top_left_x=250" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-65.jpg?height=87&amp;width=919&amp;top_left_y=794&amp;top_left_x=250" /></a></p>
+<p>プラットフォームでサポートされている場合、Reference PerformanceはReference Performance Counterがインクリメントするレートである。実装されていない場合 (またはゼロの場合)、リファレンスパフォーマンスカウンターは、ノミナルパフォーマンスレベルに対応するレートでインクリメントする。</p>
+<h2 id="847114-lowest-nonlinear-performance">8.4.7.1.1.4. Lowest Nonlinear Performance<a class="headerlink" href="#847114-lowest-nonlinear-performance" title="Permanent link">#</a></h2>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-65.jpg?height=96&amp;width=759&amp;top_left_y=1504&amp;top_left_x=246" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-65.jpg?height=96&amp;width=759&amp;top_left_y=1504&amp;top_left_x=246" /></a></p>
+<p>最低非線形性能とは、電圧スケーリングと周波数スケーリングの複合効果などにより、非線形消費電力削減が達成される最低の性能レベルである。この閾値よ り上では、 一般に、 低い性能レベルの方が高い性能レベルよ りも エネ ルギー効率が高いはずである。従来の用語では、これは性能レベルのP-state範囲を表している。</p>
+<p>このレジスタは、最も効率的な性能レベルを効果的にOSPMに伝える。</p>
+<h2 id="847115-lowest-performance">8.4.7.1.1.5. Lowest Performance<a class="headerlink" href="#847115-lowest-performance" title="Permanent link">#</a></h2>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-65.jpg?height=90&amp;width=756&amp;top_left_y=2407&amp;top_left_x=247" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-65.jpg?height=90&amp;width=756&amp;top_left_y=2407&amp;top_left_x=247" /></a></p>
+<p>Lowest Performance (最低性能)は、プラットフォームの絶対的な最低性能レベルである。最小の非線形性能レベルよりも低い性能レベルを選択すると、実際には効率性が低下する可能性があるが、以下の瞬間消費電力は削減されるはずである。
+これは、プロセッサの性能レベルを表す。従来の用語では、これは性能レベルのTステート範囲を表している。</p>
+<h2 id="847116-guaranteed-performance-register">8.4.7.1.1.6. Guaranteed Performance Register<a class="headerlink" href="#847116-guaranteed-performance-register" title="Permanent link">#</a></h2>
+<p>オプションの属性：読み取り</p>
+<p>サイズ <span class="arithmatex">\(\quad 8-32\)</span> ビット</p>
+<p>保証性能レジスタはOSPMに保証性能レベルを伝える。保証性能レベルとは、既知の全ての外部制約 (パワーバジェッティング、熱制約、AC対DC電源など)を考慮した、プロセッサの現在の最大持続性能レベルである。全てのプロセッサは、同時にその保証性能レベルを維持できることが期待されている。保証性能レベルは、[最低性能、公称性能]の範囲内にあることが求められる。</p>
+<p>このレジスタが実装されていない場合、OSPMは保証性能が常に公称性能と等しいと仮定する。</p>
+<p>プロセッサデバイスオブジェクトへのタイプ 0x83 の通知イベントにより、OSPM は性能保証レジスタを再評価する。保証性能の変更は、1 秒に 1 回を超える頻度で行われるべきではない。プラットフォームが一定時間 (1秒以上)所定の性能レベルを保証できない場合は、低い性能レベルを保証し、OSPMの要求に応じて、現在の動作条件で許容される高い性能レベルに臨機応変に入るべきである。</p>
+<h2 id="847117-lowest-frequency-and-nominal-frequency">8.4.7.1.1.7. Lowest Frequency and Nominal Frequency<a class="headerlink" href="#847117-lowest-frequency-and-nominal-frequency" title="Permanent link">#</a></h2>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-66.jpg?height=100&amp;width=882&amp;top_left_y=1853&amp;top_left_x=247" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-66.jpg?height=100&amp;width=882&amp;top_left_y=1853&amp;top_left_x=247" /></a></p>
+<p>プラットフォームがサポートしている場合、Lowest FrequencyとNominal Frequencyの値は、それぞれプラットフォームの最低CPU周波数と公称CPU周波数をメガヘルツ (MHz)で表す。これらは、CPPCの抽象的性能尺度の「最低性能」と「公称性能」にほぼ対応するはずであるが、正確な相関は保証されない。詳細は「最低性能」と「公称性能」を参照。</p>
+<p>これらの値は、CPPC抽象性能スケールに基づく機能決定やプラットフォーム通信に使用すべきではない。これらの値は、CPPCプラットフォームがCPU周波数として性能を報告するOSと下位互換性を持つことを可能にすることのみを目的としている。OSは、最低周波数/性能および公称周波数/性能をアンカーポイントとして使用し、CPPC抽象性能のCPU周波数への線形マッピングを作成する必要がある。</p>
+<p>Nominal、およびNominalからHighestへの外挿。CPPC抽象性能は純粋にCPU周波数に基づいている必要はないため、このマッピングが正確であることは保証されないが、OSが性能をCPU周波数として報告しなければならない場合、データがないよりはましであることに注意。プラットフォームは、CPU周波数を報告する必要があるOSと動作する必要があり、この情報を発見する代替メカニズムがない場合、これらの値を提供する必要がある。</p>
+<h2 id="84712-performance-controls">8.4.7.1.2. Performance Controls<a class="headerlink" href="#84712-performance-controls" title="Permanent link">#</a></h2>
+<p>CPPCの下で、OSPMはプラットフォームの性能を制御/影響するために、いくつかの性能設定を併用できる。これらの制御入力の概要は下図の通りである。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-67.jpg?height=1254&amp;width=1499&amp;top_left_y=818&amp;top_left_x=290" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-67.jpg?height=1254&amp;width=1499&amp;top_left_y=818&amp;top_left_x=290" /></a></p>
+<p>図8.11 OSPMパフォーマンスコントロール</p>
+<p>OSPMはプラットフォームがサポートする連続的な値の範囲内で任意の性能値を選択できる。内部的には、プラットフォームは少数の離散的な性能状態を実装し、OSPMが望む正確な性能レベルで動作できない可能性がある。OSPMが希望する性能レベルに合致するプラットフォーム内部の状態が存在しない場合、プラットフォームは以下のように希望する性能を丸めるべきである：
+- OSPM が保証性能以上の希望性能レベルを選択した場合、プラットフォームは切り上げまたは切り下げを行うことができる。四捨五入の結果は保証性能を下回ってはならない。
+- OSPMが保証性能未満の希望性能レベルと保証性能を下回らない最大性能レベルを選択した場合、プラットフォームは切り上げなければならない。</p>
+<p>OSPMが希望性能レベルと保証性能未満の最大性能レベルの両方を選択した場合、プラットフォームは、切り上げが最大性能レベルに違反しない場合は切り上げなければならない。そうでない場合は切り捨てる。このアプローチは、プラットフォームやOSPMの制約によって性能が制限されている場合を除き、性能を優先する。</p>
+<p>自律選択を有効にすると、OSPMは最小性能レジスタと最大性能レジスタに適切な制約値を書き込むことで、プロセッサの性能選択を制限する。最小値と最大値を同じ値に設定すると、自律選択は事実上無効になる。</p>
+<p>注：プロセッサが同じ依存性ドメイン内にある場合、最大性能は、ハードウェアの調整によって許容される場合にのみ、実際に制限される可能性がある。</p>
+<h2 id="847121-maximum-performance-register">8.4.7.1.2.1. Maximum Performance Register<a class="headerlink" href="#847121-maximum-performance-register" title="Permanent link">#</a></h2>
+<p>オプションの属性：読み取り/書き込み</p>
+<p>サイズ <span class="arithmatex">\(\quad 8-32\)</span> ビット</p>
+<p>最大性能最大性能最大性能最大性能最大性能レジスタレジスタレジスタレジスタは、プラットフォームが実行できる最大性能レベルを伝える。最大性能は[Lowest Performance, Highest Performance]の範囲内の任意の性能値に設定できる。</p>
+<p>最大性能レジスタに書き込まれた値は、エネルギー効率または熱制御の目的で最大性能を制限する要求を伝え、プラットフォームは可能な限りそれに従って性能を制限する。ただし、内部パッケージの最適化によって必要な場合、プラットフォームは要求された制限を超えることがある。例えば、相互依存性を持つ複数の論理プロセッサ間のハードウェア調整。</p>
+<p>OSPMが熱制御の目的で性能を制限するためにこのレジスタを使用するには、相互依存性を持つ複数の論理プロセッサを理解しなければならない。すなわち、望ましい結果を得るためには、ドメイン内の全てのプロセッサに同じ値を書き込まなければならない。</p>
+<p>プラットフォームは最小性能レジスタと最大性能レジスタの両方を実装するか、どちらのレジスタも実装しない必要がある。どちらのレジスタも実装されておらず、Autonomous Selectionが無効になっている場合、プラットフォームは常に希望の性能を提供しなければならない。</p>
+<h2 id="847122-minimum-performance-register">8.4.7.1.2.2. Minimum Performance Register<a class="headerlink" href="#847122-minimum-performance-register" title="Permanent link">#</a></h2>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-69.jpg?height=101&amp;width=603&amp;top_left_y=200&amp;top_left_x=246" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-69.jpg?height=101&amp;width=603&amp;top_left_y=200&amp;top_left_x=246" /></a></p>
+<p>最小性能レジスタにより、OSPMはプラットフォームが実行できる最小性能レベルを伝えることができる。最小性能は[Lowest Performance, Highest Performance]の範囲内の任意の性能値に設定できるが、最大性能レジスタで指定された値以下に設定されなければならない。</p>
+<p>物理的な制約がある場合 (例えば熱的な逸脱など)、プラットフォームは最小性能レジスタで設定された最小性能を正常に維持できないことがある。この場合、プラットフォームはプロセッサデバイスオブジェクトにタイプ0x84のNotifyイベントを発行し、パフォーマンス制限レジスタ内のMinimum_Excursionビットを設定する。</p>
+<p>プラットフォームは最小性能レジスタと最大性能レジスタの両方を実装するか、どちらのレジスタも実装しない必要がある。どちらのレジスタも実装されておらず、Autonomous Selectionが無効になっている場合、プラットフォームは常に希望の性能を提供しなければならない。</p>
+<h2 id="847123-desired-performance-register">8.4.7.1.2.3. Desired Performance Register<a class="headerlink" href="#847123-desired-performance-register" title="Permanent link">#</a></h2>
+<p>オプション属性 (Autonomous Selectionのサポートによる)：サイズ：
+リード/ライト <span class="arithmatex">\(8-32\)</span> ビット</p>
+<p>Autonomous Selectionが無効の場合、Desired Performance Registerは必須であり、OSPMがプラットフォームに要求している性能レベルを伝える。希望性能は、[最小性能、最大性能]の範囲内の任意の性能値に設定できる。希望性能は、希望性能が保証性能レベル以上か以下かによって、2つの意味のうちの1つを取ることができる。
+- 保証された性能レベル以下では、望まれる性能は、性能低下許容範囲に従ってプラットフォームが提供しなければならない平均性能レベルを表す。
+- 保証性能レベル以上では、プラットフォームは保証性能レベルを提供しなければならない。プラットフォームは、現在の動作条件が許せば、希望する性能レベルまでの提供を試みるべきであるが、そうする必要はない。</p>
+<p>自律選択が有効な場合、OSPMがプロセッサのワークロード性能要求を評価し、対応する性能提供要求をDesired Registerを介してプラットフォームに伝える必要はない。Desired Performance Registerが存在する場合、OSPMは0以外の値を書き込むことで、明示的な性能要求のヒントをプラットフォームに提供できる。この場合、配信性能は性能低下許容値レジスタによって制限されないが、OSPMはエネルギー性能優先度レジスタに適切な値を書き込むことによって、配信性能に影響を与えることができる。Desired Performance Registerにゼロ値を書き込むか、またはDesired Performance Registerが存在しない場合、プラットフォームは現在のワークロードに適した性能レベルを自律的に選択する。</p>
+<h1 id="1-note_2">(1) Note<a class="headerlink" href="#1-note_2" title="Permanent link">#</a></h1>
+<p>希望性能レジスタは、OPSMがプラットフォーム全体の_OSC機能でCPPC2のサポートを示し、かつ自律選択有効フィールドが <span class="arithmatex">\(1 . *\)</span> の値を持つ整数としてエンコードされている場合にのみオプションとなる。</p>
+<h2 id="847124-performance-reduction-tolerance-register">8.4.7.1.2.4. Performance Reduction Tolerance Register<a class="headerlink" href="#847124-performance-reduction-tolerance-register" title="Permanent link">#</a></h2>
+<p>オプションの属性：読み取り/書き込み</p>
+<p>サイズ <span class="arithmatex">\(\quad 8-32\)</span> ビット</p>
+<p>性能低下許容誤差レジスタは、OSPMが許容できる望ましい性能からの偏差を伝えるために使用される。OSPM はこの値を性能スケールの絶対値で表す。性能許容差は望ましい性能以下でなければならない。プラットフォームがタイムウィンドウレジスタをサポートしている場合、性能低下許容値はタイムウィンドウの平均で提供される可能性のある最小性能値を伝える。このレジスタがインプリメントされていない場合、プラットフォームは性能低下許容誤差 <span class="arithmatex">\(=\)</span> 望ましい性能としなければならない。</p>
+<p>自律選択が有効な場合、性能低下許容誤差レジスタに書き込まれた値は無視される。</p>
+<h2 id="847125-time-window-register">8.4.7.1.2.5. Time Window Register<a class="headerlink" href="#847125-time-window-register" title="Permanent link">#</a></h2>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-70.jpg?height=141&amp;width=668&amp;top_left_y=2373&amp;top_left_x=247" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-70.jpg?height=141&amp;width=668&amp;top_left_y=2373&amp;top_left_x=247" /></a></p>
+<p>Autonomous Selectionが有効でない場合、OSPMはTime Window Registerに値を書き込み、プラットフォームが望ましい性能レベルを提供しなければならない時間ウィンドウを示すことができる (性能低下許容範囲に従う)。OSPMは以下を設定する。
+時間ウィンドウは、OSPMがプラットフォームのデリバリーパフォーマンスを評価するための最小時間を示す (OSPMがデリバリーパフォーマンスを計算する方法の詳細については、パフォーマンスカウンタ "Performance Counters "を参照)。OSPMが指定された時間ウィンドウより小さい間隔でデリバリーされたパフォーマンスを評価する場合、プラットフォームがデリバリーするパフォーマンスには何の期待もしていないことになる。タイムウィンドウと同等かそれ以上の評価間隔では、プラットフォームは指定された許容範囲内でOSPMが望む性能を提供しなければならない。</p>
+<p>OSPMがゼロのタイムウィンドウを指定した場合、またはプラットフォームがタイムウィンドウレジスタをサポートしない場合、プラットフォームは評価インターバルの期間に関係なく、性能低減許容範囲内の性能を提供しなければならない。</p>
+<p>自律選択が有効な場合、タイムウィンドウレジスタに書き込まれた値は無視される。Time Windowレジスタの読み出しは、プラットフォームのパフォーマンスカウンタを連続して読み出す間の最小時間 (ms)を示す。Time Windowレジスタがサポートされていない場合、プラットフォームのパフォーマンスカウンタの連続読み出し間の最小時間要件はない。</p>
+<h2 id="84713-performance-feedback">8.4.7.1.3. Performance Feedback<a class="headerlink" href="#84713-performance-feedback" title="Permanent link">#</a></h2>
+<p>このプラットフォームは、パフォーマンスカウンターのセットとパフォーマンス限定インジケーターによってパフォーマンスフィードバックを提供する。</p>
+<h2 id="847131-performance-counters">8.4.7.1.3.1. Performance Counters<a class="headerlink" href="#847131-performance-counters" title="Permanent link">#</a></h2>
+<p>時間の経過とともに実際に提供される性能レベルを決定するために、OSPMは基準性能カウンタレジスタと提供性能カウンタレジスタから一連の性能カウンタを読み出すことができる。</p>
+<p>OSPMは、リファレンスパフォーマンスカウンターとデリバリーパフォーマンスカウンターの両方の開始と終了のスナップショットを取り、計算することによって、与えられた期間にわたってデリバリーパフォーマンスを計算する：</p>
+<p><span class="arithmatex">\(=\)</span> の参考性能</p>
+<p><span class="arithmatex">\(\Delta\)</span> delivered performance counter</p>
+<p><span class="arithmatex">\(\Delta\)</span> reference performance counter</p>
+<p>配信された性能は常に[最低性能、最高性能]の範囲にあるべきである。OSPM は配信されたパフォーマンスカウンタを，自らが選択する望ましいパフォーマンス状態を改善するためのフィードバックメカニズムとして使用できる。</p>
+<p>Autonomous Selectionが有効でない場合、プラットフォームから配信されるパフォーマンスがOSPMのDesired Performanceからいつ、どのように乖離するかを規定する制約がある。OSPMがDesired Performanceを設定すると、それ以降いつでも、配信されるパフォーマンスに以下の制約が適用される。
+- プラットフォームが望ましい性能を提供する場合と同じか、より低いエネルギーでより高い性能を提供できる場合、提供される性能は、OSPMが要求する望ましい性能より高くなる可能性がある。
+- プラットフォームが離散的な性能状態を持ち、OSPM制御セクションに規定されたアルゴリズムに従って性能を最も近いサポート性能レベルに切り捨てる必要があった場合、配信される性能はOSPMの希望性能より高くても低くてもよい。
+- プラットフォームの効率最適化により、引き渡された性能が望ましい性能を下回った場合、引き渡された性能は OSPM の望ましい性能を下回ることがある。しかし、納入される性能はOSPMが指定する性能削減許容値より低くなることはない。性能削減許容範囲は、性能配信を最適化する際にプラットフォームがどの程度積極的に行えるかを示すものである。プラットフォームは、OSPMで指定されたパフォーマンス削減許容値よりも低い配信パフォーマンスを引き起こすような最適化を行うべきではない。</p>
+<h1 id="reference-performance-counter-register">Reference Performance Counter Register<a class="headerlink" href="#reference-performance-counter-register" title="Permanent link">#</a></h1>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-72.jpg?height=97&amp;width=490&amp;top_left_y=1191&amp;top_left_x=246" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-72.jpg?height=97&amp;width=490&amp;top_left_y=1191&amp;top_left_x=246" /></a></p>
+<p>リファレンスパフォーマンスカウンタレジスタは、プロセッサがアクティブであればいつでも固定レートでカウントする。リファレンスパフォーマンスカウンタレジスタは、プロセッサがアクティブであればいつでも固定レートでカウントされ、「希望するパフォーマンス」やプロセッサのスロットリングなどの変更には影響されない。リファレンスパフォーマンスがサポートされている場合、リファレンスパフォーマンスカウンタはリファレンスパフォーマンスレベルに対応するレートで累積される。そうでない場合、リファレンスパフォーマンスカウンタは公称パフォーマンスレベルで累積される。</p>
+<h1 id="delivered-performance-counter-register">Delivered Performance Counter Register:<a class="headerlink" href="#delivered-performance-counter-register" title="Permanent link">#</a></h1>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-72.jpg?height=89&amp;width=485&amp;top_left_y=2029&amp;top_left_x=249" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-72.jpg?height=89&amp;width=485&amp;top_left_y=2029&amp;top_left_x=249" /></a></p>
+<p>納入済み性能カウンタレジスタは、プロセッサがアクティブであればいつでも、現在の性能レベルに比例した割合でインクリメントし、希望性能への変更を考慮する。プロセッサが基準性能レベルで動作している場合、納入性能カウンタは基準性能カウンタと同じ割合でインクリメントしなければならない。</p>
+<p>オプションのレジスタまたはDWORD属性：読み取り</p>
+<p>サイズ <span class="arithmatex">\(\quad 32\)</span> または64ビット</p>
+<p>単位：秒</p>
+<p>Counter Wraparound Timeは、プラットフォームがReference/Deliveredパフォーマンスカウンタのロールオーバー時間を指定するための手段である。OSPM がフィードバックカウンターを照会する間にこの時間より長い時間が経過すると、カウンターは OSPM がそれを検出できないままラップする可能性がある。</p>
+<p>実装されていない場合 (あるいはゼロの場合)、パフォーマンスカウンターは、プラットフォームのライフタイム中、ラップしないと仮定される。</p>
+<h2 id="847132-performance-limited-register">8.4.7.1.3.2. Performance Limited Register<a class="headerlink" href="#847132-performance-limited-register" title="Permanent link">#</a></h2>
+<p>属性：読み取り/書き込み</p>
+<p>サイズ <span class="arithmatex">\(\quad&gt;=2 \operatorname{bit}(\mathrm{s})\)</span></p>
+<p>予測不可能なイベントにより、プラットフォームが配信性能を最小性能または希望性能未満 (希望性能が保証性能より大きい場合は保証性能未満)に制限した場合、プラットフォームは性能制限インジケータをゼロ以外の値に設定する。これは OSPM に対して、予測不可能なイベントによってプロセッサの性能が制限され、提供される性能が希望性能/最低性能を下回る可能性があることを示す。プラットフォームが性能制限イベントのシグナリングをサポートしていない場合、このレジスタはリード時に常にゼロを返すことが許される。</p>
+<div class="arithmatex">\[\begin{tabular}{|l|l|l|}
+\hline Bit &amp; Name &amp; Description \\
+\hline 0 &amp; Desired_Excursion &amp; Set when Delivered Performance has been constrainı \\
+\hline 1 &amp; Minimum_Excursion &amp; Set when Delivered Performance has been constrainı \\
+\hline $2-n$ &amp; Reserved &amp; Reserved \\
+\hline
+\end{tabular}\]</div>
+<p>性能制限レジスタ内のビットはスティッキーであり、OSPMがビットをクリアするまで非ゼロのままである。プラットフォームは、最小エクスカージョンが0から1に遷移した時のみノーティファイを発行する必要があり、持続的または反復的な制限があるにもかかわらずOSPMが前の指示をクリアしていない場合に、イベントが繰り返されるのを防ぎます。</p>
+<p>性能制限レジスタへの全てのアクセスは、アクセスする両方のエンティティによって、インターロックされたオペレーションを使用して行われなければならない*。</p>
+<p>性能制限レジスタは、短期間の予測不可能なイベント (例えば、PROCHOT がアサートされる) を報告するためにのみ使用すべきである。プラットフォームが、プロセッサの性能を制限する長期的で予測可能なイベントを特定できる場合は、性能保証レジスタを使用してこの制限を OSPM に通知すべきである。保証性能の変更は、1秒に1回を超える頻度であってはならない。プラットフォームが一定時間 (1秒以上)所定の性能レベルを保証できない場合は、低い性能レベルを保証し、OSPMの要求に応じて、現在の動作条件で許容される高い性能レベルに臨機応変に入るべきである。</p>
+<h2 id="84714-cppc-enable-register">8.4.7.1.4. CPPC Enable Register<a class="headerlink" href="#84714-cppc-enable-register" title="Permanent link">#</a></h2>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-74.jpg?height=98&amp;width=599&amp;top_left_y=974&amp;top_left_x=249" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-74.jpg?height=98&amp;width=599&amp;top_left_y=974&amp;top_left_x=249" /></a></p>
+<p>プラットフォームでサポートされている場合、OSPMはこのレジスタに1を書き込み、このプロセッサでCPPCを有効にする。</p>
+<p>実装されていない場合、OSPMはプラットフォームが常にCPPCを有効にしていると仮定する。</p>
+<h2 id="84715-autonomous-selection-enable-register">8.4.7.1.5. Autonomous Selection Enable Register<a class="headerlink" href="#84715-autonomous-selection-enable-register" title="Permanent link">#</a></h2>
+<p>オプションのレジスタまたはDWORD属性：サイズ
+リード/ライト</p>
+<p><span class="arithmatex">\(&gt;=1\)</span> bit(s)</p>
+<p>プラットフォームでサポートされている場合、OSPM はこのレジスタに 1 を書き込み、このプロセッサで自律パフォーマンスレベル選択を有効にする。自律パフォーマンスレベル選択を有効にするには、CPPCイネーブルレジスタでCPPCを有効にする必要がある。Autonomous Selectionを排他的にサポートするプラットフォームは、このフィールドに整数値で1を書き込む必要がある。</p>
+<p>Autonomous Selection が有効な場合、パフォーマンス状態の選択はプラットフォームが行う。OSPMは、プロセッサのワークロード性能要求を評価し、対応する性能提供要求をDesired Performance Registerを介してプラットフォームに伝える必要はない。</p>
+<h2 id="84716-autonomous-activity-window-register">8.4.7.1.6. Autonomous Activity Window Register<a class="headerlink" href="#84716-autonomous-activity-window-register" title="Permanent link">#</a></h2>
+<p>プラットフォームがサポートしている場合、OSPMはこのフィールドに時間値 ( <span class="arithmatex">\(1 \mu \mathrm{sec}\)</span> 単位で10^3ビットexp * 7ビット仮数：1us～ <span class="arithmatex">\(1270 \mathrm{sec}\)</span> )を書き込み、プラットフォームの自律選択ポリシーに対する移動利用感度ウィンドウを示すことができる。エネルギー性能優先レジスタ値と組み合わせると、アクティビティウインドウはプラットフォームの自律選択ポリシーの性能増加/減少率に影響する。OSPMは、ワークロードに応じてプラットフォームが適切なアクティビティウィンドウを決定できるように、このレジスタにゼロ値を書き込む。</p>
+<p>このレジスタへの書き込みは、自律選択が有効になっているときのみ意味を持つ。</p>
+<h2 id="84717-energy-performance-preference-register">8.4.7.1.7. Energy Performance Preference Register<a class="headerlink" href="#84717-energy-performance-preference-register" title="Permanent link">#</a></h2>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-75.jpg?height=97&amp;width=599&amp;top_left_y=1155&amp;top_left_x=249" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-75.jpg?height=97&amp;width=599&amp;top_left_y=1155&amp;top_left_x=249" /></a></p>
+<p>プラットフォームがサポートしている場合、OSPMは0 (性能優先)から0xFF (エネルギー効率優先)までの値の範囲を書き込むことができ、性能の増減率やハードウェアのエネルギー効率と性能の最適化ポリシーの結果に影響を与える。これは、OSPMがプラットフォームの性能関連の最適化/制御ポリシーのエネルギー効率への影響と、プラットフォームのエネルギー効率関連の最適化/制御ポリシーの性能への影響を制限する手段を提供する。</p>
+<p>このレジスタへの書き込みは、自律選択が有効になっているときのみ意味を持つ。</p>
+<h2 id="84718-ospm-control-policy">8.4.7.1.8. OSPM Control Policy<a class="headerlink" href="#84718-ospm-control-policy" title="Permanent link">#</a></h2>
+<h2 id="847181-in-band-thermal-control">8.4.7.1.8.1. In-Band Thermal Control<a class="headerlink" href="#847181-in-band-thermal-control" title="Permanent link">#</a></h2>
+<p>性能制御を使用するプロセッサは、サーマルゾーンの_PSLリストにリストされることがある。PSV閾値を超えた結果、サーマルゾーンがパッシブ冷却を行う場合、OSPMは <span class="arithmatex">\(\Delta P[\%]\)</span> を適用し、希望するパフォーマンスレジスタの値を変更する。パッシブ冷却が作動するときはいつでも、OSPMは最大性能レジスタを希望性能レジスタに等しく設定し、プラットフォームが日和見的に希望性能を超えないようにしなければならない。</p>
+<p>注意：SoCがプロセッサに加えて複数のデバイスコンポーネントで構成されているシステムオンチップベースプラットフォームでは、OSPMが熱制御のためにDesiredおよびMaximumレジスタを使用すると、SoCデバイスの相互作用により最適な結果が得られない場合がある。独自のパッケージレベルの熱制御 (存在する場合)を使用することで、より最適な結果が得られる可能性がある。</p>
+<h2 id="84719-using-pcc-registers">8.4.7.1.9. Using PCC Registers<a class="headerlink" href="#84719-using-pcc-registers" title="Permanent link">#</a></h2>
+<p>PCCレジスタ空間が使用される場合、同じパフォーマンスドメイン (_PSDによって定義される)内の全てのプロセッサの全てのPCCレジスタは、同じ部分空間にあるように定義されなければならない。PSDが使用されない場合、この制限は与えられた_CPCオブジェクト内の全てのレジスタに適用される。</p>
+<p>OSPM は、レジスタ値を入力し、PCC ライトコマンドを発行することで、レジスタを書き込む。また、リードコマンドを発行することで、静的レジスタ、カウンタ、パフォーマンスリミテッドレジスタを読み出すことができる (表 8.25 参照)。</p>
+<p>PCCトランザクションのコストを償却するため、OSPMは可能な限り、1つのリードまたはライトコマンドで全てのPCCレジスタをリードまたはライトすべきである。</p>
+<p>表 8.25 共同処理で使用される PCC コマンドコード</p>
+<h1 id="command-description">Command Description<a class="headerlink" href="#command-description" title="Permanent link">#</a></h1>
+<div class="arithmatex">\[\begin{tabular}{l|l}
+\hline $0 x 00$ &amp; Read registers. Executed to request the platform update all registers fc \\
+\hline $0 x 01$ &amp; Write registers. Executed to notify the platform one or more read/writ \\
+\hline $0 x 02-0 x F F$ &amp; All other values are reserved.
+\end{tabular}\]</div>
+<h2 id="847110-relationship-to-other-acpi-defined-objects-and-notifications">8.4.7.1.10. Relationship to other ACPI-defined Objects and Notifications<a class="headerlink" href="#847110-relationship-to-other-acpi-defined-objects-and-notifications" title="Permanent link">#</a></h2>
+<p>CPCが存在する場合、その使用は以下の既存のACPIオブジェクトの使用に優先する：
+- P_BLK P_CNTレジスタ
+- PTCの
+- _TSS。
+- TPC
+- _TSD。
+- TDL
+- (邦訳)
+- _PSS
+- (邦人)
+- _PDL (英文
+- プロセッサデバイスに0x80を通知
+- プロセッサデバイスに0x82を通知</p>
+<p>PSDオブジェクトは、プロセッサ間のドメイン依存性を指定するために使用できる。ヘテロジニアスプロセッサを持つシステムでは、1つのドメイン内の全てのプロセッサが同じ性能を持っていなければならない。</p>
+<h2 id="847111-_cpc-implementation-example">8.4.7.1.11. _CPC Implementation Example<a class="headerlink" href="#847111-_cpc-implementation-example" title="Permanent link">#</a></h2>
+<p>この例では、PCC 部分空間 2 の PCC インタフェースを介した _CPC インタフェースの 2 プロセッサ実装を示す。この実装では、プロセッサの能力を記述するためにレジスタを使用し、最小性能、最大性能、タイムウィンドウレジスタはサポートしていない。</p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-78.jpg?height=2761&amp;width=1156&amp;top_left_y=70&amp;top_left_x=249" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-78.jpg?height=2761&amp;width=1156&amp;top_left_y=70&amp;top_left_x=249" /></a></p>
+<p><a class="glightbox" href="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-79.jpg?height=1230&amp;width=1056&amp;top_left_y=36&amp;top_left_x=360" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://cdn.mathpix.com/cropped/2024_03_26_1854236e09e415c3ccc3g-79.jpg?height=1230&amp;width=1056&amp;top_left_y=36&amp;top_left_x=360" /></a></p>
+<h2 id="848-_ppe-polling-for-platform-errors">8.4.8. _PPE (Polling for Platform Errors)<a class="headerlink" href="#848-_ppe-polling-for-platform-errors" title="Permanent link">#</a></h2>
+<p>このオプションのオブジェクトが存在する場合、OSPM はプロセッサが訂正されたプラットフォームエラー情報を取得するためにポーリングされるべきかどうかを判断するために評価する。このオブジェクトは、CPEP で提供される情報を補強/上書きする。修正済みプラットフォームエラーポーリングテーブル (CPEP) を参照してください。</p>
+<h1 id="arguments_14">Arguments:<a class="headerlink" href="#arguments_14" title="Permanent link">#</a></h1>
+<p>なし</p>
+<p>戻り値：</p>
+<p>推奨ポーリング間隔をミリ秒で表した整数。</p>
+<p>0- OSPM はこのプロセッサをポーリングしない。</p>
+<p>その他の値- OSPMはこのプロセッサを&lt;=指定された間隔でポーリングすべきである。</p>
+<p>OSPM は、プロセッサオブジェクトの初期化およびバスチェック通知処理中に _PPE オブジェクトを評価する。</p>
+
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand", "navigation.indexes", "toc.integrate", "navigation.instant", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "search": "../../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.220ee61c.min.js"></script>
+      
+        
+          <script src="../../../javascripts/mathjax.js"></script>
+        
+      
+        
+          <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        
+      
+        
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>
