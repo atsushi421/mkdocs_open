@@ -1,12 +1,12 @@
 # HOME
 
+
 ## DVFS
 
-### Linux
+- [Power Management in Linux Kernel](dvfs/linux/Power_Management_in_Linux_Kernel.md)
+- [Power Management in ACPI (tmp)](dvfs/Power_Management_in_ACPI/Power_Management_in_ACPI.md)
 
-- [CPU Performance Scaling in Linux Kernel](./dvfs/CPU_Performance_Scaling/summary_CPU_Performance_Scaling.md)
-
-### ACPI
+### ACPI (tmp)
 
 - [Overview](./dvfs/Overview/summary_Overview.md)
 - [Introduction](./dvfs/Introduction/summary_Introduction.md)
